@@ -1,0 +1,1219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดตารางสอน</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        body {
+            background-color: #eaedffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            color: #6b7280;
+            font-weight: 500;
+            padding: 1rem 1.5rem;
+            border-bottom: 3px solid transparent;
+            background: none;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: none;
+            color: #4f46e5;
+            border-bottom-color: #4f46e5;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            border-color: transparent;
+            color: #374151;
+            background: none;
+        }
+        
+        .action-card {
+            border: 2px solid #d1d5db !important;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-2px);
+            border-color: #9ca3af !important;
+            box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header-blue {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 1.5rem;
+            border: none;
+        }
+        
+        .card-header-green {
+            background: linear-gradient(135deg, #ffc400ff, #ffc400ff);
+            color: white;
+            padding: 1.5rem;
+            border: none;
+        }
+        
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+        }
+        
+        .icon-circle-blue {
+            background-color: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+        }
+        
+        .icon-circle-green {
+            background-color: rgba(255, 196, 0, 0.1);
+            color: #ffc400ff;
+        }
+        
+        .stat-card {
+            border: 2px solid #d1d5db !important;
+            border-radius: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-1px);
+            border-color: #9ca3af !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-create {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border: none;
+            border-radius: 12px;
+            padding: 0.875rem 2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: white;
+        }
+        
+        .btn-create:hover {
+            background: linear-gradient(135deg, #4338ca, #6d28d9);
+            transform: translateY(-1px);
+            color: white;
+        }
+        
+        .btn-view {
+            background: linear-gradient(135deg, #ffc400ff, #ffc400ff);
+            border: none;
+            border-radius: 12px;
+            padding: 0.875rem 2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background: linear-gradient(135deg, #e6b000, #e6b000);
+            transform: translateY(-1px);
+            color: white;
+        }
+        
+        /* Added CSS for CSV download button */
+        .btn-csv {
+            background: linear-gradient(135deg, #0d9488, #0f766e);
+            border: none;
+            border-radius: 12px;
+            padding: 0.875rem 2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: white;
+        }
+        
+        .btn-csv:hover {
+            background: linear-gradient(135deg, #0f766e, #134e4a);
+            transform: translateY(-1px);
+            color: white;
+        }
+        
+        /* Added scrollable modal styling for better UX with large datasets */
+        .modal-body-scrollable {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 0;
+        }
+        
+        .modal-body-scrollable .table-container {
+            padding: 1rem;
+        }
+        
+        .modal-body-scrollable::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .modal-body-scrollable::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .modal-body-scrollable::-webkit-scrollbar-thumb {
+            background: #0d9488;
+            border-radius: 4px;
+        }
+        
+        .modal-body-scrollable::-webkit-scrollbar-thumb:hover {
+            background: #0f766e;
+        }
+        
+        /* Enhanced modal styling for better centering and visual appeal */
+        .modal-dialog {
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            min-height: calc(100vh - 4rem);
+        }
+        
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(13, 148, 136, 0.15);
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            border: none;
+            padding: 2rem 2rem 1rem 2rem;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .modal-footer {
+            border: none;
+            padding: 1rem 2rem 2rem 2rem;
+            background: rgba(248, 250, 252, 0.8);
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .modal-backdrop {
+            background-color: rgba(13, 148, 136, 0.2);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .btn-close-white {
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+            transition: all 0.2s;
+        }
+        
+        .btn-close-white:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        /* Enhanced table styling within modal */
+        .modal-body-scrollable .table {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        
+        .modal-body-scrollable .table th {
+            /* Changed from teal gradient to flat dark background */
+            background: #343a40;
+            color: white;
+            font-weight: 600;
+            padding: 1rem 0.75rem;
+            border: none;
+            font-size: 0.9rem;
+        }
+        
+        .modal-body-scrollable .table td {
+            padding: 0.875rem 0.75rem;
+            vertical-align: middle;
+            border-color: #e5e7eb;
+        }
+        
+        .modal-body-scrollable .table-striped > tbody > tr:nth-of-type(odd) > td {
+            background-color: rgba(13, 148, 136, 0.03);
+        }
+        
+        .modal-body-scrollable .table-hover > tbody > tr:hover > td {
+            background-color: rgba(13, 148, 136, 0.08);
+            transition: background-color 0.2s;
+        }
+        
+        /* Enhanced alert styling */
+        .alert-info {
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.1), rgba(15, 118, 110, 0.05));
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Enhanced button styling in modal footer */
+        .modal-footer .btn {
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .modal-footer .btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .modal-footer .btn-secondary {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            border: none;
+        }
+        
+        .modal-footer .btn-success {
+            background: linear-gradient(135deg, #0d9488, #0f766e);
+            border: none;
+        }
+        
+        /* Added styles for Schedule Modal */
+        .tt-slot { border-radius: .5rem; padding: .5rem .75rem; color: #fff; }
+        .tt-type-lab      { background: #0d6efd; }
+        .tt-type-lecture  { background: #198754; }
+        .tt-type-tutorial { background: #6f42c1; }
+        .tt-type-seminar  { background: #fd7e14; }
+        .tt-type-default  { background: #495057; }
+        .tt-badge { display:inline-block; font-size:.75rem; padding:.125rem .5rem; border-radius:.375rem; background:rgba(255,255,255,.15); }
+        #ttTable thead th.sticky-top { position: sticky; top: 0; z-index: 5; background: #f8f9fa; }
+        #ttTable tbody th.sticky-col { position: sticky; left: 0; z-index: 4; background: #f8f9fa; }
+        .tt-item-card { transition: box-shadow .2s ease, transform .05s ease; }
+        .tt-item-card:hover { box-shadow: 0 .4rem 1rem rgba(0,0,0,.08); transform: translateY(-1px); }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white border-bottom py-3">
+        <div class="container-fluid" style="max-width: 1400px;">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center">
+                        <div class="header-icon me-3">
+                            <i class="bi bi-calendar-check text-white fs-4"></i>
+                        </div>
+                        <h1 class="h4 mb-0 fw-bold text-dark">ระบบจัดตารางสอน</h1>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <button class="btn btn-outline-secondary me-3">
+                            <i class="bi bi-file-text me-2"></i>คู่มือ
+                        </button>
+                        <button class="btn btn-outline-primary">
+                            <i class="bi bi-person me-2"></i>เกี่ยวกับเรา
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-bottom">
+        <div class="container-fluid" style="max-width: 1400px;">
+            <ul class="nav nav-tabs border-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'home' %}" aria-current="page">
+                        <i class="bi bi-house me-2"></i>หน้าหลัก
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pre' %}">
+                        <i class="bi bi-book me-2"></i>ลงล่วงหน้า
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher' %}">
+                        <i class="bi bi-people me-2"></i>รายวิชา
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'room' %}">
+                        <i class="bi bi-geo-alt me-2"></i>ห้องเรียน
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student' %}">
+                        <i class="bi bi-person-badge me-2"></i>นักศึกษา
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'activities' %}">
+                        <i class="bi bi-activity me-2"></i>กิจกรรม
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container-fluid py-5" style="max-width: 1400px;">
+        <!-- Action Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-lg-6">
+                <div class="card action-card h-100">
+                    <div class="card-header card-header-blue">
+                        <h5 class="card-title mb-0 d-flex align-items-center">
+                            <i class="bi bi-bar-chart-line me-2"></i>
+                            สร้างตารางสอน
+                        </h5>
+                    </div>
+                    <div class="card-body text-center py-5">
+                        <div class="icon-circle icon-circle-blue">
+                            <i class="bi bi-calendar-plus" style="font-size: 2rem;"></i>
+                        </div>
+                        <h3 class="h5 fw-bold mb-4 text-dark">สร้างตารางสอน</h3>
+                        <!-- Modified button layout to have two buttons side by side -->
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button class="btn btn-create w-100" onclick="generateSchedule()">
+                                    <i class="bi bi-plus-lg me-2"></i>
+                                    กดเพื่อสร้างตารางสอน
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <!-- Modified CSV button to show modal instead of direct download -->
+                                <button class="btn btn-csv w-100" onclick="showCSVPreview()">
+                                    <i class="bi bi-download me-2"></i>
+                                    ดาวน์โหลด CSV
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card action-card h-100">
+                    <div class="card-header card-header-green">
+                        <h5 class="card-title mb-0 d-flex align-items-center">
+                            <i class="bi bi-calendar-check me-2"></i>
+                            ดูตารางสอน
+                        </h5>
+                    </div>
+                    <div class="card-body text-center py-5">
+                        <div class="icon-circle icon-circle-green">
+                            <i class="bi bi-calendar-event" style="font-size: 2rem;"></i>
+                        </div>
+                        <h3 class="h5 fw-bold mb-4 text-dark">กดเพื่อดูตารางสอน</h3>
+                        <button class="btn btn-view w-100" onclick="viewSchedule()">
+                            <i class="bi bi-calendar-check me-2"></i>
+                            กดเพื่อดูตารางสอน
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card stat-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="text-muted mb-1 small">อาจารย์</p>
+                                <h2 class="h1 fw-bold text-dark mb-0">{{ total_teachers }}</h2>
+                            </div>
+                            <div class="stat-icon" style="background-color: rgba(79, 70, 229, 0.1);">
+                                <i class="bi bi-people fs-4" style="color: #4f46e5;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card stat-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="text-muted mb-1 small">วิชา</p>
+                                <h2 class="h1 fw-bold text-dark mb-0">{{ total_subjects }}</h2>
+                            </div>
+                            <div class="stat-icon" style="background-color: rgba(5, 150, 105, 0.1);">
+                                <i class="bi bi-book fs-4" style="color: #059669;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card stat-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="text-muted mb-1 small">ห้องเรียน</p>
+                                <h2 class="h1 fw-bold text-dark mb-0">{{ total_rooms }}</h2>
+                            </div>
+                            <div class="stat-icon" style="background-color: rgba(147, 51, 234, 0.1);">
+                                <i class="bi bi-geo-alt fs-4" style="color: #9333ea;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card stat-card">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="text-muted mb-1 small">กิจกรรม</p>
+                                <h2 class="h1 fw-bold text-dark mb-0">{{ total_activities }}</h2>
+                            </div>
+                            <div class="stat-icon" style="background-color: rgba(249, 115, 22, 0.1);">
+                                <i class="bi bi-activity fs-4" style="color: #f97316;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CSV Preview Modal -->
+    <!-- Enhanced modal structure with better centering and visual appeal -->
+    <div class="modal fade" id="csvPreviewModal" tabindex="-1" aria-labelledby="csvPreviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #0d9488, #0f766e); color: white;">
+                    <h5 class="modal-title" id="csvPreviewModalLabel">
+                        <i class="bi bi-table me-2"></i>ตัวอย่างข้อมูลตารางสอน
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modified modal body to be scrollable with fixed height -->
+                <div class="modal-body modal-body-scrollable">
+                    <div id="csvPreviewContent" class="table-container">
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                                <span class="visually-hidden">กำลังโหลด...</span>
+                            </div>
+                            <p class="mt-3 text-muted fs-5">กำลังโหลดข้อมูล...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Added delete functionality buttons -->
+                    <button type="button" class="btn btn-danger me-2" onclick="deleteAllSchedules()" id="deleteAllBtn" disabled>
+                        <i class="bi bi-trash me-2"></i>ลบทั้งหมด
+                    </button>
+                    <button type="button" class="btn btn-warning me-2" onclick="deleteSelectedSchedules()" id="deleteSelectedBtn" disabled>
+                        <i class="bi bi-trash3 me-2"></i>ลบที่เลือก
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="downloadCSVFile()" id="downloadBtn" disabled>
+                        <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal (สไตล์/โทนใกล้เคียงโค้ด React เดิม) -->
+    <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xxl modal-dialog-centered" style="max-width:96vw;">
+        <div class="modal-content">
+          <div class="modal-header" style="background: linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff;">
+            <h5 class="modal-title" id="scheduleModalLabel">
+              <i class="bi bi-calendar3 me-2"></i>ตารางสอน
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- ======= state: เลือกหมวด + การ์ดรายการ (เหมือนหน้าแรกใน React) ======= -->
+            <div id="tt-select-view">
+              <div class="row g-2 align-items-end mb-3">
+                <div class="col-12 col-md-4">
+                  <label class="form-label mb-1">ประเภท</label>
+                  <select id="ttCategory" class="form-select">
+                    <option value="Teacher">อาจารย์</option>
+                    <option value="Room">ห้อง</option>
+                    <option value="Student_Group">กลุ่มนักศึกษา</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-8">
+                  <div class="alert alert-light border d-flex align-items-center mb-0">
+                    <i class="bi bi-info-circle me-2"></i>
+                    เลือกประเภทเพื่อดูรายชื่อ แล้วคลิกการ์ดรายการเพื่อดูตารางสอน
+                  </div>
+                </div>
+              </div>
+
+              <div id="tt-select-spinner" class="text-center py-5 d-none">
+                <div class="spinner-border text-primary" style="width:3rem; height:3rem;"></div>
+                <p class="mt-3 text-muted fs-6">กำลังโหลดข้อมูล...</p>
+              </div>
+
+              <div id="tt-items-grid" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
+                <!-- การ์ดรายการ จะถูกเติมด้วย JS -->
+              </div>
+
+              <div id="tt-select-empty" class="text-center text-muted py-5 d-none">
+                ไม่พบรายการในหมวดนี้
+              </div>
+            </div>
+            <!-- /select state -->
+
+            <!-- ======= state: ตารางสอนของรายการที่เลือก ======= -->
+            <div id="tt-table-view" class="d-none">
+              <div class="mb-2">
+                <div class="d-flex flex-column flex-lg-row gap-2 align-items-stretch align-items-lg-center">
+                  <button class="btn btn-outline-secondary" id="tt-back-btn">← กลับไปรายการ</button>
+
+                  <div class="flex-grow-1 position-relative">
+                    <span class="position-absolute top-50 start-0 translate-middle-y ps-3 text-secondary">
+                      <i class="bi bi-search"></i>
+                    </span>
+                    <input id="tt-search" type="text" class="form-control ps-5" placeholder="ค้นหาวิชา, รหัส...">
+                  </div>
+
+                  <!-- ปุ่มสลับมุมมองแบบเดียวกับ React: ปุ่มเดียว toggle -->
+                  <button class="btn btn-outline-primary" id="tt-toggle-view">
+                    <i class="bi bi-funnel me-1"></i><span id="tt-toggle-text">มุมมองรายการ</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- เหมือน CardHeader/CardDescription -->
+              <div id="tt-header" class="mb-3">
+                <h6 class="mb-1">
+                  <i class="bi bi-calendar3 me-1"></i>
+                  <span id="tt-title">ตารางสอน</span>
+                </h6>
+                <div class="text-muted" id="tt-desc"></div>
+              </div>
+
+              <!-- Grid view (วัน × ชั่วโมง) -->
+              <div id="tt-grid-wrap">
+                <div class="table-responsive">
+                  <table id="tt-table" class="table table-bordered align-middle"></table>
+                </div>
+                <div id="tt-grid-empty" class="text-center text-muted py-5 d-none">ไม่พบข้อมูลที่ตรงกับเงื่อนไข</div>
+              </div>
+
+              <!-- List view (การ์ด) -->
+              <div id="tt-list-wrap" class="d-none">
+                <div class="row g-3" id="tt-list-grid"></div>
+                <div id="tt-list-empty" class="text-center text-muted py-5 d-none">ไม่พบข้อมูลที่ตรงกับเงื่อนไข</div>
+              </div>
+            </div>
+            <!-- /table state -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script>
+        function generateSchedule() {
+            if (confirm('คุณต้องการสร้างตารางสอนใหม่หรือไม่?')) {
+                fetch('/api/schedule/generate/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('สร้างตารางสอนสำเร็จแล้ว!');
+                        location.reload();
+                    } else {
+                        alert('เกิดข้อผิดพลาด: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('เกิดข้อผิดพลาดในการสร้างตารางสอน');
+                });
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        /* Modified CSV download function to show preview modal */
+        function showCSVPreview() {
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('csvPreviewModal'));
+            modal.show();
+            
+            // Fetch schedule data for preview
+            fetch('/api/schedule/view/?order=id&dir=asc')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("[v0] API Response:", data);
+                    console.log("[v0] Total schedules from API:", data.schedules ? data.schedules.length : 0);
+                    console.log("[v0] Sample schedule data:", data.schedules ? data.schedules[0] : null);
+                    
+                    if (data.status === 'success' && data.schedules.length > 0) {
+                        displaySchedulePreview(data.schedules);
+                        document.getElementById('downloadBtn').disabled = false;
+                    } else {
+                        displayNoDataMessage();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    displayErrorMessage();
+                });
+        }
+
+        function displaySchedulePreview(schedules) {
+            console.log("[v0] Displaying schedules:", schedules.length);
+            
+            const content = document.getElementById('csvPreviewContent');
+            let tableHTML = `
+                <div class="alert alert-info d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="bi bi-info-circle me-1"></i>
+                        พบข้อมูลตารางสอนทั้งหมด <strong>${schedules.length}</strong> รายการ
+                    </div>
+                    <!-- Added select all checkbox -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                        <label class="form-check-label fw-bold" for="selectAll">
+                            เลือกทั้งหมด
+                        </label>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark sticky-top">
+                        <tr>
+                            <!-- Added checkbox column for selection -->
+                            <th><input type="checkbox" id="headerCheckbox" onchange="toggleSelectAll()" class="form-check-input"></th>
+                            <th><i class="bi bi-hash me-1"></i>ลำดับ</th>
+                            <th><i class="bi bi-code-square me-1"></i>รหัสวิชา</th>
+                            <th><i class="bi bi-book me-1"></i>ชื่อวิชา</th>
+                            <th><i class="bi bi-person me-1"></i>อาจารย์</th>
+                            <th><i class="bi bi-geo-alt me-1"></i>ห้อง</th>
+                            <th><i class="bi bi-tag me-1"></i>ประเภท</th>
+                            <th><i class="bi bi-calendar me-1"></i>วัน</th>
+                            <th><i class="bi bi-clock me-1"></i>เวลา</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            schedules.forEach((schedule, index) => {
+                if (index < 3) {
+                    console.log(`[v0] Schedule ${index + 1}:`, schedule);
+                }
+                
+                tableHTML += `
+                    <tr>
+                        <!-- Added individual checkbox for each row -->
+                        <td><input type="checkbox" class="form-check-input schedule-checkbox" value="${schedule.id}" onchange="updateDeleteButtons()"></td>
+                        <td><span class="badge bg-primary">${index + 1}</span></td>
+                        <td><strong>${schedule.Course_Code || 'N/A'}</strong></td>
+                        <td>${schedule.Subject_Name || 'N/A'}</td>
+                        <td><i class="bi bi-person-circle me-1"></i>${schedule.Teacher || 'N/A'}</td>
+                        <td><i class="bi bi-door-open me-1"></i>${schedule.Room || 'N/A'}</td>
+                        <td><span class="badge bg-secondary">${schedule.Type || 'N/A'}</span></td>
+                        <td><span class="badge bg-info">${schedule.Day || 'N/A'}</span></td>
+                        <td><i class="bi bi-clock me-1"></i>${schedule.Hour || 'N/A'}</td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `</tbody></table>`;
+            
+            content.innerHTML = tableHTML;
+            
+            document.getElementById('deleteAllBtn').disabled = false;
+            updateDeleteButtons();
+        }
+
+        function displayNoDataMessage() {
+            const content = document.getElementById('csvPreviewContent');
+            content.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="bi bi-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3">ไม่พบข้อมูลตารางสอน</h5>
+                    <p class="text-muted">กรุณาสร้างตารางสอนก่อนดาวน์โหลด</p>
+                </div>
+            `;
+        }
+
+        function displayErrorMessage() {
+            const content = document.getElementById('csvPreviewContent');
+            content.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="bi bi-exclamation-circle text-danger" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3">เกิดข้อผิดพลาด</h5>
+                    <p class="text-muted">ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่อีกครั้ง</p>
+                </div>
+            `;
+        }
+
+        function downloadCSVFile() {
+            fetch('/api/schedule/download/', {
+                method: 'GET',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    throw new Error('ไม่สามารถดาวน์โหลดไฟล์ CSV ได้');
+                }
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'schedule_' + new Date().toISOString().split('T')[0] + '.csv';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                bootstrap.Modal.getInstance(document.getElementById('csvPreviewModal')).hide();
+                alert('ดาวน์โหลดไฟล์ CSV สำเร็จแล้ว!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ CSV');
+            });
+        }
+
+        function toggleSelectAll() {
+            const selectAllCheckbox = document.getElementById('selectAll') || document.getElementById('headerCheckbox');
+            const checkboxes = document.querySelectorAll('.schedule-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+            
+            // Sync both checkboxes
+            const selectAllMain = document.getElementById('selectAll');
+            const headerCheckbox = document.getElementById('headerCheckbox');
+            if (selectAllMain && headerCheckbox) {
+                selectAllMain.checked = headerCheckbox.checked = selectAllCheckbox.checked;
+            }
+            
+            updateDeleteButtons();
+        }
+
+        function updateDeleteButtons() {
+            const selectedCheckboxes = document.querySelectorAll('.schedule-checkbox:checked');
+            const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+            
+            deleteSelectedBtn.disabled = selectedCheckboxes.length === 0;
+            
+            // Update select all checkbox state
+            const allCheckboxes = document.querySelectorAll('.schedule-checkbox');
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const headerCheckbox = document.getElementById('headerCheckbox');
+            
+            if (selectAllCheckbox && headerCheckbox) {
+                const allSelected = selectedCheckboxes.length === allCheckboxes.length;
+                const someSelected = selectedCheckboxes.length > 0;
+                
+                selectAllCheckbox.checked = allSelected;
+                headerCheckbox.checked = allSelected;
+                selectAllCheckbox.indeterminate = someSelected && !allSelected;
+                headerCheckbox.indeterminate = someSelected && !allSelected;
+            }
+        }
+
+        function deleteAllSchedules() {
+            if (confirm('คุณแน่ใจหรือไม่ที่จะลบตารางสอนทั้งหมด? การกระทำนี้ไม่สามารถยกเลิกได้!')) {
+                fetch('/api/schedule/clear/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('ลบตารางสอนทั้งหมดสำเร็จแล้ว!');
+                        bootstrap.Modal.getInstance(document.getElementById('csvPreviewModal')).hide();
+                        location.reload();
+                    } else {
+                        alert('เกิดข้อผิดพลาด: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('เกิดข้อผิดพลาดในการลบข้อมูล');
+                });
+            }
+        }
+
+        function deleteSelectedSchedules() {
+            const selectedCheckboxes = document.querySelectorAll('.schedule-checkbox:checked');
+            const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+            
+            if (selectedIds.length === 0) {
+                alert('กรุณาเลือกรายการที่ต้องการลบ');
+                return;
+            }
+            
+            if (confirm(`คุณแน่ใจหรือไม่ที่จะลบรายการที่เลือก ${selectedIds.length} รายการ? การกระทำนี้ไม่สามารถยกเลิกได้!`)) {
+                fetch('/api/schedule/delete-selected/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        'schedule_ids': selectedIds
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert(`ลบรายการที่เลือก ${data.deleted_count} รายการสำเร็จแล้ว!`);
+                        // Refresh the modal content
+                        showCSVPreview();
+                    } else {
+                        alert('เกิดข้อผิดพลาด: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('เกิดข้อผิดพลาดในการลบข้อมูล');
+                });
+            }
+        }
+    </script>
+    
+    <!-- Adding new Schedule Modal script to replace existing viewSchedule() function -->
+    <script>
+(function () {
+  // ===== Config/State =====
+  const DAY_ORDER = ["จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์","อาทิตย์"];
+  const START_HOUR = 8, END_HOUR = 21;    // 8:00 - 21:00 (เทียบ timeSlots ของโค้ดเดิม)
+  const $  = (q) => document.querySelector(q);
+  const $$ = (q) => Array.from(document.querySelectorAll(q));
+
+  let SCHEDULES = null;            // แคชข้อมูลจาก API
+  let selectedCategory = "Teacher";
+  let selectedItem = "";
+  let searchTerm = "";
+  let viewMode = "grid";           // "grid" | "list"
+  let filtered = [];
+
+  // ===== Helpers =====
+  const esc = (s) => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;')
+                                     .replaceAll('>','&gt;').replaceAll('"','&quot;')
+                                     .replaceAll("'",'&#039;');
+  const typeClass = (t) => {
+    const k = (t || '').toLowerCase();
+    if (k === 'lab') return 'tt-type-lab';
+    if (k === 'lecture') return 'tt-type-lecture';
+    if (k === 'tutorial') return 'tt-type-tutorial';
+    if (k === 'seminar') return 'tt-type-seminar';
+    return 'tt-type-default';
+  };
+  const formatHH = (h) => String(h).padStart(2,'0') + ':00';
+
+  // ===== Public: ปุ่ม index เรียกใช้ฟังก์ชันนี้ =====
+  window.viewSchedule = function () {
+    const modal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+    modal.show();
+
+    // reset state
+    selectedCategory = $('#ttCategory')?.value || 'Teacher';
+    selectedItem = "";
+    searchTerm = "";
+    viewMode = "grid";
+
+    $('#tt-select-view').classList.remove('d-none');
+    $('#tt-table-view').classList.add('d-none');
+    $('#ttItemsGrid').innerHTML = "";
+    $('#ttSelectEmpty').classList.add('d-none');
+    $('#ttSelectSpinner').classList.remove('d-none');
+
+    if (!SCHEDULES) {
+      fetch('/api/schedule/view/?order=day&dir=asc')
+        .then(r => r.json())
+        .then(d => { SCHEDULES = (d && d.status==='success') ? (d.schedules||[]) : []; })
+        .catch(() => { SCHEDULES = []; })
+        .finally(() => { $('#ttSelectSpinner')?.classList.add('d-none'); buildUniqueItems(); });
+    } else {
+      $('#ttSelectSpinner')?.classList.add('d-none');
+      buildUniqueItems();
+    }
+  };
+
+  // ====== Select view ======
+  function buildUniqueItems() {
+    const field = (selectedCategory === 'Teacher') ? 'Teacher'
+                : (selectedCategory === 'Room') ? 'Room'
+                : 'Student_Group';
+    const items = [...new Set((SCHEDULES||[]).map(x => (x[field] || '').trim()).filter(Boolean))]
+      .sort(new Intl.Collator('th').compare);
+
+    const grid = $('#ttItemsGrid');
+    grid.innerHTML = items.map(name => `
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 tt-item-card" data-name="${esc(name)}" role="button" tabindex="0">
+          <div class="card-body text-center">
+            <div class="mb-3">
+              ${
+                selectedCategory==='Teacher' ? '<i class="bi bi-person-circle fs-2 text-primary"></i>' :
+                selectedCategory==='Room' ? '<i class="bi bi-geo-alt fs-2 text-success"></i>' :
+                '<i class="bi bi-book fs-2 text-purple"></i>'
+              }
+            </div>
+            <h6 class="fw-semibold mb-1">${esc(name)}</h6>
+            <div class="text-muted small">คลิกเพื่อดูตารางสอน</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    $('#ttSelectEmpty').classList.toggle('d-none', items.length > 0);
+
+    $$('.tt-item-card').forEach(el => {
+      const go = () => { selectedItem = el.dataset.name || ""; enterTableView(); };
+      el.addEventListener('click', go);
+      el.addEventListener('keypress', (e) => { if (e.key === 'Enter') go(); });
+    });
+  }
+
+  $('#ttCategory')?.addEventListener('change', (e) => {
+    selectedCategory = e.target.value;
+    selectedItem = "";
+    buildUniqueItems();
+  });
+
+  // ====== Table view ======
+  function enterTableView() {
+    $('#tt-select-view').classList.add('d-none');
+    $('#tt-table-view').classList.remove('d-none');
+    $('#ttSearch').value = "";
+    searchTerm = "";
+    viewMode = "grid";
+    $('#ttToggleText').textContent = 'มุมมองรายการ';
+    renderTableView();
+  }
+
+  $('#ttBackBtn')?.addEventListener('click', () => {
+    $('#tt-table-view').classList.add('d-none');
+    $('#tt-select-view').classList.remove('d-none');
+  });
+
+  $('#ttSearch')?.addEventListener('input', (e) => {
+    searchTerm = e.target.value || "";
+    renderTableView();
+  });
+
+  // ปุ่มเดียว toggle grid/list ให้เหมือนต้นฉบับ
+  $('#ttToggleView')?.addEventListener('click', () => {
+    viewMode = (viewMode === 'grid') ? 'list' : 'grid';
+    $('#ttToggleText').textContent = (viewMode === 'grid') ? 'มุมมองรายการ' : 'มุมมองตาราง';
+    renderTableView();
+  });
+
+  function renderTableView() {
+    // กรองข้อมูลตามหมวด + รายการ
+    filtered = (SCHEDULES||[]).filter(x => {
+      const val = (selectedCategory === 'Teacher') ? (x.Teacher || '')
+                : (selectedCategory === 'Room') ? (x.Room || '')
+                : (x.Student_Group || '');
+      return (val.trim() === selectedItem);
+    });
+
+    if (searchTerm) {
+      const q = searchTerm.toLowerCase();
+      filtered = filtered.filter(x =>
+        [x.Subject_Name, x.Course_Code, x.Teacher, x.Room]
+          .some(s => (String(s||'').toLowerCase()).includes(q))
+      );
+    }
+
+    // Header/Description เหมือน CardHeader/CardDescription
+    $('#ttTitle').innerHTML = `ตารางสอน - ${esc(selectedItem)}`;
+    const catLabel = (selectedCategory === 'Teacher') ? 'อาจารย์' : (selectedCategory === 'Room') ? 'ห้อง' : 'กลุ่มนักศึกษา';
+    $('#ttDesc').innerHTML = `ตารางเรียนของ${catLabel} ${esc(selectedItem)} (<strong>${filtered.length}</strong> รายการ)`;
+
+    if (viewMode === 'grid') {
+      $('#ttGridWrap').classList.remove('d-none');
+      $('#ttListWrap').classList.add('d-none');
+      renderGrid();
+    } else {
+      $('#ttListWrap').classList.remove('d-none');
+      $('#ttGridWrap').classList.add('d-none');
+      renderList();
+    }
+  }
+
+  // ====== List view (การ์ด) ======
+  function renderList() {
+    const grid = $('#ttListGrid');
+    if (!filtered.length) {
+      grid.innerHTML = "";
+      $('#ttListEmpty').classList.remove('d-none');
+      return;
+    }
+    $('#ttListEmpty').classList.add('d-none');
+
+    grid.innerHTML = filtered.map((item) => `
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-2">${esc(item.Subject_Name || '')}</h6>
+            <p class="text-muted small mb-3">${esc(item.Course_Code || '')}</p>
+            <div class="small"><i class="bi bi-calendar-week me-1"></i>${esc(item.Day || '')}</div>
+            <div class="small"><i class="bi bi-clock me-1"></i>${esc(item.Time_Slot || (String(item.Hour||'') + ':00'))}</div>
+            <div class="small"><i class="bi bi-geo-alt me-1"></i>${esc(item.Room || '')}</div>
+            <div class="small"><i class="bi bi-person me-1"></i>${esc(item.Teacher || '')}</div>
+            <span class="badge bg-secondary mt-2">${esc(item.Type || '')}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ====== Grid view (วัน × ชั่วโมง, รวมคาบต่อเนื่องด้วย colspan) ======
+  function mergeBlocks(rows) {
+    const byDay = Object.fromEntries(DAY_ORDER.map(d => [d, {}]));
+    for (const r of rows) {
+      const day = r.Day;
+      if (!byDay[day]) byDay[day] = {};
+      const key = [r.Course_Code||'', r.Subject_Name||'', r.Teacher||'', r.Room||'', (r.Type||'').toLowerCase()].join('|');
+      byDay[day][key] ??= new Set();
+      const h = Number(r.Hour);
+      if (!Number.isNaN(h)) byDay[day][key].add(h);
+    }
+    const blocks = {};
+    for (const day of Object.keys(byDay)) {
+      blocks[day] = [];
+      for (const key of Object.keys(byDay[day])) {
+        const [code, name, teacher, room, type] = key.split('|');
+        const hours = Array.from(byDay[day][key]).sort((a,b)=>a-b);
+        let start = null, prev = null;
+        for (const h of hours) {
+          if (start === null) { start = h; prev = h; continue; }
+          if (h === prev + 1) { prev = h; continue; }
+          blocks[day].push({ startHour:start, endHour:prev+1, Course_Code:code, Subject_Name:name, Teacher:teacher, Room:room, Type:type, Day:day });
+          start = h; prev = h;
+        }
+        if (start !== null) {
+          blocks[day].push({ startHour:start, endHour:(prev ?? start)+1, Course_Code:code, Subject_Name:name, Teacher:teacher, Room:room, Type:type, Day:day });
+        }
+      }
+      blocks[day].sort((a,b)=>a.startHour - b.startHour);
+    }
+    return blocks;
+  }
+
+  function renderGrid() {
+    const table = $('#ttTable');
+    if (!filtered.length) {
+      table.innerHTML = "";
+      $('#ttGridEmpty').classList.remove('d-none');
+      return;
+    }
+    $('#ttGridEmpty').classList.add('d-none');
+
+    const blocksByDay = mergeBlocks(filtered);
+
+    // thead: 08:00 - 21:00 (เหมือน timeSlots เดิม)
+    let thead = '<thead><tr><th class="sticky-top text-center align-middle">วัน / เวลา</th>';
+    for (let h = START_HOUR; h <= END_HOUR; h++) thead += `<th class="sticky-top text-center">${formatHH(h)}</th>`;
+    thead += '</tr></thead>';
+
+    // tbody
+    let tbody = '<tbody>';
+    for (const day of DAY_ORDER) {
+      const blocks = blocksByDay[day] || [];
+      const startIndex = Object.fromEntries(blocks.map(b => [String(b.startHour), b]));
+      tbody += `<tr><th class="sticky-col">${esc(day)}</th>`;
+      // เดินทีละชั่วโมงแบบ React (8..21)
+      for (let h = START_HOUR; h <= END_HOUR; h++) {
+        const b = startIndex[String(h)];
+        if (b) {
+          const colspan = Math.max(1, b.endHour - b.startHour); // เช่น 9-12 → 3 ช่อง
+          const teacherShort = (b.Teacher || '').replace(/^อ\./,'');
+          tbody += `<td colspan="${colspan}">
+            <div class="tt-slot ${typeClass(b.Type)}">
+              <div class="fw-semibold small">${esc(b.Subject_Name || '-')}</div>
+              <div class="small">${esc(b.Course_Code || '')}</div>
+              <div class="small mt-1">
+                <i class="bi bi-geo-alt me-1"></i>${esc(b.Room || '-')}
+                <span class="ms-2"><i class="bi bi-person me-1"></i>${esc(teacherShort || '-')}</span>
+              </div>
+              <span class="tt-badge text-white">${esc(b.Type || '—')}</span>
+            </div>
+          </td>`;
+          // ข้ามชั่วโมงที่ครอบโดย colspan ไป
+          h += (colspan - 1);
+        } else {
+          // ถ้ากำลังอยู่ในช่วงของบล็อก (ชั่วโมงกลาง) ให้ปล่อยผ่าน (ใน React return null)
+          const inside = blocks.some(x => x.startHour < h && x.endHour > h);
+          if (!inside) tbody += `<td>&nbsp;</td>`;
+        }
+      }
+      tbody += `</tr>`;
+    }
+    tbody += '</tbody>';
+
+    table.innerHTML = thead + tbody;
+  }
+})();
+    </script>
+</body>
+</html>

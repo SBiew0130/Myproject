@@ -1,0 +1,478 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Calendar, Clock, MapPin, User, BookOpen, Filter, Search, Download } from "lucide-react"
+
+interface ScheduleItem {
+  id: number
+  course_code: string
+  course_name: string
+  teacher: string
+  room: string
+  type: string
+  day: string
+  time_slot: string
+  student_group?: string
+  category: string
+  start_hour: number
+  end_hour: number
+}
+
+const dayOrder = ["จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์"]
+const timeSlots = Array.from({ length: 14 }, (_, i) => i + 8) // 8:00 - 21:00
+
+const typeColors = {
+  lab: "bg-blue-500 text-white border-blue-600",
+  lecture: "bg-green-500 text-white border-green-600",
+  tutorial: "bg-purple-500 text-white border-purple-600",
+  seminar: "bg-orange-500 text-white border-orange-600",
+  default: "bg-gray-500 text-white border-gray-600",
+}
+
+export default function TimetableGrid() {
+  const [scheduleData, setScheduleData] = useState<ScheduleItem[]>([])
+  const [filteredData, setFilteredData] = useState<ScheduleItem[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedItem, setSelectedItem] = useState("")
+  const [showTimetable, setShowTimetable] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState("Teacher")
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  const [uniqueItems, setUniqueItems] = useState<string[]>([])
+
+  const mockData: ScheduleItem[] = [
+    {
+      id: 1,
+      course_code: "CS101",
+      course_name: "การเขียนโปรแกรมเบื้องต้น",
+      teacher: "อ.สมชาย ใจดี",
+      room: "LAB1",
+      type: "lab",
+      day: "จันทร์",
+      time_slot: "09:00-12:00",
+      student_group: "วท.บ.1/1",
+      category: "วิทยาการคอมพิวเตอร์",
+      start_hour: 9,
+      end_hour: 12,
+    },
+    {
+      id: 2,
+      course_code: "MA201",
+      course_name: "แคลคูลัส 1",
+      teacher: "อ.สมหญิง รักเรียน",
+      room: "ROOM205",
+      type: "lecture",
+      day: "อังคาร",
+      time_slot: "13:00-15:00",
+      student_group: "วท.บ.1/2",
+      category: "คณิตศาสตร์",
+      start_hour: 13,
+      end_hour: 15,
+    },
+    {
+      id: 3,
+      course_code: "EN102",
+      course_name: "ภาษาอังกฤษเพื่อการสื่อสาร",
+      teacher: "อ.จอห์น สมิธ",
+      room: "ROOM401",
+      type: "tutorial",
+      day: "พุธ",
+      time_slot: "10:00-12:00",
+      student_group: "วท.บ.2/1",
+      category: "ภาษาต่างประเทศ",
+      start_hour: 10,
+      end_hour: 12,
+    },
+    {
+      id: 4,
+      course_code: "PH101",
+      course_name: "ฟิสิกส์ทั่วไป",
+      teacher: "อ.สมศักดิ์ วิทยา",
+      room: "LAB2",
+      type: "lab",
+      day: "พฤหัสบดี",
+      time_slot: "14:00-17:00",
+      student_group: "วท.บ.1/1",
+      category: "ฟิสิกส์",
+      start_hour: 14,
+      end_hour: 17,
+    },
+    {
+      id: 5,
+      course_code: "CH101",
+      course_name: "เคมีทั่วไป",
+      teacher: "อ.สมใจ เคมี",
+      room: "LAB3",
+      type: "seminar",
+      day: "ศุกร์",
+      time_slot: "08:00-11:00",
+      student_group: "วท.บ.1/2",
+      category: "เคมี",
+      start_hour: 8,
+      end_hour: 11,
+    },
+  ]
+
+  useEffect(() => {
+    const fetchScheduleData = async () => {
+      try {
+        setLoading(true)
+        // For Django integration, uncomment the following lines:
+        // const response = await fetch('/api/schedule/view/')
+        // const data = await response.json()
+        // const processedData = data.map(item => ({
+        //   ...item,
+        //   start_hour: parseInt(item.time_slot.split('-')[0].split(':')[0]),
+        //   end_hour: parseInt(item.time_slot.split('-')[1].split(':')[0])
+        // }))
+        // setScheduleData(processedData)
+
+        // Mock data simulation
+        setTimeout(() => {
+          setScheduleData(mockData)
+          setLoading(false)
+        }, 1000)
+      } catch (err) {
+        setError("เกิดข้อผิดพลาดในการโหลดข้อมูล")
+        setLoading(false)
+      }
+    }
+
+    fetchScheduleData()
+  }, [])
+
+  useEffect(() => {
+    // Get unique items based on selected category
+    const items = [
+      ...new Set(
+        scheduleData.map((item) => {
+          switch (selectedCategory) {
+            case "Teacher":
+              return item.teacher
+            case "Room":
+              return item.room
+            case "Student_Group":
+              return item.student_group || ""
+            default:
+              return ""
+          }
+        }),
+      ),
+    ].filter(Boolean)
+    setUniqueItems(items)
+  }, [scheduleData, selectedCategory])
+
+  useEffect(() => {
+    if (showTimetable && selectedItem) {
+      const filtered = scheduleData.filter((item) => {
+        const categoryValue =
+          selectedCategory === "Teacher"
+            ? item.teacher
+            : selectedCategory === "Room"
+              ? item.room
+              : item.student_group || ""
+        return categoryValue === selectedItem
+      })
+      setFilteredData(filtered)
+    }
+  }, [scheduleData, selectedCategory, selectedItem, showTimetable])
+
+  useEffect(() => {
+    if (searchTerm && showTimetable) {
+      const filtered = filteredData.filter(
+        (item) =>
+          item.course_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.course_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.teacher.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.room.toLowerCase().includes(searchTerm.toLowerCase()),
+      )
+      setFilteredData(filtered)
+    }
+  }, [searchTerm])
+
+  const getTypeColor = (type: string) => {
+    return typeColors[type.toLowerCase() as keyof typeof typeColors] || typeColors.default
+  }
+
+  const formatTime = (hour: number) => {
+    return `${hour.toString().padStart(2, "0")}:00`
+  }
+
+  const getClassesByDay = () => {
+    const classesByDay: { [key: string]: ScheduleItem[] } = {}
+    dayOrder.forEach((day) => {
+      classesByDay[day] = filteredData.filter((item) => item.day === day)
+    })
+    return classesByDay
+  }
+
+  const handleItemSelect = (item: string) => {
+    setSelectedItem(item)
+    setShowTimetable(true)
+  }
+
+  const handleBackToList = () => {
+    setShowTimetable(false)
+    setSelectedItem("")
+    setSearchTerm("")
+  }
+
+  const handleDownloadCSV = () => {
+    const headers = ["รหัสวิชา", "ชื่อวิชา", "อาจารย์", "ห้องเรียน", "กลุ่มนักศึกษา", "วัน", "เวลา", "ประเภท"]
+    const csvContent = [
+      headers.join(","),
+      ...filteredData.map((item) =>
+        [
+          item.course_code,
+          `"${item.course_name}"`,
+          `"${item.teacher}"`,
+          item.room,
+          item.student_group || "",
+          item.day,
+          item.time_slot,
+          item.type,
+        ].join(","),
+      ),
+    ].join("\n")
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+    const link = document.createElement("a")
+    link.href = URL.createObjectURL(blob)
+    link.download = `timetable_${selectedItem}_${new Date().toISOString().split("T")[0]}.csv`
+    link.click()
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p className="text-gray-600">กำลังโหลดข้อมูล...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card className="max-w-md mx-auto mt-8">
+        <CardContent className="pt-6">
+          <div className="text-center text-red-600">
+            <h4 className="text-lg font-semibold mb-2">เกิดข้อผิดพลาด</h4>
+            <p>{error}</p>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  const classesByDay = getClassesByDay()
+
+  return (
+    <div className="container mx-auto p-4">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5" />
+            {showTimetable ? `ตารางสอน - ${selectedItem}` : "เลือกรายการ"}
+          </CardTitle>
+          <CardDescription>
+            {showTimetable
+              ? `ตารางเรียนของ${selectedCategory === "Teacher" ? "อาจารย์" : selectedCategory === "Room" ? "ห้อง" : "กลุ่มนักศึกษา"} ${selectedItem} (${filteredData.length} รายการ)`
+              : `เลือก${selectedCategory === "Teacher" ? "อาจารย์" : selectedCategory === "Room" ? "ห้อง" : "กลุ่มนักศึกษา"}เพื่อดูตารางสอน`}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {!showTimetable ? (
+            <>
+              {/* Category Selection */}
+              <div className="mb-6">
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger className="w-full max-w-xs">
+                    <SelectValue placeholder="เลือกประเภท" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Teacher">อาจารย์</SelectItem>
+                    <SelectItem value="Room">ห้อง</SelectItem>
+                    <SelectItem value="Student_Group">กลุ่มนักศึกษา</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Items Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {uniqueItems.map((item, index) => (
+                  <Card
+                    key={index}
+                    className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                    onClick={() => handleItemSelect(item)}
+                  >
+                    <CardContent className="p-4 text-center">
+                      <div className="mb-3">
+                        {selectedCategory === "Teacher" && <User className="h-8 w-8 mx-auto text-blue-600" />}
+                        {selectedCategory === "Room" && <MapPin className="h-8 w-8 mx-auto text-green-600" />}
+                        {selectedCategory === "Student_Group" && (
+                          <BookOpen className="h-8 w-8 mx-auto text-purple-600" />
+                        )}
+                      </div>
+                      <h6 className="font-semibold text-lg">{item}</h6>
+                      <p className="text-sm text-gray-500 mt-1">คลิกเพื่อดูตารางสอน</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Controls */}
+              <div className="flex flex-col md:flex-row gap-4 mb-6">
+                <Button variant="outline" onClick={handleBackToList}>
+                  ← กลับไปรายชื่อ
+                </Button>
+
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Input
+                    type="text"
+                    placeholder="ค้นหาวิชา, รหัส..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+
+                <Button
+                  variant={viewMode === "grid" ? "default" : "outline"}
+                  onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}
+                >
+                  <Filter className="h-4 w-4 mr-2" />
+                  {viewMode === "grid" ? "มุมมองรายการ" : "มุมมองตาราง"}
+                </Button>
+
+                <Button variant="outline" onClick={handleDownloadCSV}>
+                  <Download className="h-4 w-4 mr-2" />
+                  ดาวน์โหลด CSV
+                </Button>
+              </div>
+
+              {/* Timetable */}
+              {viewMode === "grid" ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse border border-gray-300">
+                    <thead>
+                      <tr className="bg-gray-50">
+                        <th className="border border-gray-300 p-3 text-center font-semibold">วัน / เวลา</th>
+                        {timeSlots.map((hour) => (
+                          <th key={hour} className="border border-gray-300 p-2 text-center min-w-[120px]">
+                            <Clock className="h-4 w-4 inline mr-1" />
+                            {formatTime(hour)}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dayOrder.map((day) => (
+                        <tr key={day}>
+                          <td className="border border-gray-300 p-3 text-center font-semibold bg-gray-50">
+                            <Calendar className="h-4 w-4 inline mr-2" />
+                            {day}
+                          </td>
+                          {timeSlots.map((hour) => {
+                            const classesInThisSlot = classesByDay[day].filter(
+                              (item) => item.start_hour <= hour && item.end_hour > hour,
+                            )
+                            const classStartsHere = classesInThisSlot.find((item) => item.start_hour === hour)
+
+                            if (classStartsHere) {
+                              const colspan = classStartsHere.end_hour - classStartsHere.start_hour
+                              return (
+                                <td key={`${day}-${hour}`} colSpan={colspan} className="border border-gray-300 p-0">
+                                  <div className={`p-3 h-full ${getTypeColor(classStartsHere.type)}`}>
+                                    <div className="font-bold text-sm">{classStartsHere.course_name}</div>
+                                    <div className="text-xs opacity-90">{classStartsHere.course_code}</div>
+                                    <div className="text-xs mt-1">
+                                      <MapPin className="h-3 w-3 inline mr-1" />
+                                      {classStartsHere.room}
+                                    </div>
+                                    <div className="text-xs">
+                                      <User className="h-3 w-3 inline mr-1" />
+                                      {classStartsHere.teacher.replace("อ.", "")}
+                                    </div>
+                                    <Badge variant="secondary" className="mt-1 text-xs">
+                                      {classStartsHere.type}
+                                    </Badge>
+                                  </div>
+                                </td>
+                              )
+                            }
+
+                            const ongoingClass = classesInThisSlot.find((item) => item.start_hour < hour)
+                            if (ongoingClass) {
+                              return null
+                            }
+
+                            return (
+                              <td key={`${day}-${hour}`} className="border border-gray-300 p-3">
+                                &nbsp;
+                              </td>
+                            )
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredData.length > 0 ? (
+                    filteredData.map((item, index) => (
+                      <Card key={index}>
+                        <CardContent className="p-4">
+                          <h6 className="font-semibold text-lg mb-2">{item.course_name}</h6>
+                          <p className="text-sm text-gray-600 mb-3">{item.course_code}</p>
+                          <div className="space-y-1 text-sm">
+                            <div className="flex items-center">
+                              <Calendar className="h-4 w-4 mr-2 text-gray-500" />
+                              {item.day}
+                            </div>
+                            <div className="flex items-center">
+                              <Clock className="h-4 w-4 mr-2 text-gray-500" />
+                              {item.time_slot}
+                            </div>
+                            <div className="flex items-center">
+                              <MapPin className="h-4 w-4 mr-2 text-gray-500" />
+                              {item.room}
+                            </div>
+                            <div className="flex items-center">
+                              <User className="h-4 w-4 mr-2 text-gray-500" />
+                              {item.teacher}
+                            </div>
+                          </div>
+                          <Badge className={`mt-3 ${getTypeColor(item.type)}`}>{item.type}</Badge>
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="col-span-full">
+                      <Card>
+                        <CardContent className="p-8 text-center">
+                          <p className="text-gray-500">ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหา</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
