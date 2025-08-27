@@ -318,6 +318,34 @@
         #ttTable tbody th.sticky-col { position: sticky; left: 0; z-index: 4; background: #f8f9fa; }
         .tt-item-card { transition: box-shadow .2s ease, transform .05s ease; }
         .tt-item-card:hover { box-shadow: 0 .4rem 1rem rgba(0,0,0,.08); transform: translateY(-1px); }
+        
+        /* Adding modal height and layout CSS for better spacing */
+        /* ให้โมดัลสูงขึ้นแม้ไม่มีรายการ */
+        #scheduleModal .modal-content { min-height: 65vh; }     /* ปรับตัวเลขได้: 60–75vh */
+        #scheduleModal .modal-body    { min-height: 55vh; display:flex; flex-direction:column; }
+        
+        /* ทำให้ส่วน select-view กินพื้นที่ที่เหลือ และ empty state อยู่กึ่งกลางสวย ๆ */
+        #tt-select-view  { flex: 1 1 auto; display:flex; flex-direction:column; min-height:0; }
+        #tt-items-grid   { flex: 1 1 auto; min-height:0; }  /* เผื่ออนาคตมีการ์ด */
+        #tt-select-empty { flex: 1 1 auto; display:flex; align-items:center; justify-content:center; }
+        
+        /* มุมมอง Grid: จำกัดความสูงตารางให้พอดีจอ (จะมีสกรอลล์ในตารางเอง) */
+        #tt-grid-wrap .table-responsive { max-height: 60vh; }
+
+        /* กล่อง empty-state ให้แก้ดีกับ CSV */
+        .empty-state{
+            text-align:center; padding:3rem 1rem; color:#6b7280;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+        }
+
+        .empty-state i{ font-size:3rem; color:#f59e0b; } /* ไอคอนสีเหลืองเตือน */
+
+        /* infobar ให้ใหม่อ่อนแบบเดียวกับ CSV */
+        #tt-infobar{
+            background: linear-gradient(135deg, rgba(13,148,136,.1), rgba(15,118,110,.05));
+            border: 1px solid rgba(13,148,136,.2);
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
@@ -511,7 +539,7 @@
     <!-- CSV Preview Modal -->
     <!-- Enhanced modal structure with better centering and visual appeal -->
     <div class="modal fade" id="csvPreviewModal" tabindex="-1" aria-labelledby="csvPreviewModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-dialog modal-xxl modal-dialog-centered modal-dialog-scrollable" style="max-width:96vw;">
             <div class="modal-content">
                 <div class="modal-header" style="background: linear-gradient(135deg, #0d9488, #0f766e); color: white;">
                     <h5 class="modal-title" id="csvPreviewModalLabel">
@@ -548,7 +576,7 @@
 
     <!-- Schedule Modal (สไตล์/โทนใกล้เคียงโค้ด React เดิม) -->
     <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xxl modal-dialog-centered" style="max-width:96vw;">
+      <div class="modal-dialog modal-xxl modal-dialog-centered modal-dialog-scrollable" style="max-width:96vw;">
         <div class="modal-content">
           <div class="modal-header" style="background: linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff;">
             <h5 class="modal-title" id="scheduleModalLabel">
@@ -559,7 +587,7 @@
 
           <div class="modal-body">
             <!-- ======= state: เลือกหมวด + การ์ดรายการ (เหมือนหน้าแรกใน React) ======= -->
-            <div id="tt-select-view">
+            <div id="tt-select-view" class="d-none">
               <div class="row g-2 align-items-end mb-3">
                 <div class="col-12 col-md-4">
                   <label class="form-label mb-1">ประเภท</label>
@@ -586,8 +614,10 @@
                 <!-- การ์ดรายการ จะถูกเติมด้วย JS -->
               </div>
 
-              <div id="tt-select-empty" class="text-center text-muted py-5 d-none">
-                ไม่พบรายการในหมวดนี้
+              <div id="tt-select-empty" class="empty-state d-none">
+                <i class="bi bi-exclamation-triangle"></i>
+                <h5 class="mt-3 mb-2">ไม่พบรายการในหมวดนี้</h5>
+                <!-- เปลี่ยนลิงก์ให้ไปหน้า "สร้างตารางสอน" -->
               </div>
             </div>
             <!-- /select state -->
@@ -621,18 +651,32 @@
                 <div class="text-muted" id="tt-desc"></div>
               </div>
 
+              <!-- Infobar สำหรับ CSV -->
+              <div id="tt-infobar" class="alert alert-info d-none">
+                <i class="bi bi-info-circle me-1"></i>
+                <span id="tt-infobar-text">พบ 0 รายการ</span>
+              </div>
+
               <!-- Grid view (วัน × ชั่วโมง) -->
               <div id="tt-grid-wrap">
                 <div class="table-responsive">
                   <table id="tt-table" class="table table-bordered align-middle"></table>
                 </div>
-                <div id="tt-grid-empty" class="text-center text-muted py-5 d-none">ไม่พบข้อมูลที่ตรงกับเงื่อนไข</div>
+                <div id="tt-grid-empty" class="empty-state d-none">
+                  <i class="bi bi-exclamation-triangle"></i>
+                  <h5 class="mt-3 mb-2">ไม่พบข้อมูลที่ตรงกับเงื่อนไข</h5>
+                  <p class="text-muted mb-3">ลองปรับเงื่อนไขการค้นหา แล้วกลับมาอีกครั้ง</p>
+                </div>
               </div>
 
               <!-- List view (การ์ด) -->
               <div id="tt-list-wrap" class="d-none">
                 <div class="row g-3" id="tt-list-grid"></div>
-                <div id="tt-list-empty" class="text-center text-muted py-5 d-none">ไม่พบข้อมูลที่ตรงกับเงื่อนไข</div>
+                <div id="tt-list-empty" class="empty-state d-none">
+                  <i class="bi bi-exclamation-triangle"></i>
+                  <h5 class="mt-3 mb-2">ไม่พบข้อมูลที่ตรงกับเงื่อนไข</h5>
+                  <p class="text-muted mb-3">ลองปรับเงื่อนไขการค้นหา แล้วกลับมาอีกครั้ง</p>
+                </div>
               </div>
             </div>
             <!-- /table state -->
@@ -784,7 +828,6 @@
                 <div class="text-center py-5">
                     <i class="bi bi-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
                     <h5 class="mt-3">ไม่พบข้อมูลตารางสอน</h5>
-                    <p class="text-muted">กรุณาสร้างตารางสอนก่อนดาวน์โหลด</p>
                 </div>
             `;
         }
@@ -981,18 +1024,18 @@
 
     $('#tt-select-view').classList.remove('d-none');
     $('#tt-table-view').classList.add('d-none');
-    $('#ttItemsGrid').innerHTML = "";
-    $('#ttSelectEmpty').classList.add('d-none');
-    $('#ttSelectSpinner').classList.remove('d-none');
+    $('#tt-items-grid').innerHTML = "";
+    $('#tt-select-empty').classList.add('d-none');
+    $('#tt-select-spinner').classList.remove('d-none');
 
     if (!SCHEDULES) {
       fetch('/api/schedule/view/?order=day&dir=asc')
         .then(r => r.json())
         .then(d => { SCHEDULES = (d && d.status==='success') ? (d.schedules||[]) : []; })
         .catch(() => { SCHEDULES = []; })
-        .finally(() => { $('#ttSelectSpinner')?.classList.add('d-none'); buildUniqueItems(); });
+        .finally(() => { $('#tt-select-spinner')?.classList.add('d-none'); buildUniqueItems(); });
     } else {
-      $('#ttSelectSpinner')?.classList.add('d-none');
+      $('#tt-select-spinner')?.classList.add('d-none');
       buildUniqueItems();
     }
   };
@@ -1005,7 +1048,7 @@
     const items = [...new Set((SCHEDULES||[]).map(x => (x[field] || '').trim()).filter(Boolean))]
       .sort(new Intl.Collator('th').compare);
 
-    const grid = $('#ttItemsGrid');
+    const grid = $('#tt-items-grid');
     grid.innerHTML = items.map(name => `
       <div class="col">
         <div class="card h-100 shadow-sm border-0 tt-item-card" data-name="${esc(name)}" role="button" tabindex="0">
@@ -1024,7 +1067,7 @@
       </div>
     `).join('');
 
-    $('#ttSelectEmpty').classList.toggle('d-none', items.length > 0);
+    $('#tt-select-empty').classList.toggle('d-none', items.length > 0);
 
     $$('.tt-item-card').forEach(el => {
       const go = () => { selectedItem = el.dataset.name || ""; enterTableView(); };
@@ -1043,27 +1086,27 @@
   function enterTableView() {
     $('#tt-select-view').classList.add('d-none');
     $('#tt-table-view').classList.remove('d-none');
-    $('#ttSearch').value = "";
+    $('#tt-search').value = "";
     searchTerm = "";
     viewMode = "grid";
-    $('#ttToggleText').textContent = 'มุมมองรายการ';
+    $('#tt-toggle-text').textContent = 'มุมมองรายการ';
     renderTableView();
   }
 
-  $('#ttBackBtn')?.addEventListener('click', () => {
+  $('#tt-back-btn')?.addEventListener('click', () => {
     $('#tt-table-view').classList.add('d-none');
     $('#tt-select-view').classList.remove('d-none');
   });
 
-  $('#ttSearch')?.addEventListener('input', (e) => {
+  $('#tt-search')?.addEventListener('input', (e) => {
     searchTerm = e.target.value || "";
     renderTableView();
   });
 
   // ปุ่มเดียว toggle grid/list ให้เหมือนต้นฉบับ
-  $('#ttToggleView')?.addEventListener('click', () => {
+  $('#tt-toggle-view')?.addEventListener('click', () => {
     viewMode = (viewMode === 'grid') ? 'list' : 'grid';
-    $('#ttToggleText').textContent = (viewMode === 'grid') ? 'มุมมองรายการ' : 'มุมมองตาราง';
+    $('#tt-toggle-text').textContent = (viewMode === 'grid') ? 'มุมมองรายการ' : 'มุมมองตาราง';
     renderTableView();
   });
 
@@ -1085,30 +1128,35 @@
     }
 
     // Header/Description เหมือน CardHeader/CardDescription
-    $('#ttTitle').innerHTML = `ตารางสอน - ${esc(selectedItem)}`;
+    $('#tt-title').innerHTML = `ตารางสอน - ${esc(selectedItem)}`;
     const catLabel = (selectedCategory === 'Teacher') ? 'อาจารย์' : (selectedCategory === 'Room') ? 'ห้อง' : 'กลุ่มนักศึกษา';
-    $('#ttDesc').innerHTML = `ตารางเรียนของ${catLabel} ${esc(selectedItem)} (<strong>${filtered.length}</strong> รายการ)`;
+    $('#tt-desc').innerHTML = `ตารางเรียนของ${catLabel} ${esc(selectedItem)} (<strong>${filtered.length}</strong> รายการ)`;
+
+    // Infobar สำหรับ CSV
+    const info = $('#tt-infobar');
+    $('#tt-infobar-text').textContent = `พบ ${filtered.length} รายการ`;
+    info.classList.toggle('d-none', filtered.length === 0);
 
     if (viewMode === 'grid') {
-      $('#ttGridWrap').classList.remove('d-none');
-      $('#ttListWrap').classList.add('d-none');
+      $('#tt-grid-wrap').classList.remove('d-none');
+      $('#tt-list-wrap').classList.add('d-none');
       renderGrid();
     } else {
-      $('#ttListWrap').classList.remove('d-none');
-      $('#ttGridWrap').classList.add('d-none');
+      $('#tt-list-wrap').classList.remove('d-none');
+      $('#tt-grid-wrap').classList.add('d-none');
       renderList();
     }
   }
 
   // ====== List view (การ์ด) ======
   function renderList() {
-    const grid = $('#ttListGrid');
+    const grid = $('#tt-list-grid');
     if (!filtered.length) {
       grid.innerHTML = "";
-      $('#ttListEmpty').classList.remove('d-none');
+      $('#tt-list-empty').classList.remove('d-none');
       return;
     }
-    $('#ttListEmpty').classList.add('d-none');
+    $('#tt-list-empty').classList.add('d-none');
 
     grid.innerHTML = filtered.map((item) => `
       <div class="col-12 col-md-6 col-xl-4">
@@ -1161,13 +1209,13 @@
   }
 
   function renderGrid() {
-    const table = $('#ttTable');
+    const table = $('#tt-table');
     if (!filtered.length) {
       table.innerHTML = "";
-      $('#ttGridEmpty').classList.remove('d-none');
+      $('#tt-grid-empty').classList.remove('d-none');
       return;
     }
-    $('#ttGridEmpty').classList.add('d-none');
+    $('#tt-grid-empty').classList.add('d-none');
 
     const blocksByDay = mergeBlocks(filtered);
 
