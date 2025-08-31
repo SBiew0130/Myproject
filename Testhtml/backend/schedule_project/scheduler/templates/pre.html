@@ -341,6 +341,11 @@
     border: none;
     color: white;
 }
+
+.form-grid .form-label { margin-bottom: .4rem; }
+.form-grid .form-control,
+.form-grid .form-select { height: 48px; }
+
     </style>
 </head>
 <body>
@@ -465,123 +470,127 @@
 
                             <!-- Manual Input Form -->
                             <div class="col-md-7">
-                                <h6 class="fw-bold mb-3 text-dark">
-                                    <i class="bi bi-plus-circle me-2"></i>เพิ่มข้อมูล
-                                </h6>
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <label for="teacher_name_pre" class="form-label">อาจารย์</label>
-                                        <input type="text" class="form-control" id="teacher_name_pre" placeholder="กรอกชื่ออาจารย์">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="subject_code_pre" class="form-label">รหัสวิชา</label>
-                                        <input type="text" class="form-control" id="subject_code_pre" placeholder="เช่น ENGCE123">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="subject_name_pre" class="form-label">ชื่อวิชา</label>
-                                        <input type="text" class="form-control" id="subject_name_pre" placeholder="กรอกชื่อวิชา">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="subject_type_pre" class="form-label">ประเภทรายวิชา</label>
-                                        <select class="form-select" id="subject_type_pre">
-                                            <option value="">เลือกประเภท</option>
-                                            <option value="iot">IoT</option>
-                                            <option value="computer">computer</option>
-                                            <option value="electric">electric</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="section_pre" class="form-label">กลุ่มเรียน</label>
-                                        <input type="number" class="form-control" id="section_pre" placeholder="เช่น 3" min="1">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="student_type_pre" class="form-label">ประเภทนักศึกษา</label>
-                                        <select class="form-select" id="student_type_pre">
-                                            <option value="">เลือกประเภท</option>
-                                            <option value="ภาคปกติปกติ">ภาคปกติ</option>
-                                            <option value="ภาคพิเศษ">ภาคพิเศษ</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="theory_slot_amount_pre" class="form-label">ชั่วโมงทฤษฎี</label>
-                                        <input type="number" class="form-control" id="theory_slot_amount_pre" placeholder="เช่น 2" min="0">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="lab_slot_amount_pre" class="form-label">ชั่วโมงปฏิบัติ</label>
-                                        <input type="number" class="form-control" id="lab_slot_amount_pre" placeholder="เช่น 2" min="0">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="day_pre" class="form-label">วัน</label>
-                                        <select class="form-select" id="day_pre">
-                                            <option value="">เลือกวัน</option>
-                                            <option value="วันจันทร์">วันจันทร์</option>
-                                            <option value="วันอังคาร">วันอังคาร</option>
-                                            <option value="วันพุธ">วันพุธ</option>
-                                            <option value="วันพฤหัสบดี">วันพฤหัสบดี</option>
-                                            <option value="วันศุกร์">วันศุกร์</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="start_time_pre" class="form-label">เวลาเริ่ม</label>
-                                        <select class="form-select" id="start_time_pre">
-                                            <option value="">เลือกเวลาเริ่ม</option>
-                                            <option value="08:00">08:00</option>
-                                            <option value="09:00">09:00</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="11:00">11:00</option>
-                                            <option value="12:00">12:00</option>
-                                            <option value="13:00">13:00</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="18:00">18:00</option>
-                                            <option value="19:00">19:00</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="stop_time_pre" class="form-label">เวลาสิ้นสุด</label>
-                                        <select class="form-select" id="stop_time_pre">
-                                            <option value="">เลือกเวลาสิ้นสุด</option>
-                                            <option value="09:00">09:00</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="11:00">11:00</option>
-                                            <option value="12:00">12:00</option>
-                                            <option value="13:00">13:00</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="18:00">18:00</option>
-                                            <option value="19:00">19:00</option>
-                                            <option value="20:00">20:00</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="room_name_pre" class="form-label">ห้องเรียน</label>
-                                        <input type="text" class="form-control" id="room_name_pre" placeholder="เช่น 201">
-                                    </div>
-                                  <div class="col-md-12">
-                                      <div class="d-flex justify-content-end mt-4">
-                                          <button class="btn btn-primary-gradient px-4 py-2" onclick="addPreSchedule()">
-                                              <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
-                                          </button>
-                                      </div>
-                                  </div>
+                            <h6 class="fw-bold mb-3 text-dark">
+                                <i class="bi bi-plus-circle me-2"></i>เพิ่มข้อมูล
+                            </h6>
+
+                            <div class="row g-3">
+                                <!-- แถวที่ 1 : 3 คอลัมน์ (เหมือน teacher.html) -->
+                                <div class="col-md-4">
+                                <label for="teacher_name_pre" class="form-label">อาจารย์</label>
+                                <input type="text" class="form-control"
+                                        id="teacher_name_pre" placeholder="กรอกชื่ออาจารย์">
+                                </div>
+
+                                <div class="col-md-4">
+                                <label for="subject_code_pre" class="form-label">รหัสวิชา</label>
+                                <input type="text" class="form-control"
+                                        id="subject_code_pre" placeholder="เช่น ENGCE123">
+                                </div>
+
+                                <div class="col-md-4">
+                                <label for="subject_name_pre" class="form-label">ชื่อวิชา</label>
+                                <input type="text" class="form-control"
+                                        id="subject_name_pre" placeholder="กรอกชื่อวิชา">
+                                </div>
+
+                                <!-- แถวที่ 2 : 4 คอลัมน์ (col-md-3) -->
+                                <div class="col-md-3">
+                                <label for="subject_type_pre" class="form-label">ประเภทรายวิชา</label>
+                                <select class="form-select" id="subject_type_pre">
+                                    <option value="">เลือกประเภท</option>
+                                    <option value="iot">IoT</option>
+                                    <option value="computer">computer</option>
+                                    <option value="electric">electric</option>
+                                </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                <label for="type_pre" class="form-label">ประเภทภาควิชา</label>
+                                <select class="form-select" id="type_pre">
+                                    <option value="">เลือกประเภท</option>
+                                    <option value="ภาคทฤษฎี">ภาคทฤษฎี</option>
+                                    <option value="ภาคปฏิบัติ">ภาคปฏิบัติ</option>
+                                </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                <label for="student_type_pre" class="form-label">ประเภทนักศึกษา</label>
+                                <select class="form-select" id="student_type_pre">
+                                    <option value="">เลือกประเภท</option>
+                                    <option value="ภาคปกติ">ภาคปกติ</option>
+                                    <option value="ภาคพิเศษ">ภาคพิเศษ</option>
+                                </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                <label for="hours_pre" class="form-label">จำนวนชั่วโมง</label>
+                                <input type="number" class="form-control" id="hours_pre" min="0">
+                                </div>
+
+                                <!-- แถวที่ 3 : 4 คอลัมน์ (col-md-3) -->
+                                <div class="col-md-3">
+                                <label for="day_pre" class="form-label">วัน</label>
+                                <select class="form-select" id="day_pre">
+                                    <option value="">เลือกวัน</option>
+                                    <option value="วันจันทร์">วันจันทร์</option>
+                                    <option value="วันอังคาร">วันอังคาร</option>
+                                    <option value="วันพุธ">วันพุธ</option>
+                                    <option value="วันพฤหัสบดี">วันพฤหัสบดี</option>
+                                    <option value="วันศุกร์">วันศุกร์</option>
+                                </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                <label for="start_time_pre" class="form-label">เวลาเริ่ม</label>
+                                <select class="form-select" id="start_time_pre">
+                                    <option value="">เลือกเวลาเริ่ม</option>
+                                    <option>08:00</option><option>09:00</option><option>10:00</option>
+                                    <option>11:00</option><option>12:00</option><option>13:00</option>
+                                    <option>14:00</option><option>15:00</option><option>16:00</option>
+                                    <option>17:00</option><option>18:00</option><option>19:00</option>
+                                </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                <label for="stop_time_pre" class="form-label">เวลาสิ้นสุด</label>
+                                <select class="form-select" id="stop_time_pre">
+                                    <option value="">เลือกเวลาสิ้นสุด</option>
+                                    <option>09:00</option><option>10:00</option><option>11:00</option>
+                                    <option>12:00</option><option>13:00</option><option>14:00</option>
+                                    <option>15:00</option><option>16:00</option><option>17:00</option>
+                                    <option>18:00</option><option>19:00</option><option>20:00</option>
+                                </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                <label for="room_name_pre" class="form-label">ห้องเรียน</label>
+                                <input type="text" class="form-control"
+                                        id="room_name_pre" placeholder="เช่น 201">
+                                </div>
+
+                                <!-- ปุ่ม: จัดไว้มุมขวาล่างเหมือนตัวอย่าง -->
+                                <div class="col-12">
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button type="button"
+                                            class="btn btn-primary-gradient px-4 py-2"
+                                            onclick="addPreSchedule()">
+                                    <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
             <!-- Table Section -->
             <div class="col-12">
                 <div class="card content-card h-100">
                     <div class="card-header card-header-purple">
                         <h5 class="card-title mb-0 d-flex align-items-center">
-                            <i class="bi bi-table me-2"></i>
-                            รายการวิชาล่วงหน้า
+                            <i class="bi bi-table me-2"></i>รายการวิชาล่วงหน้า
                         </h5>
                     </div>
                     <div class="card-body p-4">
@@ -594,10 +603,9 @@
                                             <th>รหัสวิชา</th>
                                             <th>ชื่อวิชา</th>
                                             <th>ประเภทรายวิชา</th>
-                                            <th>กลุ่มเรียน</th>
+                                            <th>ประเภทภาควิชา</th>
                                             <th>ประเภทนักศึกษา</th>
-                                            <th>ชั่วโมงทฤษฎี</th>
-                                            <th>ชั่วโมงปฏิบัติ</th>
+                                            <th>จำนวนชั่วโมง</th>
                                             <th>วัน</th>
                                             <th>เวลาเริ่ม</th>
                                             <th>เวลาสิ้นสุด</th>
@@ -612,10 +620,9 @@
                                             <td><span class="badge bg-primary">{{ pre.subject_code_pre }}</span></td>
                                             <td>{{ pre.subject_name_pre }}</td>
                                             <td><span class="badge {% if pre.room_type_pre == 'iot' %}bg-success{% elif pre.room_type_pre == 'computer' %}bg-info{% elif pre.room_type_pre == 'electric' %}bg-danger{% else %}bg-secondary{% endif %}">{{ pre.room_type_pre }}</span></td>
-                                            <td><span class="badge bg-secondary">{{ pre.section_pre }}</span></td>
+                                            <td><span class="badge bg-secondary">{{ pre.type_pre }}</span></td>
                                             <td><span class="badge {% if pre.curriculum_type_pre == 'ภาคปกติ' %}bg-success{% else %}bg-warning{% endif %}">{{ pre.curriculum_type_pre }}</span></td>
-                                            <td><span class="badge bg-info">{{ pre.theory_slot_amount_pre }}</span></td>
-                                            <td><span class="badge bg-warning">{{ pre.lab_slot_amount_pre }}</span></td>
+                                            <td><span class="badge bg-info">{{ pre.hours_pre }}</span></td>
                                             <td><span class="badge bg-info">{{ pre.day_pre }}</span></td>
                                             <td><span class="badge bg-success">{{ pre.start_time_pre }}</span></td>
                                             <td><span class="badge bg-warning">{{ pre.stop_time_pre }}</span></td>
@@ -631,7 +638,7 @@
                                         </tr>
                                         {% empty %}
                                         <tr>
-                                            <td colspan="13" class="text-center text-muted">ไม่มีข้อมูลวิชาล่วงหน้า</td>
+                                            <td colspan="12" class="text-center text-muted">ไม่มีข้อมูลวิชาล่วงหน้า</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -685,23 +692,24 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="editsection_pre" class="form-label">กลุ่มเรียน</label>
-                            <input type="text" class="form-control" id="editsection_pre">
+                            <label for="edittype_pre" class="form-label">ประเภทภาควิชา</label>
+                            <select class="form-select" id="edittype_pre">
+                                <option value="">เลือกประเภท</option>
+                                <option value="ภาคทฤษฎี">ภาคทฤษฎี</option>
+                                <option value="ภาคปฏิบัติ">ภาคปฏิบัติ</option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label for="editstudent_type_pre" class="form-label">ประเภทนักศึกษา</label>
                             <select class="form-select" id="editstudent_type_pre">
+                                <option value="">เลือกประเภท</option>
                                 <option value="ภาคปกติ">ภาคปกติ</option>
                                 <option value="ภาคพิเศษ">ภาคพิเศษ</option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="edittheory_slot_amount_pre" class="form-label">ชั่วโมงทฤษฎี</label>
-                            <input type="number" class="form-control" id="edittheory_slot_amount_pre">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editlab_slot_amount_pre" class="form-label">ชั่วโมงปฏิบัติ</label>
-                            <input type="number" class="form-control" id="editlab_slot_amount_pre">
+                            <label for="edithours_pre" class="form-label">จำนวนชั่วโมง</label>
+                            <input type="number" class="form-control" id="edithours_pre" min="0">
                         </div>
                         <div class="col-md-6">
                             <label for="editday_pre" class="form-label">วัน</label>
@@ -871,60 +879,34 @@
         });
 
         function addPreSchedule() {
-            const teacher_name_pre = document.getElementById("teacher_name_pre").value.trim();
-            const subject_code_pre = document.getElementById("subject_code_pre").value.trim();
-            const subject_name_pre = document.getElementById("subject_name_pre").value.trim();
-            const subject_type_pre = document.getElementById("subject_type_pre").value;
-            const section_pre = document.getElementById("section_pre").value;
-            const student_type_pre = document.getElementById("student_type_pre").value;
-            const theory_slot_amount_pre = document.getElementById("theory_slot_amount_pre").value;
-            const lab_slot_amount_pre = document.getElementById("lab_slot_amount_pre").value;
-            const day_pre = document.getElementById("day_pre").value;
-            const start_time_pre = document.getElementById("start_time_pre").value;
-            const stop_time_pre = document.getElementById("stop_time_pre").value;
-            const room_name_pre = document.getElementById("room_name_pre").value.trim();
+            const teacher_name_pre   = document.getElementById("teacher_name_pre").value.trim();
+            const subject_code_pre   = document.getElementById("subject_code_pre").value.trim();
+            const subject_name_pre   = document.getElementById("subject_name_pre").value.trim();
+            const room_type_pre      = document.getElementById("subject_type_pre").value;
+            const type_pre           = document.getElementById("type_pre").value;
+            const curriculum_type_pre= document.getElementById("student_type_pre").value;
+            const hours_pre          = parseInt(document.getElementById("hours_pre").value || '0', 10);
+            const day_pre            = document.getElementById("day_pre").value;
+            const start_time_pre     = document.getElementById("start_time_pre").value;
+            const stop_time_pre      = document.getElementById("stop_time_pre").value;
+            const room_name_pre      = document.getElementById("room_name_pre").value.trim();
 
-            if (!teacher_name_pre || !subject_code_pre || !subject_name_pre) {
-                showNotification('กรุณากรอกข้อมูลที่จำเป็น (อาจารย์, รหัสวิชา, ชื่อวิชา)', 'warning');
-                return;
-            }
-
-            // Send data to server
             fetch('/api/pre/add/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
+                headers: {'Content-Type':'application/json','X-CSRFToken': getCookie('csrftoken')},
                 body: JSON.stringify({
-                    teacher_name_pre: teacher_name_pre,
-                    subject_code_pre: subject_code_pre,
-                    subject_name_pre: subject_name_pre,
-                    subject_type_pre: subject_type_pre,
-                    section_pre: parseInt(section_pre) || 0,
-                    student_type_pre: student_type_pre,
-                    theory_slot_amount_pre: parseInt(theory_slot_amount_pre) || 0,
-                    lab_slot_amount_pre: parseInt(lab_slot_amount_pre) || 0,
-                    day_pre: day_pre,
-                    start_time_pre: start_time_pre,
-                    stop_time_pre: stop_time_pre,
-                    room_name_pre: room_name_pre
+                teacher_name_pre, subject_code_pre, subject_name_pre,
+                room_type_pre, type_pre, curriculum_type_pre, hours_pre,
+                day_pre, start_time_pre, stop_time_pre, room_name_pre
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    showNotification("✅ เพิ่มวิชาล่วงหน้าเรียบร้อยแล้ว", 'success');
-                    location.reload(); // Reload to show new data
-                } else {
-                    showNotification('เกิดข้อผิดพลาด: ' + data.message, 'error');
-                }
+            .then(r=>r.json())
+            .then(d=>{
+                if (d.status === 'success') { showNotification('✅ เพิ่มวิชาล่วงหน้าสำเร็จ','success'); location.reload(); }
+                else { showNotification('เกิดข้อผิดพลาด: '+d.message,'error'); }
             })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('เกิดข้อผิดพลาดในการเพิ่มข้อมูล', 'error');
-            });
-        }
+            .catch(()=> showNotification('เกิดข้อผิดพลาดในการเพิ่มข้อมูล','error'));
+            }
 
         function confirmDelete(button) {
             if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?")) {
@@ -948,41 +930,39 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    showNotification('เกิดข้อผิดพลาดในการลบข้อมู��', 'error');
+                    showNotification('เกิดข้อผิดพลาดในการลบข้อมูล', 'error');
                 });
             }
         }
 
         function openEditModal(button) {
             editRow = button.closest("tr");
-            editId = editRow.getAttribute("data-id");
+            editId  = editRow.getAttribute("data-id");
             const cells = editRow.getElementsByTagName("td");
-            
-            document.getElementById("editteacher_name_pre").value = cells[0].innerText;
-            document.getElementById("editsubject_code_pre").value = cells[1].querySelector('.badge').innerText;
-            document.getElementById("editsubject_name_pre").value = cells[2].innerText;
-            document.getElementById("editsubject_type_pre").value = cells[3].querySelector('.badge').innerText;
-            document.getElementById("editsection_pre").value = cells[4].querySelector('.badge').innerText;
-            document.getElementById("editstudent_type_pre").value = cells[5].querySelector('.badge').innerText;
-            document.getElementById("edittheory_slot_amount_pre").value = cells[6].querySelector('.badge').innerText;
-            document.getElementById("editlab_slot_amount_pre").value = cells[7].querySelector('.badge').innerText;
-            document.getElementById("editday_pre").value = cells[8].querySelector('.badge').innerText;
-            document.getElementById("editstart_time_pre").value = cells[9].querySelector('.badge').innerText;
-            document.getElementById("editstop_time_pre").value = cells[10].querySelector('.badge').innerText;
-            document.getElementById("editroom_name_pre").value = cells[11].innerText;
-            
+
+            document.getElementById("editteacher_name_pre").value = cells[0].innerText.trim();
+            document.getElementById("editsubject_code_pre").value = cells[1].querySelector('.badge').innerText.trim();
+            document.getElementById("editsubject_name_pre").value = cells[2].innerText.trim();
+            document.getElementById("editsubject_type_pre").value = cells[3].querySelector('.badge').innerText.trim();
+            document.getElementById("edittype_pre").value = cells[4].querySelector('.badge').innerText.trim();
+            document.getElementById("editstudent_type_pre").value = cells[5].querySelector('.badge').innerText.trim();
+            document.getElementById("edithours_pre").value = cells[6].querySelector('.badge').innerText.trim();
+            document.getElementById("editday_pre").value = cells[7].querySelector('.badge').innerText.trim();
+            document.getElementById("editstart_time_pre").value = cells[8].querySelector('.badge').innerText.trim();
+            document.getElementById("editstop_time_pre").value = cells[9].querySelector('.badge').innerText.trim();
+            document.getElementById("editroom_name_pre").value = cells[10].innerText.trim();
+
             new bootstrap.Modal(document.getElementById("editModal")).show();
-        }
+            }
 
         function saveEdit() {
             const teacher_name_pre = document.getElementById("editteacher_name_pre").value;
             const subject_code_pre = document.getElementById("editsubject_code_pre").value;
             const subject_name_pre = document.getElementById("editsubject_name_pre").value;
-            const subject_type_pre = document.getElementById("editsubject_type_pre").value;
-            const section_pre = document.getElementById("editsection_pre").value;
-            const student_type_pre = document.getElementById("editstudent_type_pre").value;
-            const theory_slot_amount_pre = document.getElementById("edittheory_slot_amount_pre").value;
-            const lab_slot_amount_pre = document.getElementById("editlab_slot_amount_pre").value;
+            const room_type_pre = document.getElementById("editsubject_type_pre").value;
+            const type_pre = document.getElementById("edittype_pre").value;
+            const curriculum_type_pre = document.getElementById("editstudent_type_pre").value;
+            const hours_pre = parseInt(document.getElementById("edithours_pre").value || '0', 10);
             const day_pre = document.getElementById("editday_pre").value;
             const start_time_pre = document.getElementById("editstart_time_pre").value;
             const stop_time_pre = document.getElementById("editstop_time_pre").value;
@@ -990,23 +970,11 @@
 
             fetch(`/api/pre/update/${editId}/`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
+                headers: {'Content-Type': 'application/json','X-CSRFToken': getCookie('csrftoken')},
                 body: JSON.stringify({
-                    teacher_name_pre: teacher_name_pre,
-                    subject_code_pre: subject_code_pre,
-                    subject_name_pre: subject_name_pre,
-                    subject_type_pre: subject_type_pre,
-                    section_pre: parseInt(section_pre) || 0,
-                    student_type_pre: student_type_pre,
-                    theory_slot_amount_pre: parseInt(theory_slot_amount_pre) || 0,
-                    lab_slot_amount_pre: parseInt(lab_slot_amount_pre) || 0,
-                    day_pre: day_pre,
-                    start_time_pre: start_time_pre,
-                    stop_time_pre: stop_time_pre,
-                    room_name_pre: room_name_pre
+                teacher_name_pre, subject_code_pre, subject_name_pre,
+                room_type_pre, type_pre, curriculum_type_pre, hours_pre,
+                day_pre, start_time_pre, stop_time_pre, room_name_pre
                 })
             })
             .then(response => response.json())
@@ -1030,39 +998,40 @@
         }
 
         function downloadCSV() {
-            let csv = "teacher_name,subject_code,subject_name,subject_type,section,student_type,theory_slot,lab_slot,day,start_time,stop_time,room_name\n";
+            let csv = "teacher_name_pre,subject_code_pre,subject_name_pre,room_type_pre,type_pre,curriculum_type_pre,hours_pre,day_pre,start_time_pre,stop_time_pre,room_name_pre\n";
+
             document.querySelectorAll("#dataTable tbody tr").forEach(row => {
-                const cells = row.querySelectorAll("td");
-                if (cells.length > 1) { // Skip empty row
-                    const rowData = [
-                        cells[0].textContent.trim(),
-                        cells[1].querySelector('.badge').textContent.trim(),
-                        cells[2].textContent.trim(),
-                        cells[3].querySelector('.badge').textContent.trim(),
-                        cells[4].querySelector('.badge').textContent.trim(),
-                        cells[5].querySelector('.badge').textContent.trim(),
-                        cells[6].querySelector('.badge').textContent.trim(),
-                        cells[7].querySelector('.badge').textContent.trim(),
-                        cells[8].querySelector('.badge').textContent.trim(),
-                        cells[9].querySelector('.badge').textContent.trim(),
-                        cells[10].querySelector('.badge').textContent.trim(),
-                        cells[11].textContent.trim()
-                    ].map(cell => `"${cell}"`).join(",");
-                    csv += rowData + "\n";
-                }
+                const c = row.querySelectorAll("td");
+                if (c.length < 12) return; // ข้ามแถวว่าง
+
+                const val = i =>
+                (c[i].querySelector('.badge') ? c[i].querySelector('.badge').textContent.trim()
+                                                : c[i].textContent.trim());
+
+                const line = [
+                c[0].textContent.trim(), // อาจารย์
+                val(1),                  // รหัสวิชา (badge)
+                c[2].textContent.trim(), // ชื่อวิชา
+                val(3),                  // ประเภทรายวิชา
+                val(4),                  // ประเภทภาควิชา
+                val(5),                  // ประเภทนักศึกษา
+                val(6),                  // จำนวนชั่วโมง
+                val(7),                  // วัน
+                val(8),                  // เวลาเริ่ม
+                val(9),                  // เวลาสิ้นสุด
+                c[10].textContent.trim() // ห้องเรียน (ไม่มี badge)
+                ].map(s => `"${String(s).replace(/"/g,'""')}"`).join(",");
+
+                csv += line + "\n";
             });
 
             const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
             const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", "วิชาล่วงหน้า.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
+            const a = document.createElement("a");
+            a.href = url; a.download = "วิชาล่วงหน้า.csv"; a.click();
+            URL.revokeObjectURL(url);
             showNotification("✅ ดาวน์โหลดไฟล์ CSV เรียบร้อยแล้ว", 'success');
-        }
+            }
 
         function getCookie(name) {
             let cookieValue = null;

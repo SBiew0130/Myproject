@@ -1007,9 +1007,8 @@ def get_pre(request):
                 'subject_name_pre': pre.subject_name_pre,
                 'curriculum_type_pre': pre.curriculum_type_pre,
                 'room_type_pre': pre.room_type_pre,
-                'section_pre': pre.section_pre,
-                'theory_slot_amount_pre': pre.theory_slot_amount_pre,
-                'lab_slot_amount_pre': pre.lab_slot_amount_pre,
+                'type_pre': pre.type_pre,
+                'hours_pre': pre.hours_pre,
                 'day_pre': pre.day_pre,
                 'start_time_pre': pre.start_time_pre.strftime('%H:%M') if pre.start_time_pre else '',
                 'stop_time_pre': pre.stop_time_pre.strftime('%H:%M') if pre.stop_time_pre else '',
@@ -1045,9 +1044,8 @@ def add_pre(request):
             subject_name_pre=data.get('subject_name_pre'),
             curriculum_type_pre=data.get('curriculum_type_pre', ''),
             room_type_pre=data.get('room_type_pre', ''),
-            section_pre=data.get('section_pre', ''),
-            theory_slot_amount_pre=data.get('theory_slot_amount_pre', 0),
-            lab_slot_amount_pre=data.get('lab_slot_amount_pre', 0),
+            type_pre = data.get('type_pre', ''),
+            hours_pre=data.get('hours_pre', 0),
             day_pre=data.get('day_pre', ''),
             start_time_pre=start_time,
             stop_time_pre=stop_time,
@@ -1079,9 +1077,8 @@ def update_pre(request, id):
         pre.subject_name_pre = data.get('subject_name_pre', pre.subject_name_pre)
         pre.curriculum_type_pre = data.get('curriculum_type_pre', pre.curriculum_type_pre)
         pre.room_type_pre = data.get('room_type_pre', pre.room_type_pre)
-        pre.section_pre = data.get('section_pre', pre.section_pre)
-        pre.theory_slot_amount_pre = data.get('theory_slot_amount_pre', pre.theory_slot_amount_pre)
-        pre.lab_slot_amount_pre = data.get('lab_slot_amount_pre', pre.lab_slot_amount_pre)
+        pre.type_pre = data.get('type_pre', pre.type_pre)
+        pre.hours_pre = data.get('hours_pre', pre.hours_pre)
         pre.day_pre = data.get('day_pre', pre.day_pre)
         pre.room_name_pre = data.get('room_name_pre', pre.room_name_pre)
         
