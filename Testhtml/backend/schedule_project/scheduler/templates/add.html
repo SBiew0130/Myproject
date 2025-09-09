@@ -12,72 +12,262 @@
         rel="stylesheet">
 
   <style>
-    body { background: #f7f8fc; }
+    body { 
+      background-color: #eaedffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
     /* ความสูง navbar โดยประมาณ ใช้กับ sticky sidebar */
     :root { --nav-h: 76px; }
 
-    .navbar { background: #fff; }
+    /* Updated header styling to match other pages */
+    .header-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Updated navigation styling to match other pages */
+    .nav-tabs .nav-link {
+      border: none;
+      color: #6b7280;
+      font-weight: 500;
+      padding: 1rem 1.5rem;
+      border-bottom: 3px solid transparent;
+      background: none;
+    }
+    
+    .nav-tabs .nav-link.active {
+      background: none;
+      color: #4f46e5;
+      border-bottom-color: #4f46e5;
+    }
+    
+    .nav-tabs .nav-link:hover {
+      border-color: transparent;
+      color: #374151;
+      background: none;
+    }
+
     .sidebar-sticky {
       position: sticky;
       top: var(--nav-h);
     }
     .side-link { display: flex; align-items: center; gap: .5rem; }
     .side-link .bi { font-size: 1.05rem; opacity: .9; }
-    .card { border: 0; border-radius: 14px; }
+    
+    /* Updated card styling to match other pages */
+    .card { 
+      border: 2px solid #d1d5db !important;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      background: white;
+      transition: all 0.2s;
+    }
+    
+    .card:hover {
+      border-color: #9ca3af !important;
+      box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.15);
+    }
+    
     .card-header {
-      background: transparent;
-      border: 0;
-      padding-bottom: 0;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      padding: 1.5rem;
+      border: none;
+      border-radius: 14px 14px 0 0 !important;
+    }
+
+    /* Added consistent button styling */
+    .btn-primary-gradient {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border: none;
+      border-radius: 12px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      color: white;
+    }
+    
+    .btn-primary-gradient:hover {
+      background: linear-gradient(135deg, #4338ca, #6d28d9);
+      transform: translateY(-1px);
+      color: white;
+    }
+
+    /* Added form styling consistency */
+    .form-control, .form-select {
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      transition: all 0.2s;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+    }
+
+    /* Added notification system styling */
+    .notification-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .notification {
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .notification.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      background-color: #d1fae5;
+      border-left: 4px solid #10b981;
+      color: #065f46;
+    }
+
+    .notification.error {
+      background-color: #fee2e2;
+      border-left: 4px solid #ef4444;
+      color: #991b1b;
+    }
+
+    .notification.warning {
+      background-color: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      color: #92400e;
+    }
+
+    .notification.info {
+      background-color: #dbeafe;
+      border-left: 4px solid #3b82f6;
+      color: #1e40af;
+    }
+
+    .notification-close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .notification-close:hover {
+      opacity: 1;
+    }
+
+    .notification-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background-color: rgba(0,0,0,0.2);
+      transition: width linear;
     }
   </style>
 </head>
 <body>
 
-    <!-- Navigation -->
-        <nav class="bg-white border-bottom">
-        <div class="container-fluid" style="max-width: 1400px;">
-            <ul class="nav nav-tabs border-0">
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
-                <i class="bi bi-house me-2"></i>หน้าหลัก
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'add' %}active{% endif %}"
-                href="{% url 'add' %}" {% if request.resolver_match.url_name == 'add' %}aria-current="page"{% endif %}>
-                <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'pre' %}active{% endif %}"
-                href="{% url 'pre' %}" {% if request.resolver_match.url_name == 'pre' %}aria-current="page"{% endif %}>
-                <i class="bi bi-book me-2"></i>ลงล่วงหน้า
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'teacher' %}active{% endif %}"
-                href="{% url 'teacher' %}" {% if request.resolver_match.url_name == 'teacher' %}aria-current="page"{% endif %}>
-                <i class="bi bi-people me-2"></i>รายวิชา
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'activities' %}active{% endif %}"
-                href="{% url 'activities' %}" {% if request.resolver_match.url_name == 'activities' %}aria-current="page"{% endif %}>
-                <i class="bi bi-activity me-2"></i>กิจกรรม
-                </a>
-            </li>
-            </ul>
+  <!-- Added notification container -->
+  <div class="notification-container" id="notificationContainer"></div>
+
+  <!-- Updated header to match other pages -->
+  <header class="bg-white border-bottom py-3">
+    <div class="container-fluid" style="max-width: 1400px;">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <div class="header-icon me-3">
+              <i class="bi bi-calendar-check text-white fs-4"></i>
+            </div>
+            <h1 class="h4 mb-0 fw-bold text-dark">ระบบจัดตารางสอน</h1>
+          </div>
         </div>
-        </nav>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-end align-items-center">
+            <button class="btn btn-outline-secondary me-3">
+              <i class="bi bi-file-text me-2"></i>คู่มือ
+            </button>
+            <button class="btn btn-outline-primary">
+              <i class="bi bi-person me-2"></i>เกี่ยวกับเรา
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="bg-white border-bottom">
+    <div class="container-fluid" style="max-width: 1400px;">
+      <ul class="nav nav-tabs border-0">
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+             href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+            <i class="bi bi-house me-2"></i>หน้าหลัก
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'add' %}active{% endif %}"
+             href="{% url 'add' %}" {% if request.resolver_match.url_name == 'add' %}aria-current="page"{% endif %}>
+            <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'pre' %}active{% endif %}"
+             href="{% url 'pre' %}" {% if request.resolver_match.url_name == 'pre' %}aria-current="page"{% endif %}>
+            <i class="bi bi-book me-2"></i>ลงล่วงหน้า
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'teacher' %}active{% endif %}"
+             href="{% url 'teacher' %}" {% if request.resolver_match.url_name == 'teacher' %}aria-current="page"{% endif %}>
+            <i class="bi bi-people me-2"></i>รายวิชา
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'activities' %}active{% endif %}"
+             href="{% url 'activities' %}" {% if request.resolver_match.url_name == 'activities' %}aria-current="page"{% endif %}>
+            <i class="bi bi-activity me-2"></i>กิจกรรม
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
   <!-- =================== MAIN: SIDEBAR + TAB CONTENT =================== -->
-  <div class="container-fluid py-4">
+  <div class="container-fluid py-4" style="max-width: 1400px;">
     <div class="row g-4">
 
       <!-- ========== SIDEBAR (แท็บด้านข้าง) ========== -->
       <aside class="col-12 col-md-3 col-lg-2">
         <div class="card shadow-sm sidebar-sticky">
+          <div class="card-header">
+            <h6 class="mb-0 d-flex align-items-center">
+              <i class="bi bi-plus-square me-2"></i>
+              เมนูเพิ่มข้อมูล
+            </h6>
+          </div>
           <div class="card-body p-2">
             <div class="nav nav-pills flex-column" id="sideTab" role="tablist"
                  aria-orientation="vertical">
@@ -106,6 +296,7 @@
                  href="#t-teacher" role="tab" aria-controls="t-teacher">
                 <i class="bi bi-person-badge"></i> อาจารย์
               </a>
+
 
               <a class="nav-link side-link" id="t-preview-tab" data-bs-toggle="pill"
                  href="#t-preview" role="tab" aria-controls="t-preview">
@@ -141,18 +332,23 @@
                aria-labelledby="t-upload-tab">
             <div class="card shadow-sm">
               <div class="card-header">
-                <h5 class="mb-0">อัปโหลดไฟล์ CSV</h5>
+                <h5 class="mb-0 d-flex align-items-center">
+                  <i class="bi bi-cloud-upload me-2"></i>อัปโหลดไฟล์ CSV
+                </h5>
               </div>
-              <div class="card-body">
+              <div class="card-body p-4">
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <input type="file" class="form-control" accept=".csv">
+                    <label for="csvFile" class="form-label">เลือกไฟล์ CSV</label>
+                    <input type="file" class="form-control" id="csvFile" accept=".csv">
+                    <div class="form-text">
+                      <small>รองรับไฟล์สกุล .csv เท่านั้น</small>
+                    </div>
                   </div>
-                  <div class="col-md-3">
-                    <button class="btn btn-primary w-100">อัปโหลด</button>
-                  </div>
-                  <div class="col-12 text-muted small">
-                    รองรับไฟล์สกุล .csv เท่านั้น
+                  <div class="col-md-3 d-flex align-items-end">
+                    <button class="btn btn-primary-gradient w-100">
+                      <i class="bi bi-cloud-upload me-2"></i>อัปโหลด
+                    </button>
                   </div>
                 </div>
               </div>
@@ -164,9 +360,11 @@
                aria-labelledby="t-add-tab">
             <div class="card shadow-sm">
               <div class="card-header">
-                <h5 class="mb-0">เพิ่มข้อมูล</h5>
+                <h5 class="mb-0 d-flex align-items-center">
+                  <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
+                </h5>
               </div>
-              <div class="card-body">
+              <div class="card-body p-4">
                 <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
                 <form class="row g-3">
                   <div class="col-md-4">
@@ -250,9 +448,11 @@
                   </div>
 
                   <div class="col-12">
-                    <button type="button" class="btn btn-primary">
-                      เพิ่มข้อมูล
-                    </button>
+                    <div class="d-flex justify-content-end mt-3">
+                      <button type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -264,7 +464,9 @@
                aria-labelledby="t-list-tab">
             <div class="card shadow-sm">
               <div class="card-header">
-                <h5 class="mb-0">รายการล่วงหน้า</h5>
+                <h5 class="mb-0 d-flex align-items-center">
+                  <i class="bi bi-clipboard-data me-2"></i>รายการล่วงหน้า
+                </h5>
               </div>
               <div class="card-body text-muted">
                 (พื้นที่แสดงรายการข้อมูลที่เพิ่มไว้ล่วงหน้า)
@@ -335,6 +537,56 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
   </script>
   <script>
+    function showNotification(message, type = 'info', duration = 5000) {
+      const container = document.getElementById('notificationContainer');
+      const notification = document.createElement('div');
+      
+      const typeMap = {
+        'success': 'success',
+        'error': 'error', 
+        'warning': 'warning',
+        'info': 'info',
+        'debug': 'info'
+      };
+      
+      const notificationType = typeMap[type] || 'info';
+      
+      notification.className = `notification ${notificationType}`;
+      notification.innerHTML = `
+        <button class="notification-close" onclick="closeNotification(this)">&times;</button>
+        <div>${message}</div>
+        <div class="notification-progress"></div>
+      `;
+      
+      container.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 100);
+      
+      const progressBar = notification.querySelector('.notification-progress');
+      progressBar.style.width = '100%';
+      setTimeout(() => {
+        progressBar.style.width = '0%';
+        progressBar.style.transitionDuration = duration + 'ms';
+      }, 100);
+      
+      setTimeout(() => {
+        closeNotification(notification.querySelector('.notification-close'));
+      }, duration);
+    }
+
+    function closeNotification(button) {
+      const notification = button.parentElement;
+      notification.style.opacity = '0';
+      notification.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.parentElement.removeChild(notification);
+        }
+      }, 300);
+    }
+
     // เปิดแท็บตาม hash (#t-add ฯลฯ) และอัปเดต hash เมื่อสลับแท็บ
     const hash = window.location.hash;
     if (hash && document.querySelector(`[href="${hash}"]`)) {
@@ -345,6 +597,10 @@
         history.replaceState(null, '', e.target.getAttribute('href'));
       });
     });
+
+    window.onload = function() {
+      showNotification("ยินดีต้อนรับสู่หน้าเพิ่มข้อมูล", 'info');
+    };
   </script>
 </body>
 </html>
