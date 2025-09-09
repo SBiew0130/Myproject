@@ -353,42 +353,43 @@
     </header>
 
     <!-- Navigation -->
-    <nav class="bg-white border-bottom">
-        <div class="container-fluid" style="max-width: 1400px;">
-            <ul class="nav nav-tabs border-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-house me-2"></i>หน้าหลัก
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'pre' %}">
-                        <i class="bi bi-book me-2"></i>ลงล่วงหน้า
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'teacher' %}" aria-current="page">
-                        <i class="bi bi-people me-2"></i>รายวิชา
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'room' %}">
-                        <i class="bi bi-geo-alt me-2"></i>ห้องเรียน
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student' %}">
-                        <i class="bi bi-person-badge me-2"></i>นักศึกษา
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'activities' %}">
-                        <i class="bi bi-activity me-2"></i>กิจกรรม
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <ul class="nav nav-tabs border-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+            href="{% url 'home' %}"
+            {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+            <i class="bi bi-house me-2"></i>หน้าหลัก
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'add' %}active{% endif %}"
+            href="{% url 'add' %}"
+            {% if request.resolver_match.url_name == 'add' %}aria-current="page"{% endif %}>
+            <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'pre' %}active{% endif %}"
+            href="{% url 'pre' %}"
+            {% if request.resolver_match.url_name == 'pre' %}aria-current="page"{% endif %}>
+            <i class="bi bi-book me-2"></i>ลงล่วงหน้า
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'teacher' %}active{% endif %}"
+            href="{% url 'teacher' %}"
+            {% if request.resolver_match.url_name == 'teacher' %}aria-current="page"{% endif %}>
+            <i class="bi bi-people me-2"></i>รายวิชา
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'activities' %}active{% endif %}"
+            href="{% url 'activities' %}"
+            {% if request.resolver_match.url_name == 'activities' %}aria-current="page"{% endif %}>
+            <i class="bi bi-activity me-2"></i>กิจกรรม
+            </a>
+        </li>
+        </ul>
 
     <!-- Django Messages -->
     {% if messages %}

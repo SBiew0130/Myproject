@@ -1,0 +1,473 @@
+﻿รหัสวิชา,ชื่อวิชา,อาจารย์,ห้อง,ประเภท,วัน,ชั่วโมง
+DENEE501_sec1_lab,doctoral seminar,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_201,lab,อาทิตย์,14
+DENEE501_sec2_lab,doctoral seminar,อ.สมนึก สุระธง,ทค2_101,lab,อาทิตย์,10
+DENEE503_sec1_lab,doctoral seminar,อ.ประเสริฐ ลือโขง,ทค2_201,lab,พุธ,17
+DENEE734_sec1,advanced artificial intelligence and machine learning,อ.จักรภพ ใหม่เสน,ทค1_101,theory,อังคาร,11
+DENEE734_sec1,advanced artificial intelligence and machine learning,อ.จักรภพ ใหม่เสน,ทค1_101,theory,อังคาร,12
+DENEE734_sec2,advanced artificial intelligence and machine learning,อ.สมนึก สุระธง,ทค2_201,theory,พฤหัสบดี,15
+DENEE734_sec2,advanced artificial intelligence and machine learning,อ.สมนึก สุระธง,ทค2_201,theory,พฤหัสบดี,16
+DENEE734_sec3,advanced artificial intelligence and machine learning,อ.ประเสริฐ ลือโขง,ทค2_201,theory,เสาร์,8
+DENEE734_sec3,advanced artificial intelligence and machine learning,อ.ประเสริฐ ลือโขง,ทค2_201,theory,เสาร์,9
+DENEE734_sec3,advanced artificial intelligence and machine learning,อ.ประเสริฐ ลือโขง,ทค2_201,theory,เสาร์,10
+ENGCC304_sec1,computer programming,โด,ทค1_101,theory,จันทร์,17
+ENGCC304_sec1,computer programming,โด,ทค1_101,theory,จันทร์,18
+ENGCC304_sec1,computer programming,โด,ทค1_101,theory,จันทร์,19
+ENGCC304_sec2,computer programming,อ.กิตตินันท น้อยมณี,ทค2_201,theory,อังคาร,8
+ENGCC304_sec2,computer programming,อ.กิตตินันท น้อยมณี,ทค2_201,theory,อังคาร,9
+ENGCC304_sec2_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_205,lab,พฤหัสบดี,17
+ENGCC304_sec2_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_205,lab,พฤหัสบดี,18
+ENGCC304_sec2_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_205,lab,พฤหัสบดี,19
+ENGCC304_sec3,computer programming,อ.กิตตินันท น้อยมณี,ทค1_101,theory,จันทร์,13
+ENGCC304_sec3,computer programming,อ.กิตตินันท น้อยมณี,ทค1_101,theory,จันทร์,14
+ENGCC304_sec3_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_205,lab,จันทร์,17
+ENGCC304_sec3_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_205,lab,จันทร์,18
+ENGCC304_sec3_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_205,lab,จันทร์,19
+ENGCC304_sec4,computer programming,อ.กิตตินันท น้อยมณี,ทค1_205,theory,พุธ,11
+ENGCC304_sec4,computer programming,อ.กิตตินันท น้อยมณี,ทค1_205,theory,พุธ,12
+ENGCC304_sec4_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_202,lab,พฤหัสบดี,14
+ENGCC304_sec4_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_202,lab,พฤหัสบดี,15
+ENGCC304_sec4_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค1_202,lab,พฤหัสบดี,16
+ENGCC304_sec5,computer programming,อ.กิตตินันท น้อยมณี,ทค2_201,theory,อาทิตย์,14
+ENGCC304_sec5,computer programming,อ.กิตตินันท น้อยมณี,ทค2_201,theory,อาทิตย์,15
+ENGCC304_sec5_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค2_101,lab,เสาร์,8
+ENGCC304_sec5_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค2_101,lab,เสาร์,9
+ENGCC304_sec5_lab,computer programming,อ.กิตตินันท น้อยมณี,ทค2_101,lab,เสาร์,10
+ENGCC304_sec6,computer programming,อ.อนันท์ ทับเกิด,ทค2_201,theory,อังคาร,12
+ENGCC304_sec6,computer programming,อ.อนันท์ ทับเกิด,ทค2_201,theory,อังคาร,13
+ENGCC304_sec6_lab,computer programming,อ.อนันท์ ทับเกิด,ทค2_101,lab,จันทร์,17
+ENGCC304_sec6_lab,computer programming,อ.อนันท์ ทับเกิด,ทค2_101,lab,จันทร์,18
+ENGCC304_sec6_lab,computer programming,อ.อนันท์ ทับเกิด,ทค2_101,lab,จันทร์,19
+ENGCC304_sec7,computer programming,อ.อนันท์ ทับเกิด,ทค1_205,theory,ศุกร์,10
+ENGCC304_sec7,computer programming,อ.อนันท์ ทับเกิด,ทค1_205,theory,ศุกร์,11
+ENGCC304_sec7_lab,computer programming,อ.อนันท์ ทับเกิด,ทค1_205,lab,ศุกร์,12
+ENGCC304_sec7_lab,computer programming,อ.อนันท์ ทับเกิด,ทค1_205,lab,ศุกร์,13
+ENGCC304_sec7_lab,computer programming,อ.อนันท์ ทับเกิด,ทค1_205,lab,ศุกร์,14
+ENGCE106_sec1,data communication and networks,อ.อรรถพล วิเวก,ทค2_302,theory,ศุกร์,8
+ENGCE106_sec1,data communication and networks,อ.อรรถพล วิเวก,ทค2_302,theory,ศุกร์,9
+ENGCE106_sec1_lab,data communication and networks,อ.อรรถพล วิเวก,ทค2_301,lab,พฤหัสบดี,14
+ENGCE106_sec1_lab,data communication and networks,อ.อรรถพล วิเวก,ทค2_301,lab,พฤหัสบดี,15
+ENGCE106_sec1_lab,data communication and networks,อ.อรรถพล วิเวก,ทค2_301,lab,พฤหัสบดี,16
+ENGCE106_sec2,data communication and networks,อ.อรรถพล วิเวก,ทค2_301,theory,ศุกร์,17
+ENGCE106_sec2,data communication and networks,อ.อรรถพล วิเวก,ทค2_301,theory,ศุกร์,18
+ENGCE106_sec2_lab,data communication and networks,อ.อรรถพล วิเวก,ทค2_302,lab,พุธ,17
+ENGCE106_sec2_lab,data communication and networks,อ.อรรถพล วิเวก,ทค2_302,lab,พุธ,18
+ENGCE106_sec2_lab,data communication and networks,อ.อรรถพล วิเวก,ทค2_302,lab,พุธ,19
+ENGCE109_sec1,computer networks,อ.ภาณุเดช ทิพย์อักษร,ทค2_301,theory,พุธ,11
+ENGCE109_sec1,computer networks,อ.ภาณุเดช ทิพย์อักษร,ทค2_301,theory,พุธ,12
+ENGCE109_sec1_lab,computer networks,อ.ภาณุเดช ทิพย์อักษร,ทค2_301,lab,จันทร์,17
+ENGCE109_sec1_lab,computer networks,อ.ภาณุเดช ทิพย์อักษร,ทค2_301,lab,จันทร์,18
+ENGCE109_sec1_lab,computer networks,อ.ภาณุเดช ทิพย์อักษร,ทค2_301,lab,จันทร์,19
+ENGCE110_sec1,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,theory,อังคาร,10
+ENGCE110_sec1,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,theory,อังคาร,11
+ENGCE110_sec1_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,พฤหัสบดี,8
+ENGCE110_sec1_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,พฤหัสบดี,9
+ENGCE110_sec1_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,พฤหัสบดี,10
+ENGCE110_sec1_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,พฤหัสบดี,11
+ENGCE110_sec1_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,พฤหัสบดี,12
+ENGCE110_sec1_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,พฤหัสบดี,13
+ENGCE110_sec2,computer and data security,อ.พิชิต ทนันชัย,ทค1_101,theory,อาทิตย์,11
+ENGCE110_sec2,computer and data security,อ.พิชิต ทนันชัย,ทค1_101,theory,อาทิตย์,12
+ENGCE110_sec2_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,อาทิตย์,8
+ENGCE110_sec2_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,อาทิตย์,9
+ENGCE110_sec2_lab,computer and data security,อ.พิชิต ทนันชัย,ทค1_201,lab,อาทิตย์,10
+ENGCE114_sec1,computer engineering project,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_202,theory,จันทร์,14
+ENGCE114_sec1_lab,computer engineering project,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_201,lab,จันทร์,8
+ENGCE114_sec1_lab,computer engineering project,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_201,lab,จันทร์,9
+ENGCE114_sec1_lab,computer engineering project,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_201,lab,จันทร์,10
+ENGCE114_sec1_lab,computer engineering project,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_201,lab,จันทร์,11
+ENGCE114_sec1_lab,computer engineering project,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_201,lab,จันทร์,12
+ENGCE114_sec1_lab,computer engineering project,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_201,lab,จันทร์,13
+ENGCE114_sec2,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค1_205,theory,ศุกร์,19
+ENGCE114_sec2_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,จันทร์,8
+ENGCE114_sec2_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,จันทร์,9
+ENGCE114_sec2_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,จันทร์,10
+ENGCE114_sec2_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,จันทร์,11
+ENGCE114_sec2_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,จันทร์,12
+ENGCE114_sec2_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,จันทร์,13
+ENGCE114_sec3,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค2_201,theory,พุธ,10
+ENGCE114_sec3_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค2_101,lab,พฤหัสบดี,14
+ENGCE114_sec3_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค2_101,lab,พฤหัสบดี,15
+ENGCE114_sec3_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค2_101,lab,พฤหัสบดี,16
+ENGCE114_sec3_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค2_101,lab,พฤหัสบดี,17
+ENGCE114_sec3_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค2_101,lab,พฤหัสบดี,18
+ENGCE114_sec3_lab,computer engineering project,อ.ปณต พุกกะพันธุ์,ทค2_101,lab,พฤหัสบดี,19
+ENGCE118_sec1,discrete,อ.จักรภพ ใหม่เสน,ทค1_202,theory,ศุกร์,17
+ENGCE118_sec1,discrete,อ.จักรภพ ใหม่เสน,ทค1_202,theory,ศุกร์,18
+ENGCE118_sec1,discrete,อ.จักรภพ ใหม่เสน,ทค1_202,theory,ศุกร์,19
+ENGCE119_sec1,Prop Stat,อ.จักรภพ ใหม่เสน,ทค1_201,theory,พุธ,17
+ENGCE119_sec1,Prop Stat,อ.จักรภพ ใหม่เสน,ทค1_201,theory,พุธ,18
+ENGCE119_sec1,Prop Stat,อ.จักรภพ ใหม่เสน,ทค1_201,theory,พุธ,19
+ENGCE119_sec2,Prop Stat,อ.จักรภพ ใหม่เสน,ทค2_201,theory,อาทิตย์,8
+ENGCE119_sec2,Prop Stat,อ.จักรภพ ใหม่เสน,ทค2_201,theory,อาทิตย์,9
+ENGCE119_sec2,Prop Stat,อ.จักรภพ ใหม่เสน,ทค2_201,theory,อาทิตย์,10
+ENGCE119_sec3,Prop Stat,อ.จักรภพ ใหม่เสน,ทค1_202,theory,อาทิตย์,13
+ENGCE119_sec3,Prop Stat,อ.จักรภพ ใหม่เสน,ทค1_202,theory,อาทิตย์,14
+ENGCE119_sec3,Prop Stat,อ.จักรภพ ใหม่เสน,ทค1_202,theory,อาทิตย์,15
+ENGCE119_sec4,Prop Stat,อ.ประเสริฐ ลือโขง,ทค1_201,theory,ศุกร์,17
+ENGCE119_sec4,Prop Stat,อ.ประเสริฐ ลือโขง,ทค1_201,theory,ศุกร์,18
+ENGCE119_sec4,Prop Stat,อ.ประเสริฐ ลือโขง,ทค1_201,theory,ศุกร์,19
+ENGCE122_sec1,micro and interfacce,อ.อรรถพล วิเวก,ทค2_302,theory,พุธ,11
+ENGCE122_sec1,micro and interfacce,อ.อรรถพล วิเวก,ทค2_302,theory,พุธ,12
+ENGCE122_sec1_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,จันทร์,8
+ENGCE122_sec1_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,จันทร์,9
+ENGCE122_sec1_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,จันทร์,10
+ENGCE122_sec1_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,จันทร์,11
+ENGCE122_sec1_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,จันทร์,12
+ENGCE122_sec1_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,จันทร์,13
+ENGCE122_sec2,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,theory,อังคาร,17
+ENGCE122_sec2,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,theory,อังคาร,18
+ENGCE122_sec2_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,พฤหัสบดี,17
+ENGCE122_sec2_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,พฤหัสบดี,18
+ENGCE122_sec2_lab,micro and interfacce,อ.อรรถพล วิเวก,ทค2_301,lab,พฤหัสบดี,19
+ENGCE123_sec1,embedded systems and internet of everything,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,theory,จันทร์,13
+ENGCE123_sec1,embedded systems and internet of everything,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,theory,จันทร์,14
+ENGCE123_sec1_lab,embedded systems and internet of everything,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,lab,พฤหัสบดี,8
+ENGCE123_sec1_lab,embedded systems and internet of everything,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,lab,พฤหัสบดี,9
+ENGCE123_sec1_lab,embedded systems and internet of everything,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,lab,พฤหัสบดี,10
+ENGCE124_sec1,data structures and algorithms,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_205,theory,ศุกร์,8
+ENGCE124_sec1,data structures and algorithms,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_205,theory,ศุกร์,9
+ENGCE124_sec2,data structures and algorithms,อ.ปิยพล ยืนยงสถาวร,ทค1_201,theory,อาทิตย์,15
+ENGCE124_sec2,data structures and algorithms,อ.ปิยพล ยืนยงสถาวร,ทค1_201,theory,อาทิตย์,16
+ENGCE124_sec2_lab,data structures and algorithms,อ.ปิยพล ยืนยงสถาวร,ทค1_205,lab,อาทิตย์,17
+ENGCE124_sec2_lab,data structures and algorithms,อ.ปิยพล ยืนยงสถาวร,ทค1_205,lab,อาทิตย์,18
+ENGCE124_sec2_lab,data structures and algorithms,อ.ปิยพล ยืนยงสถาวร,ทค1_205,lab,อาทิตย์,19
+ENGCE124_sec3,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_205,theory,อังคาร,15
+ENGCE124_sec3,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_205,theory,อังคาร,16
+ENGCE124_sec3_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_101,lab,อังคาร,8
+ENGCE124_sec3_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_101,lab,อังคาร,9
+ENGCE124_sec3_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_101,lab,อังคาร,10
+ENGCE124_sec4,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_101,theory,จันทร์,11
+ENGCE124_sec4,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_101,theory,จันทร์,12
+ENGCE124_sec4_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_202,lab,ศุกร์,11
+ENGCE124_sec4_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_202,lab,ศุกร์,12
+ENGCE124_sec4_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_202,lab,ศุกร์,13
+ENGCE124_sec5,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_101,theory,อังคาร,11
+ENGCE124_sec5,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_101,theory,อังคาร,12
+ENGCE124_sec5_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_201,lab,พุธ,11
+ENGCE124_sec5_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_201,lab,พุธ,12
+ENGCE124_sec5_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค1_201,lab,พุธ,13
+ENGCE124_sec6,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_201,theory,พุธ,8
+ENGCE124_sec6,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_201,theory,พุธ,9
+ENGCE124_sec6_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_201,lab,ศุกร์,8
+ENGCE124_sec6_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_201,lab,ศุกร์,9
+ENGCE124_sec6_lab,data structures and algorithms,อาจารยนุรักษ์ ไชยศรี,ทค2_201,lab,ศุกร์,10
+ENGCE125_sec1,operating systems,อ.ปิยพล ยืนยงสถาวร,ทค2_101,theory,อังคาร,15
+ENGCE125_sec1,operating systems,อ.ปิยพล ยืนยงสถาวร,ทค2_101,theory,อังคาร,16
+ENGCE125_sec1_lab,operating systems,อ.ปิยพล ยืนยงสถาวร,ทค1_201,lab,พุธ,8
+ENGCE125_sec1_lab,operating systems,อ.ปิยพล ยืนยงสถาวร,ทค1_201,lab,พุธ,9
+ENGCE125_sec1_lab,operating systems,อ.ปิยพล ยืนยงสถาวร,ทค1_201,lab,พุธ,10
+ENGCE126_sec1,database systems,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_202,theory,อังคาร,11
+ENGCE126_sec1,database systems,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_202,theory,อังคาร,12
+ENGCE126_sec1_lab,database systems,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค2_201,lab,จันทร์,12
+ENGCE126_sec1_lab,database systems,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค2_201,lab,จันทร์,13
+ENGCE126_sec1_lab,database systems,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค2_201,lab,จันทร์,14
+ENGCE127_sec1,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_201,theory,จันทร์,17
+ENGCE127_sec1,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_201,theory,จันทร์,18
+ENGCE127_sec1,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_201,theory,จันทร์,19
+ENGCE127_sec2,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_101,theory,พฤหัสบดี,17
+ENGCE127_sec2,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_101,theory,พฤหัสบดี,18
+ENGCE127_sec2,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_101,theory,พฤหัสบดี,19
+ENGCE127_sec3,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_101,theory,อาทิตย์,15
+ENGCE127_sec3,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_101,theory,อาทิตย์,16
+ENGCE127_sec3,SA,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_101,theory,อาทิตย์,17
+ENGCE134_sec1,network security,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,theory,พุธ,8
+ENGCE134_sec1,network security,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,theory,พุธ,9
+ENGCE134_sec1_lab,network security,อ.ภาณุเดช ทิพย์อักษร,ทค2_301,lab,ศุกร์,8
+ENGCE134_sec1_lab,network security,อ.ภาณุเดช ทิพย์อักษร,ทค2_301,lab,ศุกร์,9
+ENGCE134_sec2_lab,network security,อ.อนุพงศ ไพโรจน,ทค2_301,lab,จันทร์,14
+ENGCE137_sec1,unix system administration,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,theory,พุธ,10
+ENGCE137_sec1_lab,unix system administration,อ.ภาณุเดช ทิพย์อักษร,ทค2_302,lab,ศุกร์,14
+ENGCE137_sec2_lab,unix system administration,อ.อนุพงศ ไพโรจน,ทค2_302,lab,จันทร์,8
+ENGCE137_sec2_lab,unix system administration,อ.อนุพงศ ไพโรจน,ทค2_302,lab,จันทร์,9
+ENGCE137_sec2_lab,unix system administration,อ.อนุพงศ ไพโรจน,ทค2_302,lab,จันทร์,10
+ENGCE137_sec2_lab,unix system administration,อ.อนุพงศ ไพโรจน,ทค2_302,lab,จันทร์,11
+ENGCE137_sec2_lab,unix system administration,อ.อนุพงศ ไพโรจน,ทค2_302,lab,จันทร์,12
+ENGCE200_sec1,digital system design,อ.สมนึก สุระธง,ทค1_202,theory,อังคาร,13
+ENGCE200_sec1,digital system design,อ.สมนึก สุระธง,ทค1_202,theory,อังคาร,14
+ENGCE200_sec1_lab,digital system design,อ.สมนึก สุระธง,ทค1_205,lab,จันทร์,8
+ENGCE200_sec1_lab,digital system design,อ.สมนึก สุระธง,ทค1_205,lab,จันทร์,9
+ENGCE200_sec1_lab,digital system design,อ.สมนึก สุระธง,ทค1_205,lab,จันทร์,10
+ENGCE200_sec1_lab,digital system design,อ.สมนึก สุระธง,ทค1_205,lab,จันทร์,11
+ENGCE200_sec1_lab,digital system design,อ.สมนึก สุระธง,ทค1_205,lab,จันทร์,12
+ENGCE200_sec1_lab,digital system design,อ.สมนึก สุระธง,ทค1_205,lab,จันทร์,13
+ENGCE200_sec2,digital system design,อ.สมนึก สุระธง,ทค2_101,theory,เสาร์,14
+ENGCE200_sec2,digital system design,อ.สมนึก สุระธง,ทค2_101,theory,เสาร์,15
+ENGCE200_sec2_lab,digital system design,อ.สมนึก สุระธง,ทค2_201,lab,เสาร์,11
+ENGCE200_sec2_lab,digital system design,อ.สมนึก สุระธง,ทค2_201,lab,เสาร์,12
+ENGCE200_sec2_lab,digital system design,อ.สมนึก สุระธง,ทค2_201,lab,เสาร์,13
+ENGCE306_sec1,Web programming,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_101,theory,อังคาร,18
+ENGCE306_sec1,Web programming,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_101,theory,อังคาร,19
+ENGCE306_sec1_lab,Web programming,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พุธ,8
+ENGCE306_sec1_lab,Web programming,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พุธ,9
+ENGCE306_sec1_lab,Web programming,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พุธ,10
+ENGCE307_sec1,App Dev,อ.อนันท์ ทับเกิด,ทค2_201,theory,อังคาร,14
+ENGCE307_sec1,App Dev,อ.อนันท์ ทับเกิด,ทค2_201,theory,อังคาร,15
+ENGCE307_sec1_lab,App Dev,อ.อนันท์ ทับเกิด,ทค1_101,lab,ศุกร์,17
+ENGCE307_sec1_lab,App Dev,อ.อนันท์ ทับเกิด,ทค1_101,lab,ศุกร์,18
+ENGCE307_sec1_lab,App Dev,อ.อนันท์ ทับเกิด,ทค1_101,lab,ศุกร์,19
+ENGCE3174_sec1,OOP,อ.กิตตินันท น้อยมณี,ทค2_101,theory,อาทิตย์,11
+ENGCE3174_sec1,OOP,อ.กิตตินันท น้อยมณี,ทค2_101,theory,อาทิตย์,12
+ENGCE3174_sec1_lab,OOP,อ.กิตตินันท น้อยมณี,ทค2_101,lab,พุธ,17
+ENGCE3174_sec1_lab,OOP,อ.กิตตินันท น้อยมณี,ทค2_101,lab,พุธ,18
+ENGCE3174_sec1_lab,OOP,อ.กิตตินันท น้อยมณี,ทค2_101,lab,พุธ,19
+ENGCE400_sec1,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_201,theory,พฤหัสบดี,18
+ENGCE400_sec1,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_201,theory,พฤหัสบดี,19
+ENGCE400_sec1_lab,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_205,lab,พฤหัสบดี,8
+ENGCE400_sec1_lab,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_205,lab,พฤหัสบดี,9
+ENGCE400_sec1_lab,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_205,lab,พฤหัสบดี,10
+ENGCE400_sec2,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_101,theory,อังคาร,16
+ENGCE400_sec2,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_101,theory,อังคาร,17
+ENGCE400_sec2_lab,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_101,lab,พฤหัสบดี,14
+ENGCE400_sec2_lab,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_101,lab,พฤหัสบดี,15
+ENGCE400_sec2_lab,AI ML,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_101,lab,พฤหัสบดี,16
+ENGCE400_sec3,AI ML,อ.ปณต พุกกะพันธุ์,ทค2_101,theory,อังคาร,13
+ENGCE400_sec3,AI ML,อ.ปณต พุกกะพันธุ์,ทค2_101,theory,อังคาร,14
+ENGCE405_sec1,Deep learning,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_205,theory,พุธ,13
+ENGCE405_sec1,Deep learning,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค1_205,theory,พุธ,14
+ENGCE405_sec1_lab,Deep learning,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค2_101,lab,จันทร์,8
+ENGCE405_sec1_lab,Deep learning,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค2_101,lab,จันทร์,9
+ENGCE405_sec1_lab,Deep learning,อ.ขวัญชัย เอื้อวิริยานุกูล,ทค2_101,lab,จันทร์,10
+ENGCE406_sec1,natural language processing,อ.ประเสริฐ ลือโขง,ทค1_205,theory,อังคาร,8
+ENGCE406_sec1,natural language processing,อ.ประเสริฐ ลือโขง,ทค1_205,theory,อังคาร,9
+ENGCE406_sec1_lab,natural language processing,อ.ประเสริฐ ลือโขง,ทค1_201,lab,ศุกร์,11
+ENGCE406_sec1_lab,natural language processing,อ.ประเสริฐ ลือโขง,ทค1_201,lab,ศุกร์,12
+ENGCE406_sec1_lab,natural language processing,อ.ประเสริฐ ลือโขง,ทค1_201,lab,ศุกร์,13
+ENGCE408_sec1,pattern recognition,พิม,ทค2_201,theory,พุธ,18
+ENGCE408_sec1,pattern recognition,พิม,ทค2_201,theory,พุธ,19
+ENGCE408_sec2,pattern recognition,พิมมี่,ทค2_201,theory,ศุกร์,18
+ENGCE408_sec2,pattern recognition,พิมมี่,ทค2_201,theory,ศุกร์,19
+ENGCE408_sec3,pattern recognition,อ.สมนึก สุระธง,ทค1_101,theory,ศุกร์,8
+ENGCE408_sec3,pattern recognition,อ.สมนึก สุระธง,ทค1_101,theory,ศุกร์,9
+ENGCE408_sec3,pattern recognition,อ.สมนึก สุระธง,ทค1_101,theory,ศุกร์,10
+ENGEE105_sec1,คอม,บิว,ทค2_201,theory,อังคาร,17
+ENGEE105_sec1,คอม,บิว,ทค2_201,theory,อังคาร,18
+ENGEE105_sec1,คอม,บิว,ทค2_201,theory,อังคาร,19
+ENGEE105_sec1_lab,คอม,บิว,ทค2_201,lab,พฤหัสบดี,17
+ENGEE105_sec1_lab,คอม,บิว,ทค2_201,lab,พฤหัสบดี,18
+ENGEE106_sec1,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค1_205,theory,อังคาร,11
+ENGEE106_sec1,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค1_205,theory,อังคาร,12
+ENGEE106_sec1_lab,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค1_202,lab,พฤหัสบดี,17
+ENGEE106_sec1_lab,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค1_202,lab,พฤหัสบดี,18
+ENGEE106_sec1_lab,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค1_202,lab,พฤหัสบดี,19
+ENGEE106_sec2,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค2_101,theory,อาทิตย์,16
+ENGEE106_sec2,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค2_101,theory,อาทิตย์,17
+ENGEE106_sec2_lab,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค1_201,lab,เสาร์,8
+ENGEE106_sec2_lab,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค1_201,lab,เสาร์,9
+ENGEE106_sec2_lab,electrical instruments and measurements,อ.สัญญา อุทธโยธา,ทค1_201,lab,เสาร์,10
+ENGEE106_sec3,electrical instruments and measurements,อ.สิทธิศักดิ์ ยี่ยวน,ทค1_201,theory,ศุกร์,14
+ENGEE106_sec3_lab,electrical instruments and measurements,อ.สิทธิศักดิ์ ยี่ยวน,ทค1_101,lab,พฤหัสบดี,8
+ENGEE106_sec3_lab,electrical instruments and measurements,อ.สิทธิศักดิ์ ยี่ยวน,ทค1_101,lab,พฤหัสบดี,9
+ENGEE106_sec3_lab,electrical instruments and measurements,อ.สิทธิศักดิ์ ยี่ยวน,ทค1_101,lab,พฤหัสบดี,10
+ENGEE106_sec3_lab,electrical instruments and measurements,อ.สิทธิศักดิ์ ยี่ยวน,ทค1_101,lab,พฤหัสบดี,11
+ENGEE106_sec3_lab,electrical instruments and measurements,อ.สิทธิศักดิ์ ยี่ยวน,ทค1_101,lab,พฤหัสบดี,12
+ENGEE106_sec3_lab,electrical instruments and measurements,อ.สิทธิศักดิ์ ยี่ยวน,ทค1_101,lab,พฤหัสบดี,13
+ENGEE161_sec1,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,theory,อังคาร,15
+ENGEE161_sec1,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,theory,อังคาร,16
+ENGEE161_sec1_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พฤหัสบดี,8
+ENGEE161_sec1_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พฤหัสบดี,9
+ENGEE161_sec1_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พฤหัสบดี,10
+ENGEE161_sec1_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พฤหัสบดี,11
+ENGEE161_sec1_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พฤหัสบดี,12
+ENGEE161_sec1_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พฤหัสบดี,13
+ENGEE161_sec2,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_205,theory,เสาร์,8
+ENGEE161_sec2,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_205,theory,เสาร์,9
+ENGEE161_sec2_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พุธ,17
+ENGEE161_sec2_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พุธ,18
+ENGEE161_sec2_lab,Logic Desige,อ.ปณต พุกกะพันธุ์,ทค1_202,lab,พุธ,19
+ENGEE501_sec1,electric circuits,อ.สมนึก สุระธง,ทค1_301,theory,จันทร์,17
+ENGEE501_sec1,electric circuits,อ.สมนึก สุระธง,ทค1_301,theory,จันทร์,18
+ENGEE501_sec1,electric circuits,อ.สมนึก สุระธง,ทค1_301,theory,จันทร์,19
+ENGEE501_sec2,electric circuits,อ.สมนึก สุระธง,ทค1_302,theory,พฤหัสบดี,17
+ENGEE501_sec2,electric circuits,อ.สมนึก สุระธง,ทค1_302,theory,พฤหัสบดี,18
+ENGEE501_sec2,electric circuits,อ.สมนึก สุระธง,ทค1_302,theory,พฤหัสบดี,19
+ENGEE502_sec1,ไฟฟ้า,เอก,ทค1_101,theory,จันทร์,8
+ENGEE502_sec1,ไฟฟ้า,เอก,ทค1_101,theory,จันทร์,9
+ENGEE502_sec1,ไฟฟ้า,เอก,ทค1_101,theory,จันทร์,10
+ENGEE502_sec2,ไฟฟ้า,เอก,ทค1_101,theory,พุธ,8
+ENGEE502_sec2,ไฟฟ้า,เอก,ทค1_101,theory,พุธ,9
+ENGEE502_sec2,ไฟฟ้า,เอก,ทค1_101,theory,พุธ,10
+ENGEE502_sec3,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค1_101,theory,พุธ,11
+ENGEE502_sec3,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค1_101,theory,พุธ,12
+ENGEE502_sec3,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค1_101,theory,พุธ,13
+ENGEE502_sec4,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค2_101,theory,จันทร์,11
+ENGEE502_sec4,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค2_101,theory,จันทร์,12
+ENGEE502_sec4,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค2_101,theory,จันทร์,13
+ENGEE502_sec5,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค1_101,theory,เสาร์,8
+ENGEE502_sec5,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค1_101,theory,เสาร์,9
+ENGEE502_sec5,electrical engineering mathematics,อ.จักรภพ ใหม่เสน,ทค1_101,theory,เสาร์,10
+ENGSE121_sec1,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_301,theory,อังคาร,13
+ENGSE121_sec1,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_301,theory,อังคาร,14
+ENGSE121_sec1_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พฤหัสบดี,8
+ENGSE121_sec1_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พฤหัสบดี,9
+ENGSE121_sec1_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พฤหัสบดี,10
+ENGSE121_sec2,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,theory,ศุกร์,17
+ENGSE121_sec2,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,theory,ศุกร์,18
+ENGSE121_sec2_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,lab,พฤหัสบดี,17
+ENGSE121_sec2_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,lab,พฤหัสบดี,18
+ENGSE121_sec2_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,lab,พฤหัสบดี,19
+ENGSE128_sec1_lab,pre co operative,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พฤหัสบดี,11
+ENGSE128_sec1_lab,pre co operative,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พฤหัสบดี,12
+ENGSE128_sec1_lab,pre co operative,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พฤหัสบดี,13
+ENGSE128_sec2_lab,pre co operative,อ.อรรถพล วิเวก,ทค2_302,lab,พฤหัสบดี,11
+ENGSE128_sec2_lab,pre co operative,อ.อรรถพล วิเวก,ทค2_302,lab,พฤหัสบดี,12
+ENGSE128_sec2_lab,pre co operative,อ.อรรถพล วิเวก,ทค2_302,lab,พฤหัสบดี,13
+ENGSE200_sec1,solfware engineer,อ.สัญญา อุทธโยธา,ทค2_101,theory,พุธ,11
+ENGSE200_sec1,solfware engineer,อ.สัญญา อุทธโยธา,ทค2_101,theory,พุธ,12
+ENGSE200_sec1,solfware engineer,อ.สัญญา อุทธโยธา,ทค2_101,theory,พุธ,13
+ENGSE200_sec2,solfware engineer,อ.สัญญา อุทธโยธา,ทค2_201,theory,พฤหัสบดี,12
+ENGSE200_sec2,solfware engineer,อ.สัญญา อุทธโยธา,ทค2_201,theory,พฤหัสบดี,13
+ENGSE200_sec2,solfware engineer,อ.สัญญา อุทธโยธา,ทค2_201,theory,พฤหัสบดี,14
+ENGSE200_sec3,solfware engineer,อ.สัญญา อุทธโยธา,ทค1_205,theory,พุธ,8
+ENGSE200_sec3,solfware engineer,อ.สัญญา อุทธโยธา,ทค1_205,theory,พุธ,9
+ENGSE200_sec3,solfware engineer,อ.สัญญา อุทธโยธา,ทค1_205,theory,พุธ,10
+ENGSE201_sec1,laws and ethics in information technology,อ.สัญญา อุทธโยธา,ทค1_201,theory,จันทร์,14
+ENGSE201_sec2,laws and ethics in information technology,อ.สัญญา อุทธโยธา,ทค1_101,theory,อังคาร,13
+ENGSE201_sec3,laws and ethics in information technology,อ.สัญญา อุทธโยธา,ทค2_201,theory,พุธ,14
+ENGSE203_sec1,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค1_201,theory,อังคาร,16
+ENGSE203_sec1_lab,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค2_201,lab,จันทร์,8
+ENGSE203_sec1_lab,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค2_201,lab,จันทร์,9
+ENGSE203_sec1_lab,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค2_201,lab,จันทร์,10
+ENGSE203_sec1_lab,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค2_201,lab,จันทร์,11
+ENGSE203_sec2,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค1_205,theory,จันทร์,14
+ENGSE203_sec2_lab,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค1_201,lab,พฤหัสบดี,14
+ENGSE203_sec2_lab,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค1_201,lab,พฤหัสบดี,15
+ENGSE203_sec2_lab,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค1_201,lab,พฤหัสบดี,16
+ENGSE203_sec2_lab,computer programming for software engineer,อ.ธนิต เกตุแก้ว,ทค1_201,lab,พฤหัสบดี,17
+ENGSE205_sec1,software process and quality assurance,อ.สัญญา อุทธโยธา,ทค1_201,theory,อังคาร,14
+ENGSE205_sec1,software process and quality assurance,อ.สัญญา อุทธโยธา,ทค1_201,theory,อังคาร,15
+ENGSE205_sec1_lab,software process and quality assurance,อ.สัญญา อุทธโยธา,ทค1_101,lab,ศุกร์,11
+ENGSE205_sec1_lab,software process and quality assurance,อ.สัญญา อุทธโยธา,ทค1_101,lab,ศุกร์,12
+ENGSE205_sec1_lab,software process and quality assurance,อ.สัญญา อุทธโยธา,ทค1_101,lab,ศุกร์,13
+ENGSE206_sec1,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_101,theory,อังคาร,14
+ENGSE206_sec1,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_101,theory,อังคาร,15
+ENGSE206_sec1_lab,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_202,lab,พุธ,12
+ENGSE206_sec1_lab,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_202,lab,พุธ,13
+ENGSE206_sec1_lab,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_202,lab,พุธ,14
+ENGSE206_sec2,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_201,theory,อังคาร,12
+ENGSE206_sec2,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_201,theory,อังคาร,13
+ENGSE206_sec2_lab,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_201,lab,จันทร์,17
+ENGSE206_sec2_lab,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_201,lab,จันทร์,18
+ENGSE206_sec2_lab,solfware requirement,อ.ธนิต เกตุแก้ว,ทค1_201,lab,จันทร์,19
+ENGSE211_sec1_lab,seminar in software engineering,อ.สัญญา อุทธโยธา,ทค1_201,lab,ศุกร์,8
+ENGSE211_sec1_lab,seminar in software engineering,อ.สัญญา อุทธโยธา,ทค1_201,lab,ศุกร์,9
+ENGSE211_sec1_lab,seminar in software engineering,อ.สัญญา อุทธโยธา,ทค1_201,lab,ศุกร์,10
+ENGSE214_sec1,intro cyber,อ.ธนิต เกตุแก้ว,ทค2_201,theory,ศุกร์,12
+ENGSE214_sec1,intro cyber,อ.ธนิต เกตุแก้ว,ทค2_201,theory,ศุกร์,13
+ENGSE214_sec1,intro cyber,อ.ธนิต เกตุแก้ว,ทค2_201,theory,ศุกร์,14
+ENGSE214_sec2,intro cyber,อ.ธนิต เกตุแก้ว,ทค1_205,theory,พฤหัสบดี,11
+ENGSE214_sec2,intro cyber,อ.ธนิต เกตุแก้ว,ทค1_205,theory,พฤหัสบดี,12
+ENGSE214_sec2,intro cyber,อ.ธนิต เกตุแก้ว,ทค1_205,theory,พฤหัสบดี,13
+ENGSE217_sec1,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_202,theory,ศุกร์,8
+ENGSE217_sec1,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_202,theory,ศุกร์,9
+ENGSE217_sec1_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_202,lab,จันทร์,17
+ENGSE217_sec1_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_202,lab,จันทร์,18
+ENGSE217_sec1_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_202,lab,จันทร์,19
+ENGSE217_sec2,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_205,theory,พุธ,17
+ENGSE217_sec2,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_205,theory,พุธ,18
+ENGSE217_sec2_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค2_101,lab,ศุกร์,12
+ENGSE217_sec2_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค2_101,lab,ศุกร์,13
+ENGSE217_sec2_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค2_101,lab,ศุกร์,14
+ENGSE217_sec3,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_205,theory,อังคาร,13
+ENGSE217_sec3,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค1_205,theory,อังคาร,14
+ENGSE217_sec3_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค2_201,lab,พุธ,11
+ENGSE217_sec3_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค2_201,lab,พุธ,12
+ENGSE217_sec3_lab,data communication and network,อ.ปิยพล ยืนยงสถาวร,ทค2_201,lab,พุธ,13
+ENGSE218_sec1,computer architecture and organization,อ.สัญญา อุทธโยธา,ทค2_301,theory,พุธ,17
+ENGSE218_sec1,computer architecture and organization,อ.สัญญา อุทธโยธา,ทค2_301,theory,พุธ,18
+ENGSE218_sec1_lab,computer architecture and organization,อ.สัญญา อุทธโยธา,ทค2_302,lab,จันทร์,17
+ENGSE218_sec1_lab,computer architecture and organization,อ.สัญญา อุทธโยธา,ทค2_302,lab,จันทร์,18
+ENGSE218_sec1_lab,computer architecture and organization,อ.สัญญา อุทธโยธา,ทค2_302,lab,จันทร์,19
+ENGSE218_sec2,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,theory,ศุกร์,10
+ENGSE218_sec2,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,theory,ศุกร์,11
+ENGSE218_sec2_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,lab,พฤหัสบดี,14
+ENGSE218_sec2_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,lab,พฤหัสบดี,15
+ENGSE218_sec2_lab,computer architecture and organization,อ.อนุพงศ ไพโรจน,ทค2_302,lab,พฤหัสบดี,16
+ENGSE219_sec1,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_205,theory,อังคาร,17
+ENGSE219_sec1,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_205,theory,อังคาร,18
+ENGSE219_sec1_lab,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_101,lab,อังคาร,8
+ENGSE219_sec1_lab,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_101,lab,อังคาร,9
+ENGSE219_sec1_lab,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_101,lab,อังคาร,10
+ENGSE219_sec2,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_205,theory,ศุกร์,17
+ENGSE219_sec2,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_205,theory,ศุกร์,18
+ENGSE219_sec2_lab,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_205,lab,พฤหัสบดี,14
+ENGSE219_sec2_lab,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_205,lab,พฤหัสบดี,15
+ENGSE219_sec2_lab,database system,อ.ปิยพล ยืนยงสถาวร,ทค1_205,lab,พฤหัสบดี,16
+ENGSE300_sec1_lab,co op,อ.ธนิต เกตุแก้ว,ทค1_101,lab,พุธ,17
+ENGSE300_sec1_lab,co op,อ.ธนิต เกตุแก้ว,ทค1_101,lab,พุธ,18
+ENGSE300_sec1_lab,co op,อ.ธนิต เกตุแก้ว,ทค1_101,lab,พุธ,19
+ENGSE300_sec2_lab,co op,อ.ธนิต เกตุแก้ว,ทค2_101,lab,ศุกร์,17
+ENGSE300_sec2_lab,co op,อ.ธนิต เกตุแก้ว,ทค2_101,lab,ศุกร์,18
+ENGSE300_sec2_lab,co op,อ.ธนิต เกตุแก้ว,ทค2_101,lab,ศุกร์,19
+ENGSE509_sec1,multimedia technology engineering and animation,อ.สัญญา อุทธโยธา,ทค1_202,theory,อังคาร,17
+ENGSE509_sec1,multimedia technology engineering and animation,อ.สัญญา อุทธโยธา,ทค1_202,theory,อังคาร,18
+ENGSE509_sec1_lab,multimedia technology engineering and animation,อ.สัญญา อุทธโยธา,ทค1_202,lab,อังคาร,8
+ENGSE509_sec1_lab,multimedia technology engineering and animation,อ.สัญญา อุทธโยธา,ทค1_202,lab,อังคาร,9
+ENGSE509_sec1_lab,multimedia technology engineering and animation,อ.สัญญา อุทธโยธา,ทค1_202,lab,อังคาร,10
+ENGSE608_sec1,mobile devices application design and development,อ.ปิยพล ยืนยงสถาวร,ทค2_101,theory,จันทร์,14
+ENGSE608_sec1_lab,mobile devices application design and development,อ.ปิยพล ยืนยงสถาวร,ทค2_201,lab,พฤหัสบดี,8
+ENGSE608_sec1_lab,mobile devices application design and development,อ.ปิยพล ยืนยงสถาวร,ทค2_201,lab,พฤหัสบดี,9
+ENGSE608_sec1_lab,mobile devices application design and development,อ.ปิยพล ยืนยงสถาวร,ทค2_201,lab,พฤหัสบดี,10
+ENGSE608_sec1_lab,mobile devices application design and development,อ.ปิยพล ยืนยงสถาวร,ทค2_201,lab,พฤหัสบดี,11
+ENGSE611_sec1,modern web,อ.ธนิต เกตุแก้ว,ทค2_201,theory,อังคาร,10
+ENGSE611_sec1_lab,modern web,อ.ธนิต เกตุแก้ว,ทค1_202,lab,พุธ,8
+ENGSE611_sec1_lab,modern web,อ.ธนิต เกตุแก้ว,ทค1_202,lab,พุธ,9
+ENGSE611_sec1_lab,modern web,อ.ธนิต เกตุแก้ว,ทค1_202,lab,พุธ,10
+ENGSE611_sec1_lab,modern web,อ.ธนิต เกตุแก้ว,ทค1_202,lab,พุธ,11
+ENGSE611_sec2,modern web,อ.ธนิต เกตุแก้ว,ทค2_201,theory,อังคาร,11
+ENGSE611_sec2_lab,modern web,อ.ธนิต เกตุแก้ว,ทค2_101,lab,ศุกร์,8
+ENGSE611_sec2_lab,modern web,อ.ธนิต เกตุแก้ว,ทค2_101,lab,ศุกร์,9
+ENGSE611_sec2_lab,modern web,อ.ธนิต เกตุแก้ว,ทค2_101,lab,ศุกร์,10
+ENGSE611_sec2_lab,modern web,อ.ธนิต เกตุแก้ว,ทค2_101,lab,ศุกร์,11
+MENEE504_sec1_lab,seminar,อ.จักรภพ ใหม่เสน,ทค1_201,lab,อังคาร,8
+MENEE504_sec1_lab,seminar,อ.จักรภพ ใหม่เสน,ทค1_201,lab,อังคาร,9
+MENEE504_sec2_lab,seminar,อ.จักรภพ ใหม่เสน,ทค2_201,lab,อาทิตย์,16
+MENEE504_sec2_lab,seminar,อ.จักรภพ ใหม่เสน,ทค2_201,lab,อาทิตย์,17
+MENEE504_sec3_lab,seminar,อ.สมนึก สุระธง,ทค2_101,lab,อาทิตย์,18
+MENEE651_sec1,advanced digital engineering and internet of everything,อ.สมนึก สุระธง,ทค1_202,theory,เสาร์,8
+MENEE651_sec1,advanced digital engineering and internet of everything,อ.สมนึก สุระธง,ทค1_202,theory,เสาร์,9
+MENEE651_sec1,advanced digital engineering and internet of everything,อ.สมนึก สุระธง,ทค1_202,theory,เสาร์,10
+MENEE652_sec1,artificial intelligence and machine learning,อ.จักรภพ ใหม่เสน,ทค1_202,theory,อาทิตย์,11
+MENEE652_sec1,artificial intelligence and machine learning,อ.จักรภพ ใหม่เสน,ทค1_202,theory,อาทิตย์,12
+MENEE652_sec2,artificial intelligence and machine learning,อ.สมนึก สุระธง,ทค1_101,theory,อาทิตย์,8
+MENEE652_sec2,artificial intelligence and machine learning,อ.สมนึก สุระธง,ทค1_101,theory,อาทิตย์,9
+MENEE655_sec1,digital image processing and computer vision,อ.จักรภพ ใหม่เสน,ทค1_201,theory,อังคาร,17
+MENEE655_sec1,digital image processing and computer vision,อ.จักรภพ ใหม่เสน,ทค1_201,theory,อังคาร,18
+MENEE655_sec1,digital image processing and computer vision,อ.จักรภพ ใหม่เสน,ทค1_201,theory,อังคาร,19
+MENEE656_sec1,data and computer communication,อ.ประเสริฐ ลือโขง,ทค2_101,theory,อังคาร,17
+MENEE656_sec1,data and computer communication,อ.ประเสริฐ ลือโขง,ทค2_101,theory,อังคาร,18
+MENEE656_sec1,data and computer communication,อ.ประเสริฐ ลือโขง,ทค2_101,theory,อังคาร,19
+MENEE661_sec1,selected topics in computer and netwok engineering,อ.ประเสริฐ ลือโขง,ทค1_202,theory,อาทิตย์,8
+MENEE661_sec1,selected topics in computer and netwok engineering,อ.ประเสริฐ ลือโขง,ทค1_202,theory,อาทิตย์,9
+MENEE661_sec1,selected topics in computer and netwok engineering,อ.ประเสริฐ ลือโขง,ทค1_202,theory,อาทิตย์,10
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,8
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,9
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,10
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,11
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,12
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,13
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,14
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,15
+TEDCC814_sec1_lab,pre professional experience,อ.ปณต พุกกะพันธุ์,ทค1_205,lab,อาทิตย์,16
+TEDEE303_sec1,data structure and algorithms,อ.อนุพงศ ไพโรจน,ทค2_301,theory,ศุกร์,12
+TEDEE303_sec1,data structure and algorithms,อ.อนุพงศ ไพโรจน,ทค2_301,theory,ศุกร์,13
+TEDEE303_sec1_lab,data structure and algorithms,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พุธ,8
+TEDEE303_sec1_lab,data structure and algorithms,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พุธ,9
+TEDEE303_sec1_lab,data structure and algorithms,อ.อนุพงศ ไพโรจน,ทค2_301,lab,พุธ,10
+TEDEE311_sec1,computer technical,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค1_201,theory,พุธ,14
+TEDEE311_sec1_lab,computer technical,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พฤหัสบดี,8
+TEDEE311_sec1_lab,computer technical,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พฤหัสบดี,9
+TEDEE311_sec1_lab,computer technical,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พฤหัสบดี,10
+TEDEE311_sec1_lab,computer technical,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พฤหัสบดี,11
+TEDEE311_sec1_lab,computer technical,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พฤหัสบดี,12
+TEDEE311_sec1_lab,computer technical,อ.ณัฐชาสิทธ ชูเกียรติขจร,ทค2_101,lab,พฤหัสบดี,13
+TEDEE324_sec1,selected topics in computer engineering,อ.อนุพงศ ไพโรจน,ทค2_301,theory,อังคาร,8
+TEDEE324_sec1,selected topics in computer engineering,อ.อนุพงศ ไพโรจน,ทค2_301,theory,อังคาร,9
+TEDEE324_sec1_lab,selected topics in computer engineering,อ.อนุพงศ ไพโรจน,ทค2_302,lab,อังคาร,10
+TEDEE324_sec1_lab,selected topics in computer engineering,อ.อนุพงศ ไพโรจน,ทค2_302,lab,อังคาร,11
+TEDEE324_sec1_lab,selected topics in computer engineering,อ.อนุพงศ ไพโรจน,ทค2_302,lab,อังคาร,12
+กิจกรรม,กิจกรรม,,,activity,พุธ,15
+กิจกรรม,กิจกรรม,,,activity,พุธ,16
+กีฬา,กีฬา,,,activity,ศุกร์,15
+กีฬา,กีฬา,,,activity,ศุกร์,16
+ปฐมนิเทศ,ปฐมนิเทศ,,,activity,จันทร์,15
+ปฐมนิเทศ,ปฐมนิเทศ,,,activity,จันทร์,16

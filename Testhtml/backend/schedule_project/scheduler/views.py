@@ -2,9 +2,10 @@ import csv
 import json
 import logging
 import os
+import re
 from datetime import datetime, time
 from io import StringIO
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -13,8 +14,8 @@ from django.conf import settings
 from django.db.models import Case, When, Value, IntegerField
 
 from .models import (
-    ActivitySchedule, PreSchedule, RoomSchedule,
-    StudentGroup, TeacherSchedule, ScheduleInfo
+    ActivitySchedule, PreSchedule,
+    TeacherSchedule, ScheduleInfo
 )
 
 logger = logging.getLogger(__name__)
@@ -32,15 +33,19 @@ def to_int(v, default=0) -> int:
         return default
 
 DAY_ORDER = Case(
-    When(Day__in=['จันทร์', 'Mon'], then=Value(1)),
-    When(Day__in=['อังคาร', 'Tue'], then=Value(2)),
-    When(Day__in=['พุธ', 'Wed'], then=Value(3)),
-    When(Day__in=['พฤหัสบดี', 'Thu'], then=Value(4)),
-    When(Day__in=['ศุกร์', 'Fri'], then=Value(5)),
-    When(Day__in=['เสาร์', 'Sat'], then=Value(6)),
-    When(Day__in=['อาทิตย์', 'Sun'], then=Value(7)),
+    When(Day__in=['จันทร์','จ.','Mon','MON','monday'], then=Value(1)),
+    When(Day__in=['อังคาร','อ.','Tue','TUE','tuesday'], then=Value(2)),
+    When(Day__in=['พุธ','พ.','Wed','WED','wednesday'], then=Value(3)),
+    When(Day__in=['พฤหัสบดี','พฤ.','Thu','THU','thursday'], then=Value(4)),
+    When(Day__in=['ศุกร์','ศ.','Fri','FRI','friday'], then=Value(5)),
+    When(Day__in=['เสาร์','ส.','Sat','SAT','saturday'], then=Value(6)),
+    When(Day__in=['อาทิตย์','อา.','Sun','SUN','sunday'], then=Value(7)),
     default=Value(99), output_field=IntegerField()
 )
+
+def slot_start_hour(ts: str) -> int:
+    m = re.search(r'(\d{1,2})(?::\d{2})?(?:\s*-\s*\d{1,2}(?::\d{2})?)?$', ts or '')
+    return int(m.group(1)) if m else 0
 
 # ========== หน้าเว็บ (Page Views) ==========
 
@@ -50,7 +55,6 @@ def home(request):
         'title': 'ระบบจัดการสอน',
         'total_teachers': TeacherSchedule.objects.values('teacher_name_teacher').distinct().count(),
         'total_subjects': TeacherSchedule.objects.values('subject_code_teacher').distinct().count(),
-        'total_rooms': RoomSchedule.objects.count(),
         'total_activities': ActivitySchedule.objects.count(),
     }
     return render(request, 'index.html', context)
@@ -64,15 +68,6 @@ def teacher_page(request):
     }
     return render(request, 'teacher.html', context)
 
-def room_page(request):
-    """หน้าจัดการห้องเรียน"""
-    rooms = RoomSchedule.objects.all()
-    context = {
-        'title': 'จัดการห้องเรียน',
-        'rooms': rooms,
-    }
-    return render(request, 'room.html', context)
-
 def activities_page(request):
     """หน้าจัดการกิจกรรม"""
     activities = ActivitySchedule.objects.all()
@@ -81,15 +76,6 @@ def activities_page(request):
         'activities': activities,
     }
     return render(request, 'activities.html', context)
-
-def student_page(request):
-    """หน้าจัดการกลุ่มนักศึกษา"""
-    students = StudentGroup.objects.all()
-    context = {
-        'title': 'จัดการกลุ่มนักศึกษา',
-        'students': students,
-    }
-    return render(request, 'student.html', context)
 
 def pre_page(request):
     """หน้าจัดการตารางล่วงหน้า"""
@@ -129,9 +115,8 @@ def generate_schedule_api(request):
         result = run_genetic_algorithm_from_db()
         
         # ตรวจสอบผลลัพธ์
-        if result.get('status') == 'success':
+        if result.get('status') == 'success' and result.get('total_entries', 0) > 0:
             try:
-                # สร้างไฟล์ CSV และบันทึกลงเซิร์ฟเวอร์
                 csv_result = create_schedule_csv_file()
                 if csv_result.get('status') == 'success':
                     result['csv_file'] = csv_result['file_path']
@@ -141,10 +126,13 @@ def generate_schedule_api(request):
             except Exception as csv_error:
                 logger.error(f"Error creating CSV file: {csv_error}")
                 result['message'] += " (แต่เกิดข้อผิดพลาดในการสร้างไฟล์ CSV)"
-            
             return JsonResponse(result, json_dumps_params={'ensure_ascii': False})
         else:
-            return JsonResponse(result, status=400, json_dumps_params={'ensure_ascii': False})
+            return JsonResponse({
+                'status': 'error',
+                'message': result.get('message', 'ไม่สามารถสร้างตารางได้'),
+                'total_entries': result.get('total_entries', 0)
+            }, status=400, json_dumps_params={'ensure_ascii': False})
             
     except ImportError as e:
         logger.error(f"Import error: {e}")
@@ -229,14 +217,12 @@ def test_program_api(request):
     try:
         # ทดสอบการเชื่อมต่อฐานข้อมูล
         teacher_count = TeacherSchedule.objects.count()
-        room_count = RoomSchedule.objects.count()
         
         return JsonResponse({
             'status': 'success',
             'message': 'ระบบทำงานปกติ',
             'data': {
                 'teachers': teacher_count,
-                'rooms': room_count,
                 'timestamp': datetime.now().isoformat()
             }
         }, json_dumps_params={'ensure_ascii': False})
@@ -250,54 +236,47 @@ def test_program_api(request):
 @csrf_exempt
 @require_http_methods(["GET"])
 def view_schedule_api(request):
-    """API ดูตารางสอน"""
-    try:
-        # order: id | day | hour | course
-        # dir: asc | desc
-        order = (request.GET.get('order') or 'id').lower().strip()
-        direction = (request.GET.get('dir') or 'asc').lower().strip()
+    from .models import ScheduleInfo  # ปรับให้ตรง app ของคุณ
 
-        qs = ScheduleInfo.objects.all()
+    order = (request.GET.get('order') or 'id').lower().strip()
+    direction = (request.GET.get('dir') or 'asc').lower().strip()
 
-        def apply_dir(fields):
-            return [f if direction == 'asc' else f'-{f}' for f in fields]
+    def with_dir(*fields):
+        return [f if direction == 'asc' else f'-{f}' for f in fields]
 
-        if order == 'day':
-            qs = qs.annotate(day_order=DAY_ORDER) \
-                   .order_by(*apply_dir(['day_order', 'Hour', 'Course_Code', 'id']))
-        elif order == 'hour':
-            qs = qs.annotate(day_order=DAY_ORDER) \
-                   .order_by(*apply_dir(['day_order', 'Hour', 'id']))
-        elif order == 'course':
-            qs = qs.order_by(*apply_dir(['Course_Code', 'id']))
-        else:  # 'id' หรือค่าอื่น ๆ -> fallback เป็น id
-            qs = qs.order_by(*apply_dir(['id']))
+    qs = ScheduleInfo.objects.all()
 
-        schedules = [{
+    if order == 'day':
+        qs = qs.annotate(day_order=DAY_ORDER).order_by(*with_dir('day_order', 'Hour', 'Course_Code', 'id'))
+    elif order == 'hour':
+        qs = qs.annotate(day_order=DAY_ORDER).order_by(*with_dir('day_order', 'Hour', 'id'))
+    elif order == 'course':
+        qs = qs.order_by(*with_dir('Course_Code', 'id'))
+    else:
+        qs = qs.order_by(*with_dir('id'))
+
+    schedules = []
+    for s in qs:
+        hour = s.Hour or slot_start_hour(getattr(s, 'Time_Slot', ''))
+        schedules.append({
             'id': s.id,
-            'Course_Code': s.Course_Code,
-            'Subject_Name': s.Subject_Name,
-            'Teacher': s.Teacher,
-            'Room': s.Room,
-            'Room_Type': s.Room_Type,
-            'Type': s.Type,
-            'Day': s.Day,
-            'Hour': s.Hour,   # << ใช้ Hour
-            # ไม่ส่ง Time_Slot
-        } for s in qs]
+            'Course_Code': getattr(s, 'Course_Code', '') or getattr(s, 'Course', ''),
+            'Subject_Name': getattr(s, 'Subject_Name', '') or getattr(s, 'Course_Name', ''),
+            'Teacher': getattr(s, 'Teacher', '') or '',
+            'Room': getattr(s, 'Room', '') or '',
+            'Room_Type': getattr(s, 'Room_Type', '') or '',
+            'Type': getattr(s, 'Type', '') or '',
+            'Day': getattr(s, 'Day', '') or '',
+            'Hour': hour,
+            'Time_Slot': getattr(s, 'Time_Slot', '') or '',
+            # ถ้ามีฟิลด์กลุ่มนักศึกษา/section ให้ส่งด้วย (ไม่มีได้ค่าว่าง)
+            'Student_Group': getattr(s, 'Student_Group', '') or getattr(s, 'Section', '') or '',
+        })
 
-        return JsonResponse({
-            'status': 'success',
-            'total_entries': len(schedules),
-            'schedules': schedules
-        }, json_dumps_params={'ensure_ascii': False})
-
-    except Exception as e:
-        logger.error(f"Error getting schedule from database: {e}")
-        return JsonResponse(
-            {'status': 'error', 'message': str(e)},
-            status=500, json_dumps_params={'ensure_ascii': False}
-        )
+    return JsonResponse(
+        {'status': 'success', 'total_entries': len(schedules), 'schedules': schedules},
+        json_dumps_params={'ensure_ascii': False}
+    )
 
 # ========== Clear Schedule API ==========
 
@@ -596,400 +575,6 @@ def upload_teacher_csv(request):
             'message': f'เกิดข้อผิดพลาดในการอัปโหลด: {str(e)}'
         }, status=500, json_dumps_params={'ensure_ascii': False})
 
-# ========== ROOM APIs ==========
-
-@csrf_exempt
-def get_rooms(request):
-    """API สำหรับดึงข้อมูลห้องเรียนทั้งหมด"""
-    try:
-        rooms = RoomSchedule.objects.all()
-        rooms_data = []
-        
-        for room in rooms:
-            rooms_data.append({
-                'id': room.id,
-                'room_name_room': room.room_name_room,
-                'room_type_room': room.room_type_room,
-            })
-        
-        return JsonResponse({
-            'status': 'success',
-            'rooms': rooms_data
-        }, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error getting rooms: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def add_room(request):
-    """API สำหรับเพิ่มห้องเรียน"""
-    try:
-        data = json.loads(request.body)
-        
-        room = RoomSchedule.objects.create(
-            room_name_room=data.get('room_name_room'),
-            room_type_room=data.get('room_type_room', ''),
-        )
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': 'เพิ่มข้อมูลห้องเรียนสำเร็จ',
-            'room_id': room.id
-        }, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error adding room: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def add_room_bulk(request):
-    """API สำหรับเพิ่มห้องเรียนหลายห้องพร้อมกัน"""
-    try:
-        # body อาจเป็น b'' ได้ จัด default เป็น {} กันพัง
-        data = json.loads(request.body or b'{}')
-    except json.JSONDecodeError:
-        return JsonResponse(
-            {"status": "error", "message": "รูปแบบ JSON ไม่ถูกต้อง"},
-            status=400, json_dumps_params={"ensure_ascii": False}
-        )
-
-    rooms_data = data.get("rooms", [])
-    if not isinstance(rooms_data, list):
-        return JsonResponse(
-            {"status": "error", "message": "ฟิลด์ 'rooms' ต้องเป็นลิสต์"},
-            status=400, json_dumps_params={"ensure_ascii": False}
-        )
-
-    created_ids = []
-    for room_data in rooms_data:
-        room = RoomSchedule.objects.create(
-            room_name_room = room_data.get("room_name_room", ""),
-            room_type_room = room_data.get("room_type_room", "")
-        )
-        created_ids.append(room.id)
-
-    return JsonResponse(
-        {
-            "status": "success",
-            "message": f"เพิ่มข้อมูลห้องเรียน {len(created_ids)} ห้องสำเร็จ",
-            "created_ids": created_ids
-        },
-        json_dumps_params={"ensure_ascii": False}
-    )
-
-@csrf_exempt
-@require_http_methods(["PUT"])
-def update_room(request, id):
-    """API สำหรับแก้ไขข้อมูลห้องเรียน"""
-    try:
-        room = RoomSchedule.objects.get(id=id)
-        data = json.loads(request.body)
-        
-        room.room_name_room = data.get('room_name_room', room.room_name_room)
-        room.room_type_room = data.get('room_type_room', room.room_type_room)
-        
-        room.save()
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': 'แก้ไขข้อมูลห้องเรียนสำเร็จ'
-        }, json_dumps_params={'ensure_ascii': False})
-    except RoomSchedule.DoesNotExist:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'ไม่พบข้อมูลห้องเรียน'
-        }, status=404, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error updating room: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["DELETE"])
-def delete_room(request, id):
-    """API สำหรับลบข้อมูลห้องเรียน"""
-    try:
-        room = RoomSchedule.objects.get(id=id)
-        room.delete()
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': 'ลบข้อมูลห้องเรียนสำเร็จ'
-        }, json_dumps_params={'ensure_ascii': False})
-    except RoomSchedule.DoesNotExist:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'ไม่พบข้อมูลห้องเรียน'
-        }, status=404, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error deleting room: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def upload_room_csv(request):
-    """API สำหรับอัปโหลดไฟล์ CSV ข้อมูลห้องเรียน"""
-    try:
-        if 'file' not in request.FILES:
-            return JsonResponse({
-                'status': 'error',
-                'message': 'ไม่พบไฟล์ที่อัปโหลด'
-            }, status=400, json_dumps_params={'ensure_ascii': False})
-        
-        csv_file = request.FILES['file']
-        
-        if not csv_file.name.endswith('.csv'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'กรุณาอัปโหลดไฟล์ CSV เท่านั้น'
-            }, status=400, json_dumps_params={'ensure_ascii': False})
-        
-        # อ่านไฟล์ CSV พร้อมจัดการ encoding
-        try:
-            decoded_file = csv_file.read().decode('utf-8-sig')
-        except UnicodeDecodeError:
-            for enc in ('utf-8', 'cp874', 'tis-620', 'cp1252'):
-                try:
-                    csv_file.seek(0)
-                    decoded_file = csv_file.read().decode(enc)
-                    break
-                except UnicodeDecodeError:
-                    continue
-        
-        csv_data = StringIO(decoded_file)
-        reader = csv.DictReader(csv_data)
-        
-        created_count = 0
-        errors = []
-        
-        for row_num, row in enumerate(reader, start=2):
-            try:
-                RoomSchedule.objects.create(
-                    room_name_room=norm_code(row.get('room_name_room', '')),
-                    room_type_room=norm(row.get('room_type_room', '')),
-                )
-                created_count += 1
-            except Exception as e:
-                errors.append(f'แถว {row_num}: {str(e)}')
-        
-        if errors:
-            return JsonResponse({
-                'status': 'partial_success',
-                'message': f'อัปโหลดสำเร็จ {created_count} รายการ แต่มีข้อผิดพลาด {len(errors)} รายการ',
-                'created_count': created_count,
-                'errors': errors[:10]
-            }, json_dumps_params={'ensure_ascii': False})
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': f'อัปโหลดข้อมูลห้องเรียนสำเร็จ {created_count} รายการ',
-            'created_count': created_count
-        }, json_dumps_params={'ensure_ascii': False})
-        
-    except Exception as e:
-        logger.error(f"Error uploading room CSV: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': f'เกิดข้อผิดพลาดในการอัปโหลด: {str(e)}'
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-# ========== STUDENT APIs ==========
-
-@csrf_exempt
-def get_students(request):
-    """API สำหรับดึงข้อมูลนักศึกษาทั้งหมด"""
-    try:
-        students = StudentGroup.objects.all()
-        students_data = []
-        
-        for student in students:
-            students_data.append({
-                'id': student.id,
-                'student_group': student.student_group,
-                'subject_code_stu': student.subject_code_stu,
-                'curriculum_type_stu': student.curriculum_type_stu,
-            })
-        
-        return JsonResponse({
-            'status': 'success',
-            'students': students_data
-        }, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error getting students: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def add_student(request):
-    """API สำหรับเพิ่มกลุ่มนักศึกษา"""
-    try:
-        data = json.loads(request.body)
-        student = StudentGroup.objects.create(
-            student_group=data.get('student_group'),
-            subject_code_stu=data.get('subject_code_stu'),
-            curriculum_type_stu=data.get('curriculum_type_stu', ''),
-        )
-        return JsonResponse({
-            'status': 'success',
-            'message': 'เพิ่มข้อมูลกลุ่มนักศึกษาสำเร็จ',
-            'student_id': student.id
-        }, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error adding student: {e}")
-        return JsonResponse({'status':'error','message':str(e)},
-                            status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def add_student_bulk(request):
-    """API สำหรับเพิ่มกลุ่มนักศึกษาหลายกลุ่มพร้อมกัน"""
-    try:
-        data = json.loads(request.body)
-        students_data = data.get('students', [])
-        
-        created_students = []
-        for student_data in students_data:
-            student = StudentGroup.objects.create(
-                student_group=student_data.get('student_group'),
-                subject_code_stu=student_data.get('subject_code_stu'),
-                curriculum_type_stu=student_data.get('curriculum_type_stu', ''),
-            )
-            created_students.append(student.id)
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': f'เพิ่มข้อมูลกลุ่มนักศึกษา {len(created_students)} กลุ่มสำเร็จ',
-            'created_ids': created_students
-        }, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error adding students bulk: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["PUT"])
-def update_student(request, id):
-    """API สำหรับแก้ไขข้อมูลกลุ่มนักศึกษา"""
-    try:
-        student = StudentGroup.objects.get(id=id)
-        data = json.loads(request.body)
-        
-        student.student_group = data.get('student_group', student.student_group)
-        student.subject_code_stu = data.get('subject_code_stu', student.subject_code_stu)
-        student.curriculum_type_stu = data.get('curriculum_type_stu', student.curriculum_type_stu)
-        
-        student.save()
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': 'แก้ไขข้อมูลกลุ่มนักศึกษาสำเร็จ'
-        }, json_dumps_params={'ensure_ascii': False})
-    except StudentGroup.DoesNotExist:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'ไม่พบข้อมูลกลุ่มนักศึกษา'
-        }, status=404, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error updating student: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["DELETE"])
-def delete_student(request, id):
-    """API สำหรับลบข้อมูลกลุ่มนักศึกษา"""
-    try:
-        student = StudentGroup.objects.get(id=id)
-        student.delete()
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': 'ลบข้อมูลกลุ่มนักศึกษาสำเร็จ'
-        }, json_dumps_params={'ensure_ascii': False})
-    except StudentGroup.DoesNotExist:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'ไม่พบข้อมูลกลุ่มนักศึกษา'
-        }, status=404, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error deleting student: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def upload_student_csv(request):
-    """API สำหรับอัปโหลดไฟล์ CSV ข้อมูลกลุ่มนักศึกษา"""
-    try:
-        if 'file' not in request.FILES:
-            return JsonResponse({
-                'status': 'error',
-                'message': 'ไม่พบไฟล์ที่อัปโหลด'
-            }, status=400, json_dumps_params={'ensure_ascii': False})
-        
-        csv_file = request.FILES['file']
-        
-        if not csv_file.name.endswith('.csv'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'กรุณาอัปโหลดไฟล์ CSV เท่านั้น'
-            }, status=400, json_dumps_params={'ensure_ascii': False})
-        
-        # อ่านไฟล์ CSV พร้อมจัดการ encoding
-        try:
-            decoded_file = csv_file.read().decode('utf-8-sig')
-        except UnicodeDecodeError:
-            for enc in ('utf-8', 'cp874', 'tis-620', 'cp1252'):
-                try:
-                    csv_file.seek(0)
-                    decoded_file = csv_file.read().decode(enc)
-                    break
-                except UnicodeDecodeError:
-                    continue
-        
-        csv_data = csv.DictReader(StringIO(decoded_file))
-        
-        created_count = 0
-        for row in csv_data:
-            StudentGroup.objects.create(
-                student_group=norm(row.get('student_group', '')),
-                subject_code_stu=norm_code(row.get('subject_code_stu', '')),
-                curriculum_type_stu=norm(row.get('curriculum_type_stu', '')),
-            )
-            created_count += 1
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': f'อัปโหลดข้อมูลกลุ่มนักศึกษา {created_count} รายการสำเร็จ'
-        }, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        logger.error(f"Error uploading student CSV: {e}")
-        return JsonResponse({
-            'status': 'error',
-            'message': f'เกิดข้อผิดพลาดในการอัปโหลดไฟล์: {str(e)}'
-        }, status=500, json_dumps_params={'ensure_ascii': False})
-
 # ========== PRE-SCHEDULE APIs ==========
 
 @csrf_exempt
@@ -1033,19 +618,31 @@ def add_pre(request):
     try:
         data = json.loads(request.body)
         
-        # แปลงเวลาจาก string เป็น time object
+        code = norm_code(data.get('subject_code_pre', ''))
+        if not code:
+            return JsonResponse(
+                {'status': 'error', 'message': 'รหัสวิชาห้ามว่าง'},
+                status=400, json_dumps_params={'ensure_ascii': False}
+            )
+        
+        # แปลง/เตรียมเวลาเริ่ม
         start_time = parse_time_flexible(data.get('start_time_pre'), '08:00')
-        stop_time  = parse_time_flexible(data.get('stop_time_pre'),  '09:00')
 
+        # ถ้าฝั่งหน้าเว็บไม่ส่ง stop_time_pre มา ให้คำนวณจาก start + hours
+        if data.get('stop_time_pre'):
+            stop_time = parse_time_flexible(data.get('stop_time_pre'), '09:00')
+        else:
+            stop_s = compute_stop_str(data.get('start_time_pre', ''), str(data.get('hours_pre', '0')))
+            stop_time = parse_time_flexible(stop_s or '09:00', '09:00')
         
         pre = PreSchedule.objects.create(
             teacher_name_pre=data.get('teacher_name_pre'),
-            subject_code_pre=data.get('subject_code_pre'),
+            subject_code_pre=code,  # using normalized code
             subject_name_pre=data.get('subject_name_pre'),
             curriculum_type_pre=data.get('curriculum_type_pre', ''),
             room_type_pre=data.get('room_type_pre', ''),
             type_pre = data.get('type_pre', ''),
-            hours_pre=data.get('hours_pre', 0),
+            hours_pre = to_int(data.get('hours_pre', 0)),
             day_pre=data.get('day_pre', ''),
             start_time_pre=start_time,
             stop_time_pre=stop_time,
@@ -1071,34 +668,54 @@ def update_pre(request, id):
     try:
         pre = PreSchedule.objects.get(id=id)
         data = json.loads(request.body)
-        
+
+        code_in = norm_code(data.get('subject_code_pre', pre.subject_code_pre))
+        if not code_in:
+            pre.subject_code_pre = code_in
+            # กำลังให้ดูจากเดิม -> มีแค่
+            # ถ้าว่าง ให้ดูจากเดิม
+
+        # ฟิลด์ทั่วไป
         pre.teacher_name_pre = data.get('teacher_name_pre', pre.teacher_name_pre)
-        pre.subject_code_pre = data.get('subject_code_pre', pre.subject_code_pre)
+        pre.subject_code_pre = code_in  # using normalized code
         pre.subject_name_pre = data.get('subject_name_pre', pre.subject_name_pre)
         pre.curriculum_type_pre = data.get('curriculum_type_pre', pre.curriculum_type_pre)
         pre.room_type_pre = data.get('room_type_pre', pre.room_type_pre)
         pre.type_pre = data.get('type_pre', pre.type_pre)
-        pre.hours_pre = data.get('hours_pre', pre.hours_pre)
+        pre.hours_pre = to_int(data.get('hours_pre', pre.hours_pre))
         pre.day_pre = data.get('day_pre', pre.day_pre)
         pre.room_name_pre = data.get('room_name_pre', pre.room_name_pre)
-        
-        # แปลงเวลาถ้ามีการส่งมา
-        if data.get('start_time_pre'):
-            pre.start_time_pre = parse_time_flexible(data.get('start_time_pre'), '08:00')
-        if data.get('stop_time_pre'):
-            pre.stop_time_pre = parse_time_flexible(data.get('stop_time_pre'), '09:00')
-        
+
+        # จัดการเวลา
+        start_in = data.get('start_time_pre')
+        stop_in  = data.get('stop_time_pre')
+
+        if start_in:
+            pre.start_time_pre = parse_time_flexible(start_in, '08:00')
+
+        if stop_in:
+            # ถ้าส่ง stop มา ใช้ค่าที่ส่งมา
+            pre.stop_time_pre = parse_time_flexible(stop_in, '09:00')
+        else:
+            # ไม่ส่ง stop มา -> คำนวณจาก start + hours (ใช้ค่าที่ส่งใหม่หรือของเดิม)
+            start_for_calc = start_in or (pre.start_time_pre.strftime('%H:%M') if pre.start_time_pre else '')
+            hours_for_calc = data.get('hours_pre', pre.hours_pre)
+            stop_str = compute_stop_str(start_for_calc, str(hours_for_calc))
+            if stop_str:
+                pre.stop_time_pre = parse_time_flexible(stop_str, '09:00')
+
         pre.save()
-        
         return JsonResponse({
             'status': 'success',
             'message': 'แก้ไขตารางล่วงหน้าสำเร็จ'
         }, json_dumps_params={'ensure_ascii': False})
+
     except PreSchedule.DoesNotExist:
         return JsonResponse({
             'status': 'error',
             'message': 'ไม่พบข้อมูลตารางล่วงหน้า'
         }, status=404, json_dumps_params={'ensure_ascii': False})
+
     except Exception as e:
         logger.error(f"Error updating pre schedule: {e}")
         return JsonResponse({
@@ -1169,20 +786,29 @@ def upload_pre_csv(request):
         
         for row_num, row in enumerate(reader, start=2):
             try:
+                
+                start_str = (row.get('start_time_pre','') or '').strip()
+                hours_str = (row.get('hours_pre','') or '').strip()
+                stop_str  = (row.get('stop_time_pre','') or '').strip()
+                if not stop_str:
+                    stop_str = compute_stop_str(start_str, hours_str)  # ใช้ยูทิลิตี้คำนวณของคุณ
+                start_val = parse_time_flexible(start_str, '08:00')
+                stop_val  = parse_time_flexible(stop_str or '09:00', '09:00')
+                
                 PreSchedule.objects.create(
-                    teacher_name_pre=norm(row.get('teacher_name_pre', '')),
-                    subject_code_pre=norm_code(row.get('subject_code_pre', '')),
-                    subject_name_pre=norm(row.get('subject_name_pre', '')),
-                    curriculum_type_pre=norm(row.get('curriculum_type_pre', '')),
-                    room_type_pre=norm(row.get('room_type_pre', '')),
-                    section_pre=norm(row.get('section_pre', '')),
-                    theory_slot_amount_pre=to_int(row.get('theory_slot_amount_pre', 0)),
-                    lab_slot_amount_pre=to_int(row.get('lab_slot_amount_pre', 0)),
-                    day_pre=norm(row.get('day_pre', '')),
-                    start_time_pre=parse_time_flexible(row.get('start_time_pre'), '08:00'),
-                    stop_time_pre=parse_time_flexible(row.get('stop_time_pre'), '09:00'),
-                    room_name_pre=norm_code(row.get('room_name_pre', '')),
-                )
+                teacher_name_pre=norm(row.get('teacher_name_pre', '')),
+                subject_code_pre=norm_code(row.get('subject_code_pre', '')),
+                subject_name_pre=norm(row.get('subject_name_pre', '')),
+                curriculum_type_pre=norm(row.get('curriculum_type_pre', '')),
+                room_type_pre=norm(row.get('room_type_pre', '')),
+                type_pre=norm(row.get('type_pre', '')),
+                hours_pre=to_int(hours_str),
+                day_pre=norm(row.get('day_pre', '')),
+                start_time_pre=start_val,
+               stop_time_pre=stop_val,
+                room_name_pre=norm_code(row.get('room_name_pre', '')),
+            )
+                
                 created_count += 1
             except Exception as e:
                 errors.append(f'แถว {row_num}: {str(e)}')
@@ -1501,6 +1127,23 @@ def parse_time_flexible(value, default_time='08:00'):
     # สุดท้าย fallback
     return datetime.strptime(default_time, '%H:%M').time()
 
+from datetime import datetime, date, timedelta
+
+def compute_stop_str(start_str: str, hours_str: str) -> str:
+    """
+    รับ start_time ('HH:MM' หรือรูปแบบยืดหยุ่น) + ชั่วโมง (เช่น '2' หรือ '1.5')
+    คืนค่าเวลาสิ้นสุดเป็นสตริง 'HH:MM' (คำนวณแบบข้ามวันได้)
+    """
+    try:
+        start_t = parse_time_flexible(start_str, '08:00')
+        h = float(hours_str or '0')
+        if h <= 0:
+            return ''
+        end_dt = datetime.combine(date.today(), start_t) + timedelta(hours=h)
+        return end_dt.strftime('%H:%M')
+    except Exception:
+        return ''
+
 # ========== Download Schedule API ==========
 
 @csrf_exempt
@@ -1543,3 +1186,9 @@ def download_schedule(request):
         logger.error(f"Error downloading schedule: {e}")
         return JsonResponse({'status': 'error', 'message': str(e)},
                             status=500, json_dumps_params={'ensure_ascii': False})
+
+# ========== Add info ==========
+def add_info(request):
+    """หน้าเพิ่มข้อมูล"""
+    context = {'title': 'เพิ่มข้อมูล'}
+    return render(request, 'add.html', context)

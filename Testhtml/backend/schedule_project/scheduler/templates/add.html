@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ระบบจัดตารางสอน — เพิ่มข้อมูล</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+  <style>
+    body { background: #f7f8fc; }
+    /* ความสูง navbar โดยประมาณ ใช้กับ sticky sidebar */
+    :root { --nav-h: 76px; }
+
+    .navbar { background: #fff; }
+    .sidebar-sticky {
+      position: sticky;
+      top: var(--nav-h);
+    }
+    .side-link { display: flex; align-items: center; gap: .5rem; }
+    .side-link .bi { font-size: 1.05rem; opacity: .9; }
+    .card { border: 0; border-radius: 14px; }
+    .card-header {
+      background: transparent;
+      border: 0;
+      padding-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+     <!-- Navigation -->
+        <ul class="nav nav-tabs border-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+            href="{% url 'home' %}"
+            {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+            <i class="bi bi-house me-2"></i>หน้าหลัก
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'add' %}active{% endif %}"
+            href="{% url 'add' %}"
+            {% if request.resolver_match.url_name == 'add' %}aria-current="page"{% endif %}>
+            <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'pre' %}active{% endif %}"
+            href="{% url 'pre' %}"
+            {% if request.resolver_match.url_name == 'pre' %}aria-current="page"{% endif %}>
+            <i class="bi bi-book me-2"></i>ลงล่วงหน้า
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'teacher' %}active{% endif %}"
+            href="{% url 'teacher' %}"
+            {% if request.resolver_match.url_name == 'teacher' %}aria-current="page"{% endif %}>
+            <i class="bi bi-people me-2"></i>รายวิชา
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'activities' %}active{% endif %}"
+            href="{% url 'activities' %}"
+            {% if request.resolver_match.url_name == 'activities' %}aria-current="page"{% endif %}>
+            <i class="bi bi-activity me-2"></i>กิจกรรม
+            </a>
+        </li>
+        </ul>
+        
+  <!-- =================== MAIN: SIDEBAR + TAB CONTENT =================== -->
+  <div class="container-fluid py-4">
+    <div class="row g-4">
+
+      <!-- ========== SIDEBAR (แท็บด้านข้าง) ========== -->
+      <aside class="col-12 col-md-3 col-lg-2">
+        <div class="card shadow-sm sidebar-sticky">
+          <div class="card-body p-2">
+            <div class="nav nav-pills flex-column" id="sideTab" role="tablist"
+                 aria-orientation="vertical">
+
+              <a class="nav-link side-link" id="t-upload-tab" data-bs-toggle="pill"
+                 href="#t-upload" role="tab" aria-controls="t-upload">
+                <i class="bi bi-cloud-upload"></i> อัปโหลด CSV
+              </a>
+
+              <a class="nav-link active side-link" id="t-add-tab" data-bs-toggle="pill"
+                 href="#t-add" role="tab" aria-controls="t-add" aria-selected="true">
+                <i class="bi bi-plus-square"></i> เพิ่มข้อมูล
+              </a>
+
+              <a class="nav-link side-link" id="t-list-tab" data-bs-toggle="pill"
+                 href="#t-list" role="tab" aria-controls="t-list">
+                <i class="bi bi-clipboard-data"></i> รายการล่วงหน้า
+              </a>
+
+              <a class="nav-link side-link" id="t-course-tab" data-bs-toggle="pill"
+                 href="#t-course" role="tab" aria-controls="t-course">
+                <i class="bi bi-journal-bookmark"></i> รายวิชา
+              </a>
+
+              <a class="nav-link side-link" id="t-teacher-tab" data-bs-toggle="pill"
+                 href="#t-teacher" role="tab" aria-controls="t-teacher">
+                <i class="bi bi-person-badge"></i> อาจารย์
+              </a>
+
+              <a class="nav-link side-link" id="t-preview-tab" data-bs-toggle="pill"
+                 href="#t-preview" role="tab" aria-controls="t-preview">
+                <i class="bi bi-calendar2-week"></i> ตารางตัวอย่าง
+              </a>
+
+              <a class="nav-link side-link" id="t-settings-tab" data-bs-toggle="pill"
+                 href="#t-settings" role="tab" aria-controls="t-settings">
+                <i class="bi bi-gear"></i> ตั้งค่า
+              </a>
+
+              <a class="nav-link side-link" id="t-help-tab" data-bs-toggle="pill"
+                 href="#t-help" role="tab" aria-controls="t-help">
+                <i class="bi bi-question-circle"></i> คู่มือ
+              </a>
+
+              <a class="nav-link side-link" id="t-about-tab" data-bs-toggle="pill"
+                 href="#t-about" role="tab" aria-controls="t-about">
+                <i class="bi bi-info-circle"></i> เกี่ยวกับ
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ========== CONTENT (สลับภายในหน้าเดียว) ========== -->
+      <main class="col-12 col-md-9 col-lg-10">
+        <div class="tab-content" id="sideTabContent">
+
+          <!-- อัปโหลด CSV -->
+          <div class="tab-pane fade" id="t-upload" role="tabpanel"
+               aria-labelledby="t-upload-tab">
+            <div class="card shadow-sm">
+              <div class="card-header">
+                <h5 class="mb-0">อัปโหลดไฟล์ CSV</h5>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <input type="file" class="form-control" accept=".csv">
+                  </div>
+                  <div class="col-md-3">
+                    <button class="btn btn-primary w-100">อัปโหลด</button>
+                  </div>
+                  <div class="col-12 text-muted small">
+                    รองรับไฟล์สกุล .csv เท่านั้น
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- เพิ่มข้อมูล (ACTIVE) -->
+          <div class="tab-pane fade show active" id="t-add" role="tabpanel"
+               aria-labelledby="t-add-tab">
+            <div class="card shadow-sm">
+              <div class="card-header">
+                <h5 class="mb-0">เพิ่มข้อมูล</h5>
+              </div>
+              <div class="card-body">
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form class="row g-3">
+                  <div class="col-md-4">
+                    <label class="form-label">อาจารย์</label>
+                    <input type="text" class="form-control"
+                           placeholder="กรอกชื่ออาจารย์">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">รหัสวิชา</label>
+                    <input type="text" class="form-control"
+                           placeholder="เช่น ENGE123">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">ชื่อวิชา</label>
+                    <input type="text" class="form-control" placeholder="กรอกชื่อวิชา">
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">ประเภทวิชา</label>
+                    <select class="form-select">
+                      <option selected disabled>เลือกประเภท</option>
+                      <option>ทฤษฎี</option>
+                      <option>ปฏิบัติ</option>
+                      <option>โครงงาน</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">ประเภทภาควิชา</label>
+                    <select class="form-select">
+                      <option selected disabled>เลือกประเภท</option>
+                      <option>วิศวกรรม</option>
+                      <option>วิทยาศาสตร์</option>
+                      <option>บริหารธุรกิจ</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">ประเภทนักศึกษา</label>
+                    <select class="form-select">
+                      <option selected disabled>เลือกประเภท</option>
+                      <option>ปริญญาตรี</option>
+                      <option>ปริญญาโท</option>
+                      <option>ปริญญาเอก</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">จำนวนชั่วโมง</label>
+                    <input type="number" class="form-control" min="1" max="12"
+                           placeholder="เช่น 3">
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">วัน</label>
+                    <select class="form-select">
+                      <option selected disabled>เลือกวัน</option>
+                      <option>จันทร์</option>
+                      <option>อังคาร</option>
+                      <option>พุธ</option>
+                      <option>พฤหัสบดี</option>
+                      <option>ศุกร์</option>
+                      <option>เสาร์</option>
+                      <option>อาทิตย์</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">เวลาเริ่ม</label>
+                    <input type="time" class="form-control">
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="form-label">เวลาสิ้นสุด</label>
+                    <input type="time" class="form-control">
+                  </div>
+
+                  <div class="col-md-8">
+                    <label class="form-label">ห้องเรียน</label>
+                    <input type="text" class="form-control" placeholder="เช่น 201">
+                  </div>
+
+                  <div class="col-12">
+                    <button type="button" class="btn btn-primary">
+                      เพิ่มข้อมูล
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- รายการล่วงหน้า -->
+          <div class="tab-pane fade" id="t-list" role="tabpanel"
+               aria-labelledby="t-list-tab">
+            <div class="card shadow-sm">
+              <div class="card-header">
+                <h5 class="mb-0">รายการล่วงหน้า</h5>
+              </div>
+              <div class="card-body text-muted">
+                (พื้นที่แสดงรายการข้อมูลที่เพิ่มไว้ล่วงหน้า)
+              </div>
+            </div>
+          </div>
+
+          <!-- รายวิชา -->
+          <div class="tab-pane fade" id="t-course" role="tabpanel"
+               aria-labelledby="t-course-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"><h5 class="mb-0">รายวิชา</h5></div>
+              <div class="card-body text-muted">Placeholder</div>
+            </div>
+          </div>
+
+          <!-- อาจารย์ -->
+          <div class="tab-pane fade" id="t-teacher" role="tabpanel"
+               aria-labelledby="t-teacher-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"><h5 class="mb-0">อาจารย์</h5></div>
+              <div class="card-body text-muted">Placeholder</div>
+            </div>
+          </div>
+
+          <!-- ตารางตัวอย่าง -->
+          <div class="tab-pane fade" id="t-preview" role="tabpanel"
+               aria-labelledby="t-preview-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"><h5 class="mb-0">ตารางตัวอย่าง</h5></div>
+              <div class="card-body text-muted">Placeholder</div>
+            </div>
+          </div>
+
+          <!-- ตั้งค่า -->
+          <div class="tab-pane fade" id="t-settings" role="tabpanel"
+               aria-labelledby="t-settings-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"><h5 class="mb-0">ตั้งค่า</h5></div>
+              <div class="card-body text-muted">Placeholder</div>
+            </div>
+          </div>
+
+          <!-- คู่มือ -->
+          <div class="tab-pane fade" id="t-help" role="tabpanel"
+               aria-labelledby="t-help-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"><h5 class="mb-0">คู่มือ</h5></div>
+              <div class="card-body text-muted">Placeholder</div>
+            </div>
+          </div>
+
+          <!-- เกี่ยวกับ -->
+          <div class="tab-pane fade" id="t-about" role="tabpanel"
+               aria-labelledby="t-about-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"><h5 class="mb-0">เกี่ยวกับ</h5></div>
+              <div class="card-body text-muted">Placeholder</div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script>
+    // เปิดแท็บตาม hash (#t-add ฯลฯ) และอัปเดต hash เมื่อสลับแท็บ
+    const hash = window.location.hash;
+    if (hash && document.querySelector(`[href="${hash}"]`)) {
+      new bootstrap.Tab(document.querySelector(`[href="${hash}"]`)).show();
+    }
+    document.querySelectorAll('#sideTab a[data-bs-toggle="pill"]').forEach(a => {
+      a.addEventListener('shown.bs.tab', e => {
+        history.replaceState(null, '', e.target.getAttribute('href'));
+      });
+    });
+  </script>
+</body>
+</html>

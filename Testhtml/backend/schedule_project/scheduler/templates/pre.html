@@ -346,6 +346,24 @@
 .form-grid .form-control,
 .form-grid .form-select { height: 48px; }
 
+        /* ทำให้ดูเหมือนช่องอ่านอย่างเดียว: ไม่มีลูกศร, คลิกไม่ได้, พื้นหลังขาว */
+        .form-select.readonly-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: none !important;    /* ซ่อน caret ▼ ของ Bootstrap */
+            pointer-events: none;                 /* กันการคลิกเมาส์ */
+            background-color: #fff !important;   /* พื้นหลังขาว */
+            color: #212529;                       /* สีข้อความปกติ */
+            border-color: var(--bs-border-color); /* เส้นขอบเหมือนช่องปกติ */
+            opacity: 1;                           /* ไม่จืด */
+        }
+        .form-select.readonly-select::-ms-expand { display: none; } /* IE/Edge เท่า */
+        .form-select.readonly-select:focus { box-shadow: none; }
+
+        /* ไม่ placeholder "คำนวณอัตโนมัติ" ของออปชัน */
+        .form-select.readonly-select option[value=""] { color: #6c757d; }
+
     </style>
 </head>
 <body>
@@ -378,44 +396,45 @@
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="bg-white border-bottom">
-        <div class="container-fluid" style="max-width: 1400px;">
-            <ul class="nav nav-tabs border-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-house me-2"></i>หน้าหลัก
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'pre' %}" aria-current="page">
-                        <i class="bi bi-book me-2"></i>ลงล่วงหน้า
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher' %}">
-                        <i class="bi bi-people me-2"></i>รายวิชา
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'room' %}">
-                        <i class="bi bi-geo-alt me-2"></i>ห้องเรียน
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student' %}">
-                        <i class="bi bi-person-badge me-2"></i>นักศึกษา
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'activities' %}">
-                        <i class="bi bi-activity me-2"></i>กิจกรรม
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+ <!-- Navigation -->
+        <ul class="nav nav-tabs border-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+            href="{% url 'home' %}"
+            {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+            <i class="bi bi-house me-2"></i>หน้าหลัก
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'add' %}active{% endif %}"
+            href="{% url 'add' %}"
+            {% if request.resolver_match.url_name == 'add' %}aria-current="page"{% endif %}>
+            <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'pre' %}active{% endif %}"
+            href="{% url 'pre' %}"
+            {% if request.resolver_match.url_name == 'pre' %}aria-current="page"{% endif %}>
+            <i class="bi bi-book me-2"></i>ลงล่วงหน้า
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'teacher' %}active{% endif %}"
+            href="{% url 'teacher' %}"
+            {% if request.resolver_match.url_name == 'teacher' %}aria-current="page"{% endif %}>
+            <i class="bi bi-people me-2"></i>รายวิชา
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'activities' %}active{% endif %}"
+            href="{% url 'activities' %}"
+            {% if request.resolver_match.url_name == 'activities' %}aria-current="page"{% endif %}>
+            <i class="bi bi-activity me-2"></i>กิจกรรม
+            </a>
+        </li>
+        </ul>
+        
     <!-- Django Messages -->
     {% if messages %}
     <script>
@@ -485,7 +504,9 @@
                                 <div class="col-md-4">
                                 <label for="subject_code_pre" class="form-label">รหัสวิชา</label>
                                 <input type="text" class="form-control"
-                                        id="subject_code_pre" placeholder="เช่น ENGCE123">
+                                        id="subject_code_pre" placeholder="เช่น ENGCE123"
+                                        required
+                                        oninput="this.value = this.value.toUpperCase().trim()">
                                 </div>
 
                                 <div class="col-md-4">
@@ -525,7 +546,8 @@
 
                                 <div class="col-md-3">
                                 <label for="hours_pre" class="form-label">จำนวนชั่วโมง</label>
-                                <input type="number" class="form-control" id="hours_pre" min="0">
+                                <!-- Added step="0.5" and min="0.5" attributes -->
+                                <input type="number" class="form-control" id="hours_pre" step="0.5" min="0.5">
                                 </div>
 
                                 <!-- แถวที่ 3 : 4 คอลัมน์ (col-md-3) -->
@@ -533,16 +555,17 @@
                                 <label for="day_pre" class="form-label">วัน</label>
                                 <select class="form-select" id="day_pre">
                                     <option value="">เลือกวัน</option>
-                                    <option value="วันจันทร์">วันจันทร์</option>
-                                    <option value="วันอังคาร">วันอังคาร</option>
-                                    <option value="วันพุธ">วันพุธ</option>
-                                    <option value="วันพฤหัสบดี">วันพฤหัสบดี</option>
-                                    <option value="วันศุกร์">วันศุกร์</option>
+                                    <option value="จันทร์">วันจันทร์</option>
+                                    <option value="อังคาร">วันอังคาร</option>
+                                    <option value="พุธ">วันพุธ</option>
+                                    <option value="พฤหัสบดี">วันพฤหัสบดี</option>
+                                    <option value="ศุกร์">วันศุกร์</option>
                                 </select>
                                 </div>
 
                                 <div class="col-md-3">
                                 <label for="start_time_pre" class="form-label">เวลาเริ่ม</label>
+                                <!-- Changed from input type="time" to select dropdown -->
                                 <select class="form-select" id="start_time_pre">
                                     <option value="">เลือกเวลาเริ่ม</option>
                                     <option>08:00</option><option>09:00</option><option>10:00</option>
@@ -554,8 +577,10 @@
 
                                 <div class="col-md-3">
                                 <label for="stop_time_pre" class="form-label">เวลาสิ้นสุด</label>
-                                <select class="form-select" id="stop_time_pre">
-                                    <option value="">เลือกเวลาสิ้นสุด</option>
+                                <!-- Changed from disabled to readonly-select class with proper attributes -->
+                                <select class="form-select readonly-select" id="stop_time_pre" 
+                                        aria-readonly="true" tabindex="-1">
+                                    <option value="">คำนวณอัตโนมัติ</option>
                                     <option>09:00</option><option>10:00</option><option>11:00</option>
                                     <option>12:00</option><option>13:00</option><option>14:00</option>
                                     <option>15:00</option><option>16:00</option><option>17:00</option>
@@ -624,8 +649,8 @@
                                             <td><span class="badge {% if pre.curriculum_type_pre == 'ภาคปกติ' %}bg-success{% else %}bg-warning{% endif %}">{{ pre.curriculum_type_pre }}</span></td>
                                             <td><span class="badge bg-info">{{ pre.hours_pre }}</span></td>
                                             <td><span class="badge bg-info">{{ pre.day_pre }}</span></td>
-                                            <td><span class="badge bg-success">{{ pre.start_time_pre }}</span></td>
-                                            <td><span class="badge bg-warning">{{ pre.stop_time_pre }}</span></td>
+                                            <td><span class="badge bg-success">{{ pre.start_time_pre|time:"H:i" }}</span></td>
+                                            <td><span class="badge bg-warning">{{ pre.stop_time_pre|time:"H:i" }}</span></td>
                                             <td>{{ pre.room_name_pre }}</td>
                                             <td>
                                                 <button class="btn btn-warning-gradient btn-sm me-1" onclick="openEditModal(this)" title="แก้ไข">
@@ -709,52 +734,39 @@
                         </div>
                         <div class="col-md-6">
                             <label for="edithours_pre" class="form-label">จำนวนชั่วโมง</label>
-                            <input type="number" class="form-control" id="edithours_pre" min="0">
+                            <!-- Added step="0.5" and min="0.5" attributes -->
+                            <input type="number" class="form-control" id="edithours_pre" step="0.5" min="0.5">
                         </div>
                         <div class="col-md-6">
                             <label for="editday_pre" class="form-label">วัน</label>
                             <select class="form-select" id="editday_pre">
-                                <option value="วันจันทร์">วันจันทร์</option>
-                                <option value="วันอังคาร">วันอังคาร</option>
-                                <option value="วันพุธ">วันพุธ</option>
-                                <option value="วันพฤหัสบดี">วันพฤหัสบดี</option>
-                                <option value="วันศุกร์">วันศุกร์</option>
-                            </select>
+                                <option value="จันทร์">วันจันทร์</option>
+                                <option value="อังคาร">วันอังคาร</option>
+                                <option value="พุธ">วันพุธ</option>
+                                <option value="พฤหัสบดี">วันพฤหัสบดี</option>
+                                <option value="ศุกร์">วันศุกร์</option>
+                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="editstart_time_pre" class="form-label">เวลาเริ่ม</label>
+                            <!-- Changed from input type="time" to select dropdown -->
                             <select class="form-select" id="editstart_time_pre">
-                                <option value="">เลือกเวลาเริ่ม</option>
-                                <option value="08:00">08:00</option>
-                                <option value="09:00">09:00</option>
-                                <option value="10:00">10:00</option>
-                                <option value="11:00">11:00</option>
-                                <option value="12:00">12:00</option>
-                                <option value="13:00">13:00</option>
-                                <option value="14:00">14:00</option>
-                                <option value="15:00">15:00</option>
-                                <option value="16:00">16:00</option>
-                                <option value="17:00">17:00</option>
-                                <option value="18:00">18:00</option>
-                                <option value="19:00">19:00</option>
+                                <option>08:00</option><option>09:00</option><option>10:00</option>
+                                <option>11:00</option><option>12:00</option><option>13:00</option>
+                                <option>14:00</option><option>15:00</option><option>16:00</option>
+                                <option>17:00</option><option>18:00</option><option>19:00</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="editstop_time_pre" class="form-label">เวลาสิ้นสุด</label>
-                            <select class="form-select" id="editstop_time_pre">
-                                <option value="">เลือกเวลาสิ้นสุด</option>
-                                <option value="09:00">09:00</option>
-                                <option value="10:00">10:00</option>
-                                <option value="11:00">11:00</option>
-                                <option value="12:00">12:00</option>
-                                <option value="13:00">13:00</option>
-                                <option value="14:00">14:00</option>
-                                <option value="15:00">15:00</option>
-                                <option value="16:00">16:00</option>
-                                <option value="17:00">17:00</option>
-                                <option value="18:00">18:00</option>
-                                <option value="19:00">19:00</option>
-                                <option value="20:00">20:00</option>
+                            <!-- Changed from disabled to readonly-select class with proper attributes -->
+                            <select class="form-select readonly-select" id="editstop_time_pre" 
+                                    aria-readonly="true" tabindex="-1">
+                                <option value="">คำนวณอัตโนมัติ</option>
+                                <option>09:00</option><option>10:00</option><option>11:00</option>
+                                <option>12:00</option><option>13:00</option><option>14:00</option>
+                                <option>15:00</option><option>16:00</option><option>17:00</option>
+                                <option>18:00</option><option>19:00</option><option>20:00</option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -778,6 +790,69 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
+    <!-- Added setSelectValue helper function before existing time calculation script -->
+    <script>
+    function setSelectValue(sel, val) {
+        const hit = [...sel.options].find(o => o.value === val || o.text === val);
+        if (hit) sel.value = val;
+        else {
+            const opt = document.createElement('option');
+            opt.value = val; opt.text = val;
+            sel.appendChild(opt);
+            sel.value = val;
+        }
+    }
+    </script>
+
+    <script>
+    // ===== Utilities =====
+    function hhmmToMinutes(hhmm) { 
+        if(!hhmm) return null;
+        const [h,m]=hhmm.split(':').map(Number);
+        return (isNaN(h)||isNaN(m))?null:(h*60+m);
+    }
+    
+    function minutesToHHMM(mins){
+        mins = ((mins % 1440) + 1440) % 1440;
+        const h = String(Math.floor(mins / 60)).padStart(2, '0');
+        const m = String(mins % 60).padStart(2, '0');
+        return `${h}:${m}`;
+    }
+    
+    function calcEnd(startStr, hoursStr){
+        const s=hhmmToMinutes(startStr), h=parseFloat(hoursStr||0);
+        if(s===null || !isFinite(h) || h<=0) return '';
+        return minutesToHHMM(s + Math.round(h*60));
+    }
+    
+    function wireAutoStop(startSel, hoursSel, stopSel){
+        const startEl =document.querySelector(startSel);
+        const hoursEl =document.querySelector(hoursSel);
+        const stopEl =document.querySelector(stopSel);
+        if(!startEl||!hoursEl||!stopEl) return;
+        const update = () => {
+            const end = calcEnd(startEl.value, hoursEl.value);
+            if(!end) { stopEl.value = ''; return; }
+            const hit=[...stopEl.options].find(o=>o.value===end||o.text===end);
+            if(hit){ stopEl.value=end; }
+            else{
+                const opt=document.createElement('option');
+                opt.value=end; opt.text=end;
+                stopEl.appendChild(opt); stopEl.value=end;
+            }
+        };
+        startEl.addEventListener('change', update);
+        hoursEl.addEventListener('input', update);
+        update();
+    }
+
+    // ===== ติดตั้งให้ Add และ Edit =====
+    document.addEventListener('DOMContentLoaded', () => {
+        wireAutoStop('#start_time_pre', '#hours_pre', '#stop_time_pre');
+        wireAutoStop('#editstart_time_pre', '#edithours_pre', '#editstop_time_pre');
+    });
+    </script>
+
     <script>
         let editRow = null;
         let editId = null;
@@ -833,6 +908,21 @@
             }, 300);
         }
 
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
         // CSV Upload Form Handler
         document.getElementById('csvUploadForm').addEventListener('submit', function(e) {
             e.preventDefault(); // ป้องกัน default form submission
@@ -885,11 +975,16 @@
             const room_type_pre      = document.getElementById("subject_type_pre").value;
             const type_pre           = document.getElementById("type_pre").value;
             const curriculum_type_pre= document.getElementById("student_type_pre").value;
-            const hours_pre          = parseInt(document.getElementById("hours_pre").value || '0', 10);
+            const hours_pre = Number(document.getElementById("hours_pre").value || 0);
             const day_pre            = document.getElementById("day_pre").value;
             const start_time_pre     = document.getElementById("start_time_pre").value;
             const stop_time_pre      = document.getElementById("stop_time_pre").value;
             const room_name_pre      = document.getElementById("room_name_pre").value.trim();
+            
+            if (!subject_code_pre) {
+                showNotification('กรุณากรอกรหัสวิชา', 'warning');
+                return;
+            }
 
             fetch('/api/pre/add/', {
                 method: 'POST',
@@ -906,7 +1001,7 @@
                 else { showNotification('เกิดข้อผิดพลาด: '+d.message,'error'); }
             })
             .catch(()=> showNotification('เกิดข้อผิดพลาดในการเพิ่มข้อมูล','error'));
-            }
+        }
 
         function confirmDelete(button) {
             if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?")) {
@@ -948,12 +1043,15 @@
             document.getElementById("editstudent_type_pre").value = cells[5].querySelector('.badge').innerText.trim();
             document.getElementById("edithours_pre").value = cells[6].querySelector('.badge').innerText.trim();
             document.getElementById("editday_pre").value = cells[7].querySelector('.badge').innerText.trim();
-            document.getElementById("editstart_time_pre").value = cells[8].querySelector('.badge').innerText.trim();
-            document.getElementById("editstop_time_pre").value = cells[9].querySelector('.badge').innerText.trim();
+            // ใน openEditModal แทนที่การตั้งค่า start/stop เดิม ให้เป็น helper ดีแล้ว ใน openEditModal :
+            setSelectValue(document.getElementById("editstart_time_pre"), 
+                            cells[8].querySelector('.badge').innerText.trim());
+            setSelectValue(document.getElementById("editstop_time_pre"), 
+                            cells[9].querySelector('.badge').innerText.trim());
             document.getElementById("editroom_name_pre").value = cells[10].innerText.trim();
 
             new bootstrap.Modal(document.getElementById("editModal")).show();
-            }
+        }
 
         function saveEdit() {
             const teacher_name_pre = document.getElementById("editteacher_name_pre").value;
@@ -962,7 +1060,7 @@
             const room_type_pre = document.getElementById("editsubject_type_pre").value;
             const type_pre = document.getElementById("edittype_pre").value;
             const curriculum_type_pre = document.getElementById("editstudent_type_pre").value;
-            const hours_pre = parseInt(document.getElementById("edithours_pre").value || '0', 10);
+            const hours_pre = Number(document.getElementById("edithours_pre").value || 0);
             const day_pre = document.getElementById("editday_pre").value;
             const start_time_pre = document.getElementById("editstart_time_pre").value;
             const stop_time_pre = document.getElementById("editstop_time_pre").value;
@@ -1031,21 +1129,6 @@
             a.href = url; a.download = "วิชาล่วงหน้า.csv"; a.click();
             URL.revokeObjectURL(url);
             showNotification("✅ ดาวน์โหลดไฟล์ CSV เรียบร้อยแล้ว", 'success');
-            }
-
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
         }
 
         // Initial load

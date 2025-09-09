@@ -314,11 +314,67 @@
         .tt-type-seminar  { background: #fd7e14; }
         .tt-type-default  { background: #495057; }
         .tt-badge { display:inline-block; font-size:.75rem; padding:.125rem .5rem; border-radius:.375rem; background:rgba(255,255,255,.15); }
-        #ttTable thead th.sticky-top { position: sticky; top: 0; z-index: 5; background: #f8f9fa; }
-        #ttTable tbody th.sticky-col { position: sticky; left: 0; z-index: 4; background: #f8f9fa; }
+        #tt-table thead th.sticky-top { position: sticky; top: 0; z-index: 5; background: #f8f9fa; }
+        #tt-table tbody th.sticky-col { position: sticky; left: 0; z-index: 4; background: #f8f9fa; }
         .tt-item-card { transition: box-shadow .2s ease, transform .05s ease; }
         .tt-item-card:hover { box-shadow: 0 .4rem 1rem rgba(0,0,0,.08); transform: translateY(-1px); }
-        
+
+         /* ให้ลูกของ .tt-slot ไม่ยืดเต็มความกว้าง */
+        #tt-table td .tt-slot{
+        align-items: flex-start;   /* <-- บรรทัดสำคัญ */
+        text-align: left;          /* ช่วยให้ตัวหนังสือชิดซ้าย */
+        }
+
+        /* กัน badge ถูกยืด ย้ำให้กว้างเท่าที่จำเป็น */
+        #tt-table td .tt-slot .tt-badge{
+        align-self: flex-start;
+        margin-top: .25rem;
+        }
+
+        /* === Timetable: equal height, no-stretch === */
+        :root { --tt-slot-h: 56px; }              /* ปรับเลขนี้ได้ 52–64 กำลังสวย */
+
+        #tt-table td{
+        padding: .35rem .5rem !important;       /* padding ช่องตารางให้คงที่ */
+        vertical-align: middle !important;
+        }
+
+        #tt-table td > .tt-slot{
+        /* รีเซ็ตจาก flex ที่เคยใส่ไป */
+        display: grid !important;               /* ใช้ grid แทน ไม่ยืดลูกแบบ flex */
+        grid-auto-rows: min-content;
+        row-gap: .2rem;
+        align-content: center;                  /* จัดเนื้อหาให้อยู่กลางแนวตั้ง */
+        justify-items: start;                   /* ชิดซ้ายตามธรรมชาติ */
+        min-height: var(--tt-slot-h) !important;/* ความสูงเท่ากันทุกบล็อก */
+        overflow: hidden;
+        }
+
+        /* ชื่อวิชา: อนุญาต 2 บรรทัดแล้วตัด */
+        #tt-table .tt-slot .fw-semibold{
+        line-height: 1.25;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;                  /* เปลี่ยนเป็น 1 ถ้าอยากเตี้ยลงอีก */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        }
+
+        /* ข้อความบรรทัดรอง: ตัดเกินเป็น … */
+        #tt-table .tt-slot .small{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        }
+
+        /* ป้ายประเภท ไม่ให้ยืดเต็มความกว้าง */
+        #tt-table .tt-slot .tt-badge{
+        display: inline-block !important;
+        width: auto !important;
+        max-width: 100%;
+        justify-self: start;                    /* อยู่มุมซ้าย ไม่ยืด */
+        margin-top: .1rem;
+        }
+                
         /* Adding modal height and layout CSS for better spacing */
         /* ให้โมดัลสูงขึ้นแม้ไม่มีรายการ */
         #scheduleModal .modal-content { min-height: 65vh; }     /* ปรับตัวเลขได้: 60–75vh */
@@ -326,7 +382,21 @@
         
         /* ทำให้ส่วน select-view กินพื้นที่ที่เหลือ และ empty state อยู่กึ่งกลางสวย ๆ */
         #tt-select-view  { flex: 1 1 auto; display:flex; flex-direction:column; min-height:0; }
-        #tt-items-grid   { flex: 1 1 auto; min-height:0; }  /* เผื่ออนาคตมีการ์ด */
+        #tt-items-grid{
+        flex: 1 1 auto;
+        min-height: 0;
+        --tt-card-h: 140px;              /* สูงต่อการ์ด: ปรับได้ 120–160px แล้วแต่ดีไซน์จริง */
+        max-height: calc((var(--tt-card-h) + 1rem) * 3);  /* 3 แถว + ช่องว่าง g-3 ≈ 1rem */
+        overflow-y: auto;
+        padding-right: .25rem;           /* เผื่อที่ให้สกรอลล์บาร์ */
+        }
+
+        /* ให้การ์ดในกริดสูงเท่ากัน */
+        #tt-items-grid .card,
+        #tt-items-grid .tt-item-card{
+        min-height: var(--tt-card-h);
+        }
+
         #tt-select-empty { flex: 1 1 auto; display:flex; align-items:center; justify-content:center; }
         
         /* มุมมอง Grid: จำกัดความสูงตารางให้พอดีจอ (จะมีสกรอลล์ในตารางเอง) */
@@ -346,6 +416,7 @@
             border: 1px solid rgba(13,148,136,.2);
             border-radius: 12px;
         }
+        
     </style>
 </head>
 <body>
@@ -376,42 +447,43 @@
     </header>
 
     <!-- Navigation -->
-    <nav class="bg-white border-bottom">
-        <div class="container-fluid" style="max-width: 1400px;">
-            <ul class="nav nav-tabs border-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'home' %}" aria-current="page">
-                        <i class="bi bi-house me-2"></i>หน้าหลัก
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'pre' %}">
-                        <i class="bi bi-book me-2"></i>ลงล่วงหน้า
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher' %}">
-                        <i class="bi bi-people me-2"></i>รายวิชา
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'room' %}">
-                        <i class="bi bi-geo-alt me-2"></i>ห้องเรียน
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student' %}">
-                        <i class="bi bi-person-badge me-2"></i>นักศึกษา
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'activities' %}">
-                        <i class="bi bi-activity me-2"></i>กิจกรรม
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <ul class="nav nav-tabs border-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+            href="{% url 'home' %}"
+            {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+            <i class="bi bi-house me-2"></i>หน้าหลัก
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'add' %}active{% endif %}"
+            href="{% url 'add' %}"
+            {% if request.resolver_match.url_name == 'add' %}aria-current="page"{% endif %}>
+            <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'pre' %}active{% endif %}"
+            href="{% url 'pre' %}"
+            {% if request.resolver_match.url_name == 'pre' %}aria-current="page"{% endif %}>
+            <i class="bi bi-book me-2"></i>ลงล่วงหน้า
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'teacher' %}active{% endif %}"
+            href="{% url 'teacher' %}"
+            {% if request.resolver_match.url_name == 'teacher' %}aria-current="page"{% endif %}>
+            <i class="bi bi-people me-2"></i>รายวิชา
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'activities' %}active{% endif %}"
+            href="{% url 'activities' %}"
+            {% if request.resolver_match.url_name == 'activities' %}aria-current="page"{% endif %}>
+            <i class="bi bi-activity me-2"></i>กิจกรรม
+            </a>
+        </li>
+        </ul>
 
     <!-- Main Content -->
     <main class="container-fluid py-5" style="max-width: 1400px;">
@@ -590,7 +662,7 @@
             <div id="tt-select-view" class="d-none">
               <div class="row g-2 align-items-end mb-3">
                 <div class="col-12 col-md-4">
-                  <label class="form-label mb-1">ประเภท</label>
+                  <label class="form-label mb-1">เลือกประเภทเพื่อดูตารางสอน</label>
                   <select id="ttCategory" class="form-select">
                     <option value="Teacher">อาจารย์</option>
                     <option value="Room">ห้อง</option>
@@ -598,10 +670,6 @@
                   </select>
                 </div>
                 <div class="col-12 col-md-8">
-                  <div class="alert alert-light border d-flex align-items-center mb-0">
-                    <i class="bi bi-info-circle me-2"></i>
-                    เลือกประเภทเพื่อดูรายชื่อ แล้วคลิกการ์ดรายการเพื่อดูตารางสอน
-                  </div>
                 </div>
               </div>
 
@@ -997,6 +1065,61 @@
   let viewMode = "grid";           // "grid" | "list"
   let filtered = [];
 
+  const DAY_MAP = {
+    'จันทร์':'จันทร์','จ.':'จันทร์','mon':'จันทร์','monday':'จันทร์','1':'จันทร์',
+    'อังคาร':'อังคาร','อ.':'อังคาร','tue':'อังคาร','tuesday':'อังคาร','2':'อังคาร',
+    'พุธ':'พุธ','พ.':'พุธ','wed':'พุธ','wednesday':'พุธ','3':'พุธ',
+    'พฤหัสบดี':'พฤหัสบดี','พฤ.':'พฤหัสบดี','thu':'พฤหัสบดี','thursday':'พฤหัสบดี','4':'พฤหัสบดี',
+    'ศุกร์':'ศุกร์','ศ.':'ศุกร์','fri':'ศุกร์','friday':'ศุกร์','5':'ศุกร์',
+    'เสาร์':'เสาร์','ส.':'เสาร์','sat':'เสาร์','saturday':'เสาร์','6':'เสาร์',
+    'อาทิตย์':'อาทิตย์','อา.':'อาทิตย์','sun':'อาทิตย์','sunday':'อาทิตย์','7':'อาทิตย์'
+  };
+
+  const normalizeDay = (d) => {
+    if (!d) return null;
+    const k = String(d).trim().toLowerCase();
+    return DAY_MAP[k] || d; // ถ้าไม่รู้จัก ปล่อยค่าเดิม
+  };
+
+  const getHourRange = (r) => {
+    const toInt = v => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : null; };
+
+    let sh = null, eh = null;
+
+    // 1) ฟิลด์ชั่วโมงโดยตรง
+    if (r.Hour_Start != null) sh = toInt(r.Hour_Start);
+    if (sh == null && r.Start_Hour != null) sh = toInt(r.Start_Hour);
+    if (sh == null && r.Hour != null && r.Hour !== '') sh = toInt(r.Hour);
+
+    if (r.Hour_End != null) eh = toInt(r.Hour_End);
+    if (eh == null && r.End_Hour != null) eh = toInt(r.End_Hour);
+    if (eh == null && sh != null && r.Duration_Hours != null) eh = sh + toInt(r.Duration_Hours);
+
+    // 2) Time_Slot ที่อาจเป็น 'จันทร์_8-10', 'Mon_08-10', หรือ '8-10'
+    if ((sh == null || eh == null) && r.Time_Slot) {
+      const m = String(r.Time_Slot).match(/(\d{1,2})(?:[:._-]?\d{0,2})?(?:\s*-\s*(\d{1,2}))?/);
+      if (m) {
+        if (sh == null) sh = toInt(m[1]);
+        if (eh == null && m[2]) eh = toInt(m[2]);
+      }
+    }
+
+    // 3) Start_Time/End_Time เช่น '08:00' '10:00'
+    if (sh == null && (r.Start_Time || r.Time)) {
+      const m = String(r.Start_Time || r.Time).match(/(\d{1,2})\s*:\s*\d{2}/);
+      if (m) sh = toInt(m[1]);
+    }
+    if (eh == null && r.End_Time) {
+      const m2 = String(r.End_Time).match(/(\d{1,2})\s*:\s*\d{2}/);
+      if (m2) eh = toInt(m2[1]);
+    }
+
+    if (sh == null) return null;     // ไม่มีชั่วโมงเริ่ม → วางไม่ได้
+    if (eh == null) eh = sh + 1;     // ไม่มีชั่วโมงจบ → สมมติยาว 1 ชม.
+
+    return [sh, eh];
+  };
+
   // ===== Helpers =====
   const esc = (s) => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;')
                                      .replaceAll('>','&gt;').replaceAll('"','&quot;')
@@ -1010,6 +1133,34 @@
     return 'tt-type-default';
   };
   const formatHH = (h) => String(h).padStart(2,'0') + ':00';
+
+  const getHour = (r) => {
+    const range = getHourRange(r);
+    if (range) return range[0]; // คืนชั่วโมงเริ่ม
+    
+    // fallback เดิม
+    if (r.Hour !== undefined && r.Hour !== null && r.Hour !== '') {
+        const n = parseInt(r.Hour, 10);
+        if (Number.isFinite(n)) return n;
+    }
+    if (r.Time_Slot) {                     // เช่น 'จันทร์_8' หรือ 'Mon_08'
+        const m = String(r.Time_Slot).match(/(\d{1,2})$/);
+        if (m) return parseInt(m[1], 10);
+    }
+    if (r.Time || r.Start_Time) {          // เช่น '08:00' หรือ '8:00'
+        const m = String(r.Time || r.Start_Time).match(/(\d{1,2})\s*:\s*\d{2}/);
+        if (m) return parseInt(m[1], 10);
+    }
+    return null;
+  };
+
+  const getDay = (r) => {
+    let day = null;
+    if (r.Day) day = r.Day;
+    else if (r.Time_Slot) day = String(r.Time_Slot).split('_')[0];
+    
+    return normalizeDay(day);
+  };
 
   // ===== Public: ปุ่ม index เรียกใช้ฟังก์ชันนี้ =====
   window.viewSchedule = function () {
@@ -1130,12 +1281,10 @@
     // Header/Description เหมือน CardHeader/CardDescription
     $('#tt-title').innerHTML = `ตารางสอน - ${esc(selectedItem)}`;
     const catLabel = (selectedCategory === 'Teacher') ? 'อาจารย์' : (selectedCategory === 'Room') ? 'ห้อง' : 'กลุ่มนักศึกษา';
-    $('#tt-desc').innerHTML = `ตารางเรียนของ${catLabel} ${esc(selectedItem)} (<strong>${filtered.length}</strong> รายการ)`;
+    $('#tt-desc').innerHTML = `ตารางเรียนของ${catLabel} ${esc(selectedItem)}`;
 
     // Infobar สำหรับ CSV
-    const info = $('#tt-infobar');
-    $('#tt-infobar-text').textContent = `พบ ${filtered.length} รายการ`;
-    info.classList.toggle('d-none', filtered.length === 0);
+    $('#tt-infobar').classList.add('d-none');
 
     if (viewMode === 'grid') {
       $('#tt-grid-wrap').classList.remove('d-none');
@@ -1175,38 +1324,47 @@
     `).join('');
   }
 
-  // ====== Grid view (วัน × ชั่วโมง, รวมคาบต่อเนื่องด้วย colspan) ======
-  function mergeBlocks(rows) {
+    // ====== Grid view (วัน × ชั่วโมง, รวมคาบต่อเนื่องด้วย colspan) ======
+    function mergeBlocks(rows) {
     const byDay = Object.fromEntries(DAY_ORDER.map(d => [d, {}]));
     for (const r of rows) {
-      const day = r.Day;
-      if (!byDay[day]) byDay[day] = {};
-      const key = [r.Course_Code||'', r.Subject_Name||'', r.Teacher||'', r.Room||'', (r.Type||'').toLowerCase()].join('|');
-      byDay[day][key] ??= new Set();
-      const h = Number(r.Hour);
-      if (!Number.isNaN(h)) byDay[day][key].add(h);
+        const day = getDay(r);
+        if (!day || !byDay[day]) continue;
+        const key = [r.Course_Code||'', r.Subject_Name||'', r.Teacher||'', r.Room||'', (r.Type||'').toLowerCase()].join('|');
+        byDay[day][key] ??= [];
+        const hr = getHourRange(r);
+        if (!hr) continue;
+        let [sh, eh] = hr;
+        if (eh <= sh) eh = sh + 1;
+        // บีบให้อยู่ในกรอบหัวตาราง (08–21)
+        if (eh < START_HOUR || sh > END_HOUR) continue;
+        sh = Math.max(sh, START_HOUR);
+        eh = Math.min(eh, END_HOUR + 1);
+        byDay[day][key].push({ startHour: sh, endHour: eh,
+        Course_Code: r.Course_Code||'', Subject_Name: r.Subject_Name||'',
+        Teacher: r.Teacher||'', Room: r.Room||'', Type: (r.Type||'').toLowerCase(), Day: day
+        });
     }
     const blocks = {};
     for (const day of Object.keys(byDay)) {
-      blocks[day] = [];
-      for (const key of Object.keys(byDay[day])) {
-        const [code, name, teacher, room, type] = key.split('|');
-        const hours = Array.from(byDay[day][key]).sort((a,b)=>a-b);
-        let start = null, prev = null;
-        for (const h of hours) {
-          if (start === null) { start = h; prev = h; continue; }
-          if (h === prev + 1) { prev = h; continue; }
-          blocks[day].push({ startHour:start, endHour:prev+1, Course_Code:code, Subject_Name:name, Teacher:teacher, Room:room, Type:type, Day:day });
-          start = h; prev = h;
+        const merged = [];
+        for (const key of Object.keys(byDay[day])) {
+        const xs = byDay[day][key].sort((a,b)=>a.startHour - b.startHour);
+        let cur = null;
+        for (const b of xs) {
+            if (!cur) { cur = {...b}; continue; }
+            if (b.startHour <= cur.endHour) {
+            cur.endHour = Math.max(cur.endHour, b.endHour);
+            } else {
+            merged.push(cur); cur = {...b};
+            }
         }
-        if (start !== null) {
-          blocks[day].push({ startHour:start, endHour:(prev ?? start)+1, Course_Code:code, Subject_Name:name, Teacher:teacher, Room:room, Type:type, Day:day });
+        if (cur) merged.push(cur);
         }
-      }
-      blocks[day].sort((a,b)=>a.startHour - b.startHour);
+        blocks[day] = merged;
     }
     return blocks;
-  }
+    }
 
   function renderGrid() {
     const table = $('#tt-table');
@@ -1218,6 +1376,10 @@
     $('#tt-grid-empty').classList.add('d-none');
 
     const blocksByDay = mergeBlocks(filtered);
+
+    if (filtered.length && !Object.values(blocksByDay).some(v => (v && v.length))) {
+      console.warn('[tt] ไม่มีช่วงเวลาที่ตีความได้ (Hour/Time_Slot/Start_Time/End_Time) ตัวอย่าง:', filtered[0]);
+    }
 
     // thead: 08:00 - 21:00 (เหมือน timeSlots เดิม)
     let thead = '<thead><tr><th class="sticky-top text-center align-middle">วัน / เวลา</th>';
