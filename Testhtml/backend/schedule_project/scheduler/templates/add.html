@@ -184,6 +184,11 @@
       background-color: rgba(0,0,0,0.2);
       transition: width linear;
     }
+
+    .table-rounded { border: 2px solid #e5e7eb; border-radius: 14px; overflow: hidden; }
+    .table-rounded thead th { background: #f8fafc; font-weight: 600; color: #374151; }
+    .empty-row { height: 72px; }
+
   </style>
 </head>
 <body>
@@ -272,50 +277,49 @@
             <div class="nav nav-pills flex-column" id="sideTab" role="tablist"
                  aria-orientation="vertical">
 
-              <a class="nav-link side-link" id="t-upload-tab" data-bs-toggle="pill"
-                 href="#t-upload" role="tab" aria-controls="t-upload">
-                <i class="bi bi-cloud-upload"></i> อัปโหลด CSV
-              </a>
-
-              <a class="nav-link active side-link" id="t-add-tab" data-bs-toggle="pill"
-                 href="#t-add" role="tab" aria-controls="t-add" aria-selected="true">
-                <i class="bi bi-plus-square"></i> เพิ่มข้อมูล
-              </a>
-
-              <a class="nav-link side-link" id="t-list-tab" data-bs-toggle="pill"
-                 href="#t-list" role="tab" aria-controls="t-list">
-                <i class="bi bi-clipboard-data"></i> รายการล่วงหน้า
-              </a>
-
-              <a class="nav-link side-link" id="t-course-tab" data-bs-toggle="pill"
-                 href="#t-course" role="tab" aria-controls="t-course">
-                <i class="bi bi-journal-bookmark"></i> รายวิชา
+              <a class="nav-link active side-link" id="t-subject-tab" data-bs-toggle="pill"
+                href="#t-subject" role="tab" aria-controls="t-subject" aria-selected="true">
+                  <i class="bi bi-journal-bookmark"></i> ข้อมูลรายวิชา
               </a>
 
               <a class="nav-link side-link" id="t-teacher-tab" data-bs-toggle="pill"
-                 href="#t-teacher" role="tab" aria-controls="t-teacher">
-                <i class="bi bi-person-badge"></i> อาจารย์
+                href="#t-teacher" role="tab" aria-controls="t-teacher" aria-selected="false">
+                  <i class="bi bi-person-workspace"></i> ข้อมูลอาจารย์ผู้สอน
               </a>
 
-
-              <a class="nav-link side-link" id="t-preview-tab" data-bs-toggle="pill"
-                 href="#t-preview" role="tab" aria-controls="t-preview">
-                <i class="bi bi-calendar2-week"></i> ตารางตัวอย่าง
+              <a class="nav-link side-link" id="t-studentgroup-tab" data-bs-toggle="pill"
+                href="#t-studentgroup" role="tab" aria-controls="t-studentgroup">
+                  <i class="bi bi-people-fill"></i> ข้อมูลกลุ่มนักศึกษา
               </a>
 
-              <a class="nav-link side-link" id="t-settings-tab" data-bs-toggle="pill"
-                 href="#t-settings" role="tab" aria-controls="t-settings">
-                <i class="bi bi-gear"></i> ตั้งค่า
+              <a class="nav-link side-link" id="t-grouptype-tab" data-bs-toggle="pill"
+                 href="#t-grouptype" role="tab" aria-controls="t-grouptype">
+                <i class="bi bi-building"></i> ข้อมูลภาคนักศึกษา
               </a>
 
-              <a class="nav-link side-link" id="t-help-tab" data-bs-toggle="pill"
-                 href="#t-help" role="tab" aria-controls="t-help">
-                <i class="bi bi-question-circle"></i> คู่มือ
+              <a class="nav-link side-link" id="t-groupallow-tab" data-bs-toggle="pill"
+                 href="#t-groupallow" role="tab" aria-controls="t-groupallow">
+                <i class="bi bi-person-badge"></i> ข้อมูลคาบที่เรียนได้
               </a>
 
-              <a class="nav-link side-link" id="t-about-tab" data-bs-toggle="pill"
-                 href="#t-about" role="tab" aria-controls="t-about">
-                <i class="bi bi-info-circle"></i> เกี่ยวกับ
+              <a class="nav-link side-link" id="t-room-tab" data-bs-toggle="pill"
+                 href="#t-room" role="tab" aria-controls="t-room">
+                <i class="bi bi-calendar2-week"></i> ข้อมูลห้องเรียน
+              </a>
+
+              <a class="nav-link side-link" id="t-roomtype-tab" data-bs-toggle="pill"
+                 href="#t-roomtype" role="tab" aria-controls="t-roomtype">
+               <i class="bi bi-grid-3x3-gap"></i> ข้อมูลประเภทห้องเรียน
+              </a>
+
+              <a class="nav-link side-link" id="t-timeslot-tab" data-bs-toggle="pill"
+                 href="#t-timeslot" role="tab" aria-controls="t-timeslot">
+                <i class="bi bi-alarm"></i> ข้อมูลคาบเวลา
+              </a>
+
+              <a class="nav-link side-link" id="t-weekactivity-tab" data-bs-toggle="pill"
+                href="#t-weekactivity" role="tab" aria-controls="t-weekactivity">
+                  <i class="bi bi-calendar-event"></i> ข้อมูลกิจกรรม
               </a>
 
             </div>
@@ -327,100 +331,481 @@
       <main class="col-12 col-md-9 col-lg-10">
         <div class="tab-content" id="sideTabContent">
 
-          <!-- อัปโหลด CSV -->
-          <div class="tab-pane fade" id="t-upload" role="tabpanel"
-               aria-labelledby="t-upload-tab">
+          <!-- ข้อมูลรายวิชา -->
+          <div class="tab-pane fade" id="t-subject" role="tabpanel" aria-labelledby="t-subject-tab">
             <div class="card shadow-sm">
               <div class="card-header">
                 <h5 class="mb-0 d-flex align-items-center">
-                  <i class="bi bi-cloud-upload me-2"></i>อัปโหลดไฟล์ CSV
+                  <!-- แก้ชื่อไอคอนให้ถูก -->
+                  <i class="bi bi-cloud-upload me-2"></i>ข้อมูลรายวิชา
                 </h5>
               </div>
               <div class="card-body p-4">
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <label for="csvFile" class="form-label">เลือกไฟล์ CSV</label>
-                    <input type="file" class="form-control" id="csvFile" accept=".csv">
-                    <div class="form-text">
-                      <small>รองรับไฟล์สกุล .csv เท่านั้น</small>
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form id="subjectForm" class="row g-2" method="post">
+                  <!-- {% csrf_token %} -->
+                  <div class="col-md">
+                    <label class="form-label" for="subject_name">ชื่อรายวิชา</label>
+                    <input id="subject_name" type="text" class="form-control" placeholder="กรอกชื่อรายวิชา">
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end mt-3">
+                      <button id="btnAddSubject" type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
                     </div>
                   </div>
-                  <div class="col-md-3 d-flex align-items-end">
-                    <button class="btn btn-primary-gradient w-100">
-                      <i class="bi bi-cloud-upload me-2"></i>อัปโหลด
-                    </button>
-                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- ตารางรายวิชา (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการรายวิชา</h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>ชื่อรายวิชา</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="subjectTableBody">
+                      <tr class="empty-row">
+                        <td colspan="3" class="text-center text-muted">ไม่มีข้อมูลรายวิชา</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshSubject" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportSubjectCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- เพิ่มข้อมูล (ACTIVE) -->
-          <div class="tab-pane fade show active" id="t-add" role="tabpanel"
-               aria-labelledby="t-add-tab">
+          <!-- ข้อมูลอาจารย์ผู้สอน -->
+          <div class="tab-pane fade show active" id="t-teacher" role="tabpanel" aria-labelledby="t-teacher-tab">
             <div class="card shadow-sm">
-              <div class="card-header">
+              <div class="card-header"> 
                 <h5 class="mb-0 d-flex align-items-center">
-                  <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
+                  <i class="bi bi-plus-square me-2"></i>ข้อมูลอาจารย์ผู้สอน
                 </h5>
               </div>
               <div class="card-body p-4">
                 <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
-                <form class="row g-3">
+                <form id="teacherForm" class="row g-3" method="post">
+                  <!-- {% csrf_token %} -->
                   <div class="col-md-4">
-                    <label class="form-label">อาจารย์</label>
-                    <input type="text" class="form-control"
-                           placeholder="กรอกชื่ออาจารย์">
+                    <label class="form-label" for="teacher_name">อาจารย์</label>
+                    <input id="teacher_name" type="text" class="form-control" placeholder="กรอกชื่ออาจารย์">
                   </div>
-                  <div class="col-md-4">
-                    <label class="form-label">รหัสวิชา</label>
-                    <input type="text" class="form-control"
-                           placeholder="เช่น ENGE123">
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end mt-3">
+                      <button id="btnAddTeacher" type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
+                    </div>
                   </div>
-                  <div class="col-md-4">
-                    <label class="form-label">ชื่อวิชา</label>
-                    <input type="text" class="form-control" placeholder="กรอกชื่อวิชา">
-                  </div>
+                </form>
+              </div>
+            </div>
 
+            <!-- ตารางอาจารย์ผู้สอน (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการอาจารย์ผู้สอน</h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+
+                        <th>ชื่ออาจารย์</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="teacherTableBody">
+                      <tr class="empty-row">
+                        <td colspan="3" class="text-center text-muted">ไม่มีข้อมูลอาจารย์ผู้สอน</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshTeacher" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportTeacherCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ข้อมูลกลุ่มนักศึกษา -->
+          <div class="tab-pane fade" id="t-studentgroup" role="tabpanel" aria-labelledby="t-studentgroup-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"> 
+                <h5 class="mb-0 d-flex align-items-center">
+                  <i class="bi bi-plus-square me-2"></i>ข้อมูลกลุ่มนักศึกษา
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form id="studentGroupForm" class="row g-3" method="post">
+                  <!-- {% csrf_token %} -->
                   <div class="col-md-4">
-                    <label class="form-label">ประเภทวิชา</label>
-                    <select class="form-select">
+                    <label class="form-label" for="group_name">ชื่อกลุ่มนักศึกษา</label>
+                    <input id="group_name" type="text" class="form-control" placeholder="เช่น วศบ.1 ห้อง ก">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="group_type">ประเภทนักศึกษา</label>
+                    <select id="group_type" class="form-select">
                       <option selected disabled>เลือกประเภท</option>
-                      <option>ทฤษฎี</option>
-                      <option>ปฏิบัติ</option>
-                      <option>โครงงาน</option>
+                      <option>ภาคปกติ</option>
+                      <option>ภาคพิเศษ</option>
                     </select>
                   </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end mt-3">
+                      <button id="btnAddStudentGroup" type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
 
+            <!-- ตารางกลุ่มนักศึกษา (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการกลุ่มนักศึกษา</h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>ชื่อกลุ่มนักศึกษา</th>
+                        <th>ประเภทนักศึกษา</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="studentGroupTableBody">
+                      <tr class="empty-row">
+                        <td colspan="4" class="text-center text-muted">ไม่มีข้อมูลกลุ่มนักศึกษา</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshStudentGroup" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportStudentGroupCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ข้อมูลภาคนักศึกษา -->
+          <div class="tab-pane fade" id="t-grouptype" role="tabpanel" aria-labelledby="t-grouptype-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"> 
+                <h5 class="mb-0 d-flex align-items-center">
+                  <i class="bi bi-plus-square me-2"></i>ข้อมูลภาคนักศึกษา
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form id="groupTypeForm" class="row g-3" method="post">
+                  <!-- {% csrf_token %} -->
                   <div class="col-md-4">
-                    <label class="form-label">ประเภทภาควิชา</label>
-                    <select class="form-select">
+                    <label class="form-label" for="student_type">ประเภทนักศึกษา</label>
+                    <select id="student_type" class="form-select">
                       <option selected disabled>เลือกประเภท</option>
-                      <option>วิศวกรรม</option>
-                      <option>วิทยาศาสตร์</option>
-                      <option>บริหารธุรกิจ</option>
+                      <option>ภาคปกติ</option>
+                      <option>ภาคพิเศษ</option>
                     </select>
                   </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end mt-3">
+                      <button id="btnAddGroupType" type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
 
+            <!-- ตารางภาคนักศึกษา (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการภาคนักศึกษา</h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>ประเภทนักศึกษา</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="groupTypeTableBody">
+                      <tr class="empty-row">
+                        <td colspan="3" class="text-center text-muted">ไม่มีข้อมูลภาคนักศึกษา</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshGroupType" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportGroupTypeCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- ข้อมูลคาบที่เรียนได้ -->
+          <div class="tab-pane fade" id="t-groupallow" role="tabpanel" aria-labelledby="t-groupallow-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"> 
+                <h5 class="mb-0 d-flex align-items-center">
+                  <i class="bi bi-plus-square me-2"></i>ข้อมูลคาบที่เรียนได้
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form id="groupAllowForm" class="row g-3" method="post">
+                  <!-- {% csrf_token %} -->
                   <div class="col-md-4">
-                    <label class="form-label">ประเภทนักศึกษา</label>
-                    <select class="form-select">
+                    <label class="form-label" for="ga_dept_id">รหัสภาค</label>
+                    <input id="ga_dept_id" type="number" class="form-control" placeholder="1">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="ga_slot_id">รหัสคาบ</label>
+                    <input id="ga_slot_id" type="number" class="form-control" placeholder="1">
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end mt-3">
+                      <button id="btnAddGroupAllow" type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- ตารางคาบที่เรียนได้ (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการคาบที่เรียนได้</h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>รหัสภาค</th>
+                        <th>รหัสคาบ</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="groupAllowTableBody">
+                      <tr class="empty-row">
+                        <td colspan="3" class="text-center text-muted">ไม่มีข้อมูลคาบที่เรียนได้</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshGroupAllow" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportGroupAllowCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ข้อมูลห้องเรียน -->
+          <div class="tab-pane fade" id="t-room" role="tabpanel" aria-labelledby="t-room-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"> 
+                <h5 class="mb-0 d-flex align-items-center">
+                  <i class="bi bi-plus-square me-2"></i>ข้อมูลห้องเรียน
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form id="roomForm" class="row g-3" method="post">
+                  <!-- {% csrf_token %} -->
+                  <div class="col-md-4">
+                    <label class="form-label" for="room_name">ชื่อห้องเรียน</label>
+                    <input id="room_name" type="text" class="form-control" placeholder="เช่น ทค1-101">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="room_type">ประเภทห้อง</label>
+                    <select id="room_type" class="form-select">
                       <option selected disabled>เลือกประเภท</option>
-                      <option>ปริญญาตรี</option>
-                      <option>ปริญญาโท</option>
-                      <option>ปริญญาเอก</option>
+                      <option>ห้องปกติ</option>
+                      <option>ห้องไฟฟ้า</option>
+                      <option>ห้อง IoT</option>
                     </select>
                   </div>
-
-                  <div class="col-md-4">
-                    <label class="form-label">จำนวนชั่วโมง</label>
-                    <input type="number" class="form-control" min="1" max="12"
-                           placeholder="เช่น 3">
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end mt-3">
+                      <button id="btnAddRoom" type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
+                    </div>
                   </div>
+                </form>
+              </div>
+            </div>
 
+            <!-- ตารางห้องเรียน (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการห้องเรียน</h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>ชื่อห้องเรียน</th>
+                        <th>ประเภทห้อง</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="roomTableBody">
+                      <tr class="empty-row">
+                        <td colspan="4" class="text-center text-muted">ไม่มีข้อมูลห้องเรียน</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshRoom" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportRoomCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ข้อมูลประเภทห้องเรียน -->
+          <div class="tab-pane fade" id="t-roomtype" role="tabpanel" aria-labelledby="t-roomtype-tab">
+            <div class="card shadow-sm">
+              <div class="card-header">
+                <h5 class="mb-0 d-flex align-items-center">
+                  <i class="bi bi-grid-3x3-gap me-2"></i>ข้อมูลประเภทห้องเรียน
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form id="roomTypeForm" class="row g-3" method="post">
+                  <!-- {% csrf_token %} -->
                   <div class="col-md-4">
-                    <label class="form-label">วัน</label>
-                    <select class="form-select">
+                    <label class="form-label" for="roomtype_name">ชื่อประเภทห้อง</label>
+                    <input id="roomtype_name" type="text" class="form-control" placeholder="เช่น ห้องบรรยาย">
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end mt-3">
+                      <button id="btnAddRoomType" type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- ตารางประเภทห้องเรียน (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการประเภทห้องเรียน</h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>ชื่อประเภทห้อง</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="roomTypeTableBody">
+                      <tr class="empty-row">
+                        <td colspan="3" class="text-center text-muted">ไม่มีข้อมูลประเภทห้องเรียน</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshRoomType" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportRoomTypeCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ข้อมูลคาบเวลา -->
+          <div class="tab-pane fade" id="t-timeslot" role="tabpanel" aria-labelledby="t-timeslot-tab">
+            <div class="card shadow-sm">
+              <div class="card-header"><h5 class="mb-0">ข้อมูลคาบเวลา</h5></div>
+              <div class="card-body p-4">
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form id="timeslotForm" class="row g-3" method="post">
+                  <!-- {% csrf_token %} -->
+                  <div class="col-md-4">
+                    <label class="form-label" for="ts_day">วัน</label>
+                    <select id="ts_day" class="form-select">
                       <option selected disabled>เลือกวัน</option>
                       <option>จันทร์</option>
                       <option>อังคาร</option>
@@ -431,25 +816,17 @@
                       <option>อาทิตย์</option>
                     </select>
                   </div>
-
                   <div class="col-md-4">
-                    <label class="form-label">เวลาเริ่ม</label>
-                    <input type="time" class="form-control">
+                    <label class="form-label" for="ts_start">เวลาเริ่ม</label>
+                    <input id="ts_start" type="time" class="form-control">
                   </div>
-
                   <div class="col-md-4">
-                    <label class="form-label">เวลาสิ้นสุด</label>
-                    <input type="time" class="form-control">
+                    <label class="form-label" for="ts_end">เวลาสิ้นสุด</label>
+                    <input id="ts_end" type="time" class="form-control">
                   </div>
-
-                  <div class="col-md-8">
-                    <label class="form-label">ห้องเรียน</label>
-                    <input type="text" class="form-control" placeholder="เช่น 201">
-                  </div>
-
                   <div class="col-12">
                     <div class="d-flex justify-content-end mt-3">
-                      <button type="button" class="btn btn-primary-gradient px-4">
+                      <button id="btnAddTimeSlot" type="button" class="btn btn-primary-gradient px-4">
                         <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
                       </button>
                     </div>
@@ -457,85 +834,393 @@
                 </form>
               </div>
             </div>
-          </div>
 
-          <!-- รายการล่วงหน้า -->
-          <div class="tab-pane fade" id="t-list" role="tabpanel"
-               aria-labelledby="t-list-tab">
-            <div class="card shadow-sm">
-              <div class="card-header">
-                <h5 class="mb-0 d-flex align-items-center">
-                  <i class="bi bi-clipboard-data me-2"></i>รายการล่วงหน้า
-                </h5>
+            <!-- ตารางคาบเวลา (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการคาบเวลา</h5>
               </div>
-              <div class="card-body text-muted">
-                (พื้นที่แสดงรายการข้อมูลที่เพิ่มไว้ล่วงหน้า)
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>วัน</th>
+                        <th>เวลาเริ่ม</th>
+                        <th>เวลาสิ้นสุด</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="timeslotTableBody">
+                      <tr class="empty-row">
+                        <td colspan="5" class="text-center text-muted">ไม่มีข้อมูลคาบเวลา</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshTimeSlot" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportTimeSlotCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- รายวิชา -->
-          <div class="tab-pane fade" id="t-course" role="tabpanel"
-               aria-labelledby="t-course-tab">
+          <!-- ข้อมูลกิจกรรม -->
+          <div class="tab-pane fade" id="t-weekactivity" role="tabpanel" aria-labelledby="t-weekactivity-tab">
             <div class="card shadow-sm">
-              <div class="card-header"><h5 class="mb-0">รายวิชา</h5></div>
-              <div class="card-body text-muted">Placeholder</div>
+              <div class="card-header"><h5 class="mb-0">ข้อมูลกิจกรรม</h5></div>
+              <div class="card-body p-4">
+                <!-- ฟอร์มตัวอย่าง ยังไม่ผูก backend -->
+                <form id="weekActivityForm" class="row g-3" method="post">
+                  <!-- {% csrf_token %} -->
+                  <div class="col-md-4">
+                    <label class="form-label" for="wa_name">ชื่อกิจกรรม</label>
+                    <input id="wa_name" type="text" class="form-control" placeholder="เช่น คาบกิจกรรม">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="wa_start">เวลาเริ่ม</label>
+                    <input id="wa_start" type="time" class="form-control">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="wa_end">เวลาสิ้นสุด</label>
+                    <input id="wa_end" type="time" class="form-control">
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end mt-3">
+                      <button id="btnAddWeekActivity" type="button" class="btn btn-primary-gradient px-4">
+                        <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- ตารางกิจกรรม (ให้อยู่ในแท็บเดียวกัน) -->
+            <div class="card shadow-sm mt-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <h5 class="mb-0">รายการกิจกรรม</h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive table-rounded">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>ชื่อกิจกรรม</th>
+                        <th>เวลาเริ่ม</th>
+                        <th>เวลาสิ้นสุด</th>
+                        <th>จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="weekActivityTableBody">
+                      <tr class="empty-row">
+                        <td colspan="5" class="text-center text-muted">ไม่มีข้อมูลกิจกรรม</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <button id="btnRefreshWeekActivity" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+                  </button>
+                  <button id="btnExportWeekActivityCSV" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-
-          <!-- อาจารย์ -->
-          <div class="tab-pane fade" id="t-teacher" role="tabpanel"
-               aria-labelledby="t-teacher-tab">
-            <div class="card shadow-sm">
-              <div class="card-header"><h5 class="mb-0">อาจารย์</h5></div>
-              <div class="card-body text-muted">Placeholder</div>
-            </div>
-          </div>
-
-          <!-- ตารางตัวอย่าง -->
-          <div class="tab-pane fade" id="t-preview" role="tabpanel"
-               aria-labelledby="t-preview-tab">
-            <div class="card shadow-sm">
-              <div class="card-header"><h5 class="mb-0">ตารางตัวอย่าง</h5></div>
-              <div class="card-body text-muted">Placeholder</div>
-            </div>
-          </div>
-
-          <!-- ตั้งค่า -->
-          <div class="tab-pane fade" id="t-settings" role="tabpanel"
-               aria-labelledby="t-settings-tab">
-            <div class="card shadow-sm">
-              <div class="card-header"><h5 class="mb-0">ตั้งค่า</h5></div>
-              <div class="card-body text-muted">Placeholder</div>
-            </div>
-          </div>
-
-          <!-- คู่มือ -->
-          <div class="tab-pane fade" id="t-help" role="tabpanel"
-               aria-labelledby="t-help-tab">
-            <div class="card shadow-sm">
-              <div class="card-header"><h5 class="mb-0">คู่มือ</h5></div>
-              <div class="card-body text-muted">Placeholder</div>
-            </div>
-          </div>
-
-          <!-- เกี่ยวกับ -->
-          <div class="tab-pane fade" id="t-about" role="tabpanel"
-               aria-labelledby="t-about-tab">
-            <div class="card shadow-sm">
-              <div class="card-header"><h5 class="mb-0">เกี่ยวกับ</h5></div>
-              <div class="card-body text-muted">Placeholder</div>
-            </div>
-          </div>
-
         </div>
       </main>
     </div>
   </div>
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+  // เปิดแท็บตาม hash ถ้ามี
+  document.addEventListener('DOMContentLoaded', function () {
+    if (location.hash) {
+      const trigger = document.querySelector('a[data-bs-toggle="pill"][href="' + location.hash + '"]');
+      if (trigger) new bootstrap.Tab(trigger).show();
+    }
+    document.querySelectorAll('a[data-bs-toggle="pill"]').forEach(el => {
+      el.addEventListener('shown.bs.tab', e => history.replaceState(null, '', e.target.getAttribute('href')));
+    });
+  });
+
+  // ===== Helper: CSV Export =====
+  function exportCSV(headers, rows, filename) {
+    const csv = [headers, ...rows]
+      .map(r => r.map(v => '"' + String(v ?? '').replace(/"/g,'""') + '"').join(','))
+      .join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // ===== Generic controller factory for tables =====
+  (function(){
+    function byId(id){ return document.getElementById(id); }
+
+    function makeController(cfg){
+      const state = { data: [], editIndex: -1 };
+
+      function getFieldEls(){ return cfg.fields.map(f => ({...f, el: byId(f.id)})); }
+
+      function setAddBtnText(text){
+        const addBtn = byId(cfg.addBtnId);
+        if (!addBtn) return;
+        const span = addBtn.querySelector('span');
+        if (span) span.textContent = text; else addBtn.textContent = text;
+      }
+
+      function resetForm(){
+        byId(cfg.formId)?.reset?.();
+        state.editIndex = -1;
+        byId(cfg.cancelBtnId)?.classList.add('d-none');
+        setAddBtnText('เพิ่มข้อมูล');
+      }
+
+      function validateAndCollect(){
+        const values = {};
+        for (const f of getFieldEls()){
+          let val = f.el.value;
+          if (typeof val === 'string') val = val.trim();
+          if (f.required && (!val || val === f.requiredInvalidValue)) {
+            alert('กรอก/เลือก ' + (f.label || f.id) + ' ให้ครบ');
+            return null;
+          }
+          values[f.key] = val;
+        }
+        return values;
+      }
+
+      function render(){
+        const tbody = byId(cfg.tableBodyId); if (!tbody) return;
+        tbody.innerHTML = '';
+        if (state.data.length === 0){
+          const colspan = cfg.fields.length + 1;
+          tbody.innerHTML = '<tr class="empty-row"><td colspan="'+colspan+'" class="text-center text-muted">ไม่มีข้อมูล</td></tr>';
+          return;
+        }
+        state.data.forEach((row, i) => {
+          const cols = cfg.fields.map(f => '<td>' + (row[f.key] ?? '') + '</td>').join('');
+          tbody.insertAdjacentHTML('beforeend',
+            '<tr>' + cols + '<td><div class="btn-group btn-group-sm">' +
+            '<button class="btn btn-outline-secondary" data-act="edit" data-i="'+i+'"><i class="bi bi-pencil"></i></button>' +
+            '<button class="btn btn-outline-danger" data-act="remove" data-i="'+i+'"><i class="bi bi-trash"></i></button>' +
+            '</div></td></tr>');
+        });
+        tbody.querySelectorAll('button[data-act]').forEach(btn => {
+          btn.onclick = () => {
+            const i = parseInt(btn.getAttribute('data-i'));
+            const act = btn.getAttribute('data-act');
+            if (act === 'edit') startEdit(i);
+            if (act === 'remove') remove(i);
+          };
+        });
+      }
+
+      function startEdit(i){
+        const row = state.data[i];
+        for (const f of getFieldEls()){ f.el.value = row[f.key] ?? ''; }
+        state.editIndex = i;
+        setAddBtnText('บันทึกการแก้ไข');
+        byId(cfg.cancelBtnId)?.classList.remove('d-none');
+      }
+
+      function remove(i){
+        state.data.splice(i,1);
+        if (state.editIndex === i) resetForm();
+        render();
+      }
+
+      // Bind events
+      byId(cfg.addBtnId)?.addEventListener('click', () => {
+        const values = validateAndCollect(); if (!values) return;
+        if (state.editIndex === -1) state.data.push(values);
+        else state.data[state.editIndex] = values;
+        render();
+        resetForm();
+      });
+      byId(cfg.cancelBtnId)?.addEventListener('click', resetForm);
+      byId(cfg.refreshBtnId)?.addEventListener('click', render);
+      byId(cfg.exportBtnId)?.addEventListener('click', () => {
+        const rows = state.data.map(item => cfg.fields.map(f => item[f.key] ?? ''));
+        exportCSV(cfg.headers, rows, cfg.filename);
+      });
+
+      // Initial render
+      render();
+      return { render, startEdit, remove, resetForm, state };
+    }
+
+    // Create controllers after DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      makeController({
+        key:'subject',
+        formId:'subjectForm',
+        fields:[
+          {id:'subject_code', key:'code', label:'รหัสวิชา', required:true},
+          {id:'subject_name', key:'name', label:'ชื่อรายวิชา', required:true},
+        ],
+        tableBodyId:'subjectTableBody',
+        headers:['รหัสวิชา','ชื่อรายวิชา'],
+        filename:'subjects.csv',
+        addBtnId:'btnAddSubject',
+        cancelBtnId:'btnCancelSubjectEdit',
+        refreshBtnId:'btnRefreshSubject',
+        exportBtnId:'btnExportSubjectCSV',
+      });
+
+      makeController({
+        key:'teacher',
+        formId:'teacherForm',
+        fields:[
+          {id:'teacher_id', key:'id', label:'รหัสอาจารย์', required:true},
+          {id:'teacher_name', key:'name', label:'ชื่ออาจารย์', required:true},
+        ],
+        tableBodyId:'teacherTableBody',
+        headers:['รหัสอาจารย์','ชื่ออาจารย์'],
+        filename:'teachers.csv',
+        addBtnId:'btnAddTeacher',
+        cancelBtnId:'btnCancelTeacherEdit',
+        refreshBtnId:'btnRefreshTeacher',
+        exportBtnId:'btnExportTeacherCSV',
+      });
+
+      makeController({
+        key:'studentgroup',
+        formId:'studentGroupForm',
+        fields:[
+          {id:'group_id', key:'id', label:'รหัสกลุ่มนักศึกษา', required:true},
+          {id:'group_name', key:'name', label:'ชื่อกลุ่มนักศึกษา', required:true},
+          {id:'group_type', key:'type', label:'ประเภทนักศึกษา', required:true, requiredInvalidValue:'เลือกประเภท'},
+        ],
+        tableBodyId:'studentGroupTableBody',
+        headers:['รหัสกลุ่มนักศึกษา','ชื่อกลุ่มนักศึกษา','ประเภทนักศึกษา'],
+        filename:'student_groups.csv',
+        addBtnId:'btnAddStudentGroup',
+        cancelBtnId:'btnCancelStudentGroupEdit',
+        refreshBtnId:'btnRefreshStudentGroup',
+        exportBtnId:'btnExportStudentGroupCSV',
+      });
+
+      makeController({
+        key:'grouptype',
+        formId:'groupTypeForm',
+        fields:[
+          {id:'dept_id', key:'id', label:'รหัสภาค', required:true},
+          {id:'student_type', key:'type', label:'ประเภทนักศึกษา', required:true, requiredInvalidValue:'เลือกประเภท'},
+        ],
+        tableBodyId:'groupTypeTableBody',
+        headers:['รหัสภาค','ประเภทนักศึกษา'],
+        filename:'group_types.csv',
+        addBtnId:'btnAddGroupType',
+        cancelBtnId:'btnCancelGroupTypeEdit',
+        refreshBtnId:'btnRefreshGroupType',
+        exportBtnId:'btnExportGroupTypeCSV',
+      });
+
+      makeController({
+        key:'groupallow',
+        formId:'groupAllowForm',
+        fields:[
+          {id:'ga_dept_id', key:'dept', label:'รหัสภาค', required:true},
+          {id:'ga_slot_id', key:'slot', label:'รหัสคาบ', required:true},
+        ],
+        tableBodyId:'groupAllowTableBody',
+        headers:['รหัสภาค','รหัสคาบ'],
+        filename:'group_allow.csv',
+        addBtnId:'btnAddGroupAllow',
+        cancelBtnId:'btnCancelGroupAllowEdit',
+        refreshBtnId:'btnRefreshGroupAllow',
+        exportBtnId:'btnExportGroupAllowCSV',
+      });
+
+      makeController({
+        key:'room',
+        formId:'roomForm',
+        fields:[
+          {id:'room_id', key:'id', label:'รหัสห้อง', required:true},
+          {id:'room_name', key:'name', label:'ชื่อห้องเรียน', required:true},
+          {id:'room_type', key:'type', label:'ประเภทห้อง', required:true, requiredInvalidValue:'เลือกประเภท'},
+        ],
+        tableBodyId:'roomTableBody',
+        headers:['รหัสห้อง','ชื่อห้องเรียน','ประเภทห้อง'],
+        filename:'rooms.csv',
+        addBtnId:'btnAddRoom',
+        cancelBtnId:'btnCancelRoomEdit',
+        refreshBtnId:'btnRefreshRoom',
+        exportBtnId:'btnExportRoomCSV',
+      });
+
+      makeController({
+        key:'roomtype',
+        formId:'roomTypeForm',
+        fields:[
+          {id:'roomtype_id', key:'id', label:'รหัสประเภทห้อง', required:true},
+          {id:'roomtype_name', key:'name', label:'ชื่อประเภทห้อง', required:true},
+        ],
+        tableBodyId:'roomTypeTableBody',
+        headers:['รหัสประเภทห้อง','ชื่อประเภทห้อง'],
+        filename:'room_types.csv',
+        addBtnId:'btnAddRoomType',
+        cancelBtnId:'btnCancelRoomTypeEdit',
+        refreshBtnId:'btnRefreshRoomType',
+        exportBtnId:'btnExportRoomTypeCSV',
+      });
+
+      makeController({
+        key:'timeslot',
+        formId:'timeslotForm',
+        fields:[
+          {id:'ts_id', key:'id', label:'รหัสคาบ', required:true},
+          {id:'ts_day', key:'day', label:'วัน', required:true, requiredInvalidValue:'เลือกวัน'},
+          {id:'ts_start', key:'start', label:'เวลาเริ่ม', required:true},
+          {id:'ts_end', key:'end', label:'เวลาสิ้นสุด', required:true},
+        ],
+        tableBodyId:'timeslotTableBody',
+        headers:['รหัสคาบ','วัน','เวลาเริ่ม','เวลาสิ้นสุด'],
+        filename:'timeslots.csv',
+        addBtnId:'btnAddTimeSlot',
+        cancelBtnId:'btnCancelTimeSlotEdit',
+        refreshBtnId:'btnRefreshTimeSlot',
+        exportBtnId:'btnExportTimeSlotCSV',
+      });
+
+      makeController({
+        key:'weekactivity',
+        formId:'weekActivityForm',
+        fields:[
+          {id:'wa_id', key:'id', label:'รหัสกิจกรรม', required:true},
+          {id:'wa_name', key:'name', label:'ชื่อกิจกรรม', required:true},
+          {id:'wa_start', key:'start', label:'เวลาเริ่ม', required:true},
+          {id:'wa_end', key:'end', label:'เวลาสิ้นสุด', required:true},
+        ],
+        tableBodyId:'weekActivityTableBody',
+        headers:['รหัสกิจกรรม','ชื่อกิจกรรม','เวลาเริ่ม','เวลาสิ้นสุด'],
+        filename:'week_activities.csv',
+        addBtnId:'btnAddWeekActivity',
+        cancelBtnId:'btnCancelWeekActivityEdit',
+        refreshBtnId:'btnRefreshWeekActivity',
+        exportBtnId:'btnExportWeekActivityCSV',
+      });
+    });
+  })();
   </script>
+
   <script>
     function showNotification(message, type = 'info', duration = 5000) {
       const container = document.getElementById('notificationContainer');
