@@ -5,8 +5,8 @@ urlpatterns = [
     # หน้าเว็บหลัก
     path('', views.home, name='home'),
     path('pre/', views.pre_page, name='pre'),
-    path('teacher/', views.teacher_page, name='teacher'),
-    path('activities/', views.activities_page, name='activities'),
+    path('course/', views.course_page, name='course'),
+    path('weekactivity/', views.activity_page, name='weekactivity'),
     path('add/', views.add_info, name='add'),
 
     # APIs ที่มีอยู่แล้ว...
@@ -24,19 +24,76 @@ urlpatterns = [
     path('api/pre/delete/<int:id>/', views.delete_pre, name='delete_pre'),
     path('upload/pre-csv/', views.upload_pre_csv, name='upload_pre_csv'),
 
-    # Teacher APIs
-    path('api/teacher/', views.get_teachers, name='get_teachers'),
-    path('api/teacher/add/', views.add_teacher, name='add_teacher'),
-    path('api/teacher/bulk/', views.add_teacher_bulk, name='add_teacher_bulk'),
-    path('api/teacher/update/<int:id>/', views.update_teacher, name='update_teacher'),
-    path('api/teacher/delete/<int:id>/', views.delete_teacher, name='delete_teacher'),
-    path('upload/teacher-csv/', views.upload_teacher_csv, name='upload_teacher_csv'),
+    # Course APIs
+    path('api/course/', views.get_courses, name='get_course'),
+    path('api/course/add/', views.add_course, name='add_course'),
+    path('api/course/bulk/', views.add_course_bulk, name='add_course_bulk'),
+    path('api/course/update/<int:id>/', views.update_course, name='update_course'),
+    path('api/course/delete/<int:id>/', views.delete_course, name='delete_course'),
+    path('upload/course-csv/', views.upload_course_csv, name='upload_course_csv'),
+    
+    # Lookups for course.js
+    path('api/teachers/', views.teachers_lookup, name='teachers_lookup'),
+    path('api/lookups/room-types/', views.room_types_lookup, name='room_types_lookup'),
+    path('api/lookups/student-groups/', views.student_groups_lookup, name='student_groups_lookup'),
 
-    # Activities APIs
-    path('api/activities/', views.get_activities, name='get_activities'),
-    path('api/activities/add/', views.add_activities, name='add_activities'),
-    path('api/activities/bulk/', views.add_activities_bulk, name='add_activities_bulk'),
-    path('api/activities/update/<int:id>/', views.update_activities, name='update_activities'),
-    path('api/activities/delete/<int:id>/', views.delete_activities, name='delete_activities'),
-    path('upload/activities-csv/', views.upload_activities_csv, name='upload_activities_csv'),
+    # Weekactivity APIs
+    path('api/activity/', views.get_activity, name='get_activity'),
+    path('api/activity/add/', views.add_activity, name='add_activity'),
+    path('api/activity/bulk/', views.add_activity_bulk, name='add_activity_bulk'),
+    path('api/activity/update/<int:id>/', views.update_activity, name='update_activity'),
+    path('api/activity/delete/<int:id>/', views.delete_activity, name='delete_activity'),
+    path('upload/activity-csv/', views.upload_activity_csv, name='upload_activity_csv'),
+    path('api/meta/days/', views.meta_days, name='meta_days'),
+    path('api/meta/start-times/', views.meta_start_times, name='meta_start_times'),
+    path('api/meta/stop-times/', views.meta_stop_times, name='meta_stop_times'),
+
+    #AddPIS
+    path('subject/', views.subject, name='subject'),
+    path('teacher/', views.teacher, name='teacher'),
+    path('studentgroup/', views.studentgroup, name='studentgroup'),
+    path('grouptype/', views.grouptype, name='grouptype'),
+    path('groupallow/', views.groupallow, name='groupallow'),
+    path('room/', views.room, name='room'),
+    path('roomtype/', views.roomtype, name='roomtype'),
+    path('timeslot/', views.timeslot, name='timeslot'),
+    
+    # GroupAllow APIs
+    path('api/groupallow/list/', views.groupallow_list, name='groupallow_list'),
+    path('api/groupallow/add/', views.groupallow_add, name='groupallow_add'),
+    path('api/groupallow/delete/<int:pk>/', views.groupallow_delete, name='groupallow_delete'),
+    
+    # --- GroupType APIs ---
+    path('api/grouptype/list/', views.grouptype_list, name='grouptype_list'),
+    path('api/grouptype/add/', views.grouptype_add, name='grouptype_add'),
+    path('api/grouptype/delete/<int:pk>/', views.grouptype_delete, name='grouptype_delete'),
+    
+    # --- Room APIs ---
+    path('api/room/list/',   views.room_list,   name='room_list'),
+    path('api/room/add/',    views.room_add,    name='room_add'),
+    path('api/room/delete/<int:pk>/', views.room_delete, name='room_delete'),
+    
+    # --- RoomType APIs ---
+    path('api/roomtype/list/',   views.roomtype_list,   name='roomtype_list'),
+    path('api/roomtype/add/',    views.roomtype_add,    name='roomtype_add'),
+    path('api/roomtype/delete/<int:pk>/', views.roomtype_delete, name='roomtype_delete'),
+    
+    # --- StudentGroup APIs ---
+    path('api/studentgroup/list/',   views.studentgroup_list,   name='studentgroup_list'),
+    path('api/studentgroup/add/',    views.studentgroup_add,    name='studentgroup_add'),
+    path('api/studentgroup/delete/<int:pk>/', views.studentgroup_delete, name='studentgroup_delete'),
+    
+    # Subject (RESTful)
+    path('api/subjects/', views.subjects_collection, name='subjects_collection'),
+    path('api/subjects/<int:pk>/', views.subjects_detail, name='subjects_detail'),
+    
+    # --- Teacher APIs ---
+    path('api/teacher/list/',   views.teacher_list,   name='teacher_list'),
+    path('api/teacher/add/',    views.teacher_add,    name='teacher_add'),
+    path('api/teacher/delete/<int:pk>/', views.teacher_delete, name='teacher_delete'),
+    
+    # --- TimeSlot APIs ---
+    path('api/timeslot/list/',   views.timeslot_list,   name='timeslot_list'),
+    path('api/timeslot/add/',    views.timeslot_add,    name='timeslot_add'),
+    path('api/timeslot/delete/<int:pk>/', views.timeslot_delete, name='timeslot_delete'),
 ]

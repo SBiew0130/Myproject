@@ -1,17 +1,17 @@
 from django.db import models
 
-class TeacherSchedule(models.Model):
-    teacher_name_teacher = models.CharField(max_length=100)
-    subject_code_teacher = models.CharField(max_length=20)
-    subject_name_teacher = models.CharField(max_length=100)
-    curriculum_type_teacher = models.CharField(max_length=50, blank=True, null=True)
-    room_type_teacher = models.CharField(max_length=50, blank=True)
-    section_teacher = models.CharField(max_length=10)
-    theory_slot_amount_teacher = models.IntegerField(default=0)
-    lab_slot_amount_teacher = models.IntegerField(default=0)
+class CourseSchedule(models.Model):
+    teacher_name_course = models.CharField(max_length=100)
+    subject_code_course = models.CharField(max_length=20)
+    subject_name_course = models.CharField(max_length=100)
+    curriculum_type_course = models.CharField(max_length=50, blank=True, null=True)
+    room_type_course = models.CharField(max_length=50, blank=True, default='')
+    section_course = models.CharField(max_length=10)
+    theory_slot_amount_course = models.IntegerField(default=0)
+    lab_slot_amount_course = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.teacher_name_teacher} - {self.subject_name_teacher}"
+        return f"{self.teacher_name_course} - {self.subject_name_course}"
 
 class PreSchedule(models.Model):
     teacher_name_pre = models.CharField(max_length=100)
@@ -28,14 +28,14 @@ class PreSchedule(models.Model):
     def __str__(self):
         return f"{self.subject_name_pre} - {self.day_pre}"
 
-class ActivitySchedule(models.Model):
-    act_name_activities = models.CharField(max_length=100)
-    day_activities = models.CharField(max_length=20, blank=True, default='')
-    start_time_activities = models.TimeField()
-    stop_time_activities = models.TimeField()
+class WeekActivity(models.Model):
+    act_name_activity    = models.CharField(max_length=100, blank=True, default='')
+    day_activity         = models.CharField(max_length=20,  blank=True, default='')
+    start_time_activity  = models.TimeField(null=True, blank=True)
+    stop_time_activity   = models.TimeField(null=True,  blank=True)
 
     def __str__(self):
-        return f"{self.act_name_activities} - {self.day_activities}"
+        return f"{self.act_name_activity} - {self.day_activity}"
 
 class ScheduleInfo(models.Model):
     
@@ -163,16 +163,3 @@ class Room(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class WeekActivity(models.Model):
-    name = models.CharField(max_length=100)
-    slot = models.ForeignKey(
-        TimeSlot, on_delete=models.CASCADE, related_name="activities"
-    )
-
-    class Meta:
-        ordering = ["slot__day_of_week", "slot__start_time", "name"]
-
-    def __str__(self):
-        return f"{self.name} @ {self.slot}"

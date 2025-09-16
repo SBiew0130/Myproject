@@ -2,1138 +2,383 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>วิชาที่ต้องสอนล่วงหน้า - ระบบจัดตารางสอน</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
-    <style>
-        body {
-            background-color: #eaedffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .header-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .nav-tabs .nav-link {
-            border: none;
-            color: #6b7280;
-            font-weight: 500;
-            padding: 1rem 1.5rem;
-            border-bottom: 3px solid transparent;
-            background: none;
-        }
-        
-        .nav-tabs .nav-link.active {
-            background: none;
-            color: #4f46e5;
-            border-bottom-color: #4f46e5;
-        }
-        
-        .nav-tabs .nav-link:hover {
-            border-color: transparent;
-            color: #374151;
-            background: none;
-        }
-        
-        .content-card {
-            border: 2px solid #d1d5db !important;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            background: white;
-            transition: all 0.2s;
-        }
-        
-        .content-card:hover {
-            border-color: #9ca3af !important;
-            box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.15);
-        }
-        
-        .card-header-purple {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: white;
-            padding: 1.5rem;
-            border: none;
-            border-radius: 14px 14px 0 0 !important;
-        }
-        
-        .btn-primary-gradient {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            border: none;
-            border-radius: 12px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            color: white;
-        }
-        
-        .btn-primary-gradient:hover {
-            background: linear-gradient(135deg, #4338ca, #6d28d9);
-            transform: translateY(-1px);
-            color: white;
-        }
-        
-        .btn-success-gradient {
-            background: linear-gradient(135deg, #059669, #047857);
-            border: none;
-            border-radius: 12px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            color: white;
-        }
-        
-        .btn-success-gradient:hover {
-            background: linear-gradient(135deg, #047857, #065f46);
-            transform: translateY(-1px);
-            color: white;
-        }
-        
-        .btn-warning-gradient {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            border: none;
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            color: white;
-        }
-        
-        .btn-warning-gradient:hover {
-            background: linear-gradient(135deg, #d97706, #b45309);
-            transform: translateY(-1px);
-            color: white;
-        }
-        
-        .btn-danger-gradient {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            border: none;
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            color: white;
-        }
-        
-        .btn-danger-gradient:hover {
-            background: linear-gradient(135deg, #b91c1c, #991b1b);
-            transform: translateY(-1px);
-            color: white;
-        }
-        
-        .form-control, .form-select {
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            transition: all 0.2s;
-        }
-        
-        .form-control:focus, .form-select:focus {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
-        }
-        
-        .table-container {
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid #e5e7eb;
-        }
-        
-        .table th {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            border: none;
-            padding: 1rem 0.5rem;
-            font-weight: 600;
-            color: #374151;
-            font-size: 0.875rem;
-            text-align: center;
-        }
-        
-        .table td {
-            border: none;
-            padding: 1rem 0.5rem;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: center;
-            font-size: 0.875rem;
-        }
-        
-        .table tbody tr:hover {
-            background-color: #f8fafc;
-        }
-        
-        /* Notification Styles */
-        .notification-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            max-width: 400px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>วิชาที่ต้องสอนล่วงหน้า - ระบบจัดตารางสอน</title>
 
-        .notification {
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            opacity: 0;
-            transform: translateX(100%);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+  <!-- Bootstrap CSS + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        .notification.show {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .notification.success {
-            background-color: #d1fae5;
-            border-left: 4px solid #10b981;
-            color: #065f46;
-        }
-
-        .notification.error {
-            background-color: #fee2e2;
-            border-left: 4px solid #ef4444;
-            color: #991b1b;
-        }
-
-        .notification.warning {
-            background-color: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            color: #92400e;
-        }
-
-        .notification.info {
-            background-color: #dbeafe;
-            border-left: 4px solid #3b82f6;
-            color: #1e40af;
-        }
-
-        .notification-close {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            opacity: 0.7;
-        }
-
-        .notification-close:hover {
-            opacity: 1;
-        }
-
-        .notification-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background-color: rgba(0,0,0,0.2);
-            transition: width linear;
-        }
-        
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 2rem 0;
-        }
-        
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
-        }
-        
-        .divider span {
-            padding: 0 1rem;
-            color: #6b7280;
-            font-weight: 500;
-            font-size: 0.875rem;
-        }
-
-        .badge {
-            font-size: 0.75rem;
-            padding: 0.375rem 0.75rem;
-        }
-
-        @media (max-width: 768px) {
-            .table th, .table td {
-                padding: 0.5rem 0.25rem;
-                font-size: 0.75rem;
-            }
-            
-            .btn-sm {
-                padding: 0.25rem 0.5rem;
-                font-size: 0.75rem;
-            }
-        }
-
-        .divider-vertical {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            position: relative;
-        }
-
-        .divider-vertical::before {
-            content: '';
-            width: 2px;
-            flex: 1;
-            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
-        }
-
-        .divider-vertical span {
-            padding: 1rem 0;
-            color: #6b7280;
-            font-weight: 500;
-            font-size: 0.875rem;
-            background: white;
-        }
-
-        .divider-vertical::after {
-            content: '';
-            width: 2px;
-            flex: 1;
-            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
-        }
-        .btn-consistent {
-    min-width: 140px;
-    height: 48px;
-    font-weight: 600;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-}
-
-.btn-consistent:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-.btn-primary-consistent {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    border: none;
-    color: white;
-}
-
-.btn-secondary-consistent {
-    background: linear-gradient(135deg, #059669, #047857);
-    border: none;
-    color: white;
-}
-
-.form-grid .form-label { margin-bottom: .4rem; }
-.form-grid .form-control,
-.form-grid .form-select { height: 48px; }
-
-        /* ทำให้ดูเหมือนช่องอ่านอย่างเดียว: ไม่มีลูกศร, คลิกไม่ได้, พื้นหลังขาว */
-        .form-select.readonly-select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: none !important;    /* ซ่อน caret ▼ ของ Bootstrap */
-            pointer-events: none;                 /* กันการคลิกเมาส์ */
-            background-color: #fff !important;   /* พื้นหลังขาว */
-            color: #212529;                       /* สีข้อความปกติ */
-            border-color: var(--bs-border-color); /* เส้นขอบเหมือนช่องปกติ */
-            opacity: 1;                           /* ไม่จืด */
-        }
-        .form-select.readonly-select::-ms-expand { display: none; } /* IE/Edge เท่า */
-        .form-select.readonly-select:focus { box-shadow: none; }
-
-        /* ไม่ placeholder "คำนวณอัตโนมัติ" ของออปชัน */
-        .form-select.readonly-select option[value=""] { color: #6c757d; }
-
-    </style>
+  <!-- App CSS -->
+  <link rel="stylesheet" href="{% static 'css/pre.css' %}">
 </head>
 <body>
-    <!-- Notification Container -->
-    <div class="notification-container" id="notificationContainer"></div>
+  <!-- Notification Container -->
+  <div class="notification-container" id="notificationContainer"></div>
 
-    <!-- Header -->
-    <header class="bg-white border-bottom py-3">
-        <div class="container-fluid" style="max-width: 1400px;">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="d-flex align-items-center">
-                        <div class="header-icon me-3">
-                            <i class="bi bi-calendar-check text-white fs-4"></i>
-                        </div>
-                        <h1 class="h4 mb-0 fw-bold text-dark">ระบบจัดตารางสอน</h1>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="d-flex justify-content-end align-items-center">
-                        <button class="btn btn-outline-secondary me-3">
-                            <i class="bi bi-file-text me-2"></i>คู่มือ
-                        </button>
-                        <button class="btn btn-outline-primary">
-                            <i class="bi bi-person me-2"></i>เกี่ยวกับเรา
-                        </button>
-                    </div>
-                </div>
+  <!-- Header -->
+  <header class="bg-white border-bottom py-3">
+    <div class="container-fluid" style="max-width: 1400px;">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <div class="header-icon me-3">
+              <i class="bi bi-calendar-check text-white fs-4"></i>
             </div>
+            <h1 class="h4 mb-0 fw-bold text-dark">ระบบจัดตารางสอน</h1>
+          </div>
         </div>
-    </header>
-
-    <!-- Navigation -->
-        <nav class="bg-white border-bottom">
-        <div class="container-fluid" style="max-width: 1400px;">
-            <ul class="nav nav-tabs border-0">
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
-                <i class="bi bi-house me-2"></i>หน้าหลัก
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'add' %}active{% endif %}"
-                href="{% url 'add' %}" {% if request.resolver_match.url_name == 'add' %}aria-current="page"{% endif %}>
-                <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'pre' %}active{% endif %}"
-                href="{% url 'pre' %}" {% if request.resolver_match.url_name == 'pre' %}aria-current="page"{% endif %}>
-                <i class="bi bi-book me-2"></i>ลงล่วงหน้า
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'teacher' %}active{% endif %}"
-                href="{% url 'teacher' %}" {% if request.resolver_match.url_name == 'teacher' %}aria-current="page"{% endif %}>
-                <i class="bi bi-people me-2"></i>รายวิชา
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'activities' %}active{% endif %}"
-                href="{% url 'activities' %}" {% if request.resolver_match.url_name == 'activities' %}aria-current="page"{% endif %}>
-                <i class="bi bi-activity me-2"></i>กิจกรรม
-                </a>
-            </li>
-            </ul>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-end align-items-center">
+            <button class="btn btn-outline-secondary me-3">
+              <i class="bi bi-file-text me-2"></i>คู่มือ
+            </button>
+            <button class="btn btn-outline-primary">
+              <i class="bi bi-person me-2"></i>เกี่ยวกับเรา
+            </button>
+          </div>
         </div>
-        </nav>
-
-    <!-- Django Messages -->
-    {% if messages %}
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        {% for message in messages %}
-            showNotification('{{ message|escapejs }}', '{{ message.tags }}');
-        {% endfor %}
-    });
-    </script>
-    {% endif %}
-
-    <!-- Main Content -->
-    <main class="container-fluid py-5" style="max-width: 1400px;">
-        <div class="row g-4">
-            <!-- Form Section -->
-            <div class="col-12">
-                <div class="card content-card">
-                    <div class="card-header card-header-purple">
-                        <h5 class="card-title mb-0 d-flex align-items-center">
-                            <i class="bi bi-book me-2"></i>
-                            วิชาที่ต้องสอนล่วงหน้า
-                        </h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="row g-4">
-                            <!-- CSV Upload Section -->
-                            <div class="col-md-4">
-                                <h6 class="fw-bold mb-3 text-dark">
-                                    <i class="bi bi-upload me-2"></i>อัปโหลดไฟล์ CSV
-                                </h6>
-                                <form action="{% url 'upload_pre_csv' %}" method="post" enctype="multipart/form-data" id="csvUploadForm">
-                                    {% csrf_token %}
-                                    <div class="mb-3">
-                                        <label for="csvFileInput" class="form-label">เลือกไฟล์ CSV</label>
-                                        <input type="file" class="form-control" id="csvFileInput" name="file" accept=".csv" required>
-                                        <div class="form-text">
-                                            <small>รองรับไฟล์สกุล .csv เท่านั้น</small><br>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary-gradient w-100" id="uploadBtn">
-                                        <i class="bi bi-cloud-upload me-2"></i>อัปโหลด CSV
-                                    </button>
-                                </form>
-                            </div>
-
-                            <!-- Divider Column -->
-                            <div class="col-md-1 d-flex align-items-center justify-content-center">
-                                <div class="divider-vertical">
-                                    <span>หรือ</span>
-                                </div>
-                            </div>
-
-                            <!-- Manual Input Form -->
-                            <div class="col-md-7">
-                            <h6 class="fw-bold mb-3 text-dark">
-                                <i class="bi bi-plus-circle me-2"></i>เพิ่มข้อมูล
-                            </h6>
-
-                            <div class="row g-3">
-                                <!-- แถวที่ 1 : 3 คอลัมน์ (เหมือน teacher.html) -->
-                                <div class="col-md-4">
-                                <label for="teacher_name_pre" class="form-label">อาจารย์</label>
-                                <input type="text" class="form-control"
-                                        id="teacher_name_pre" placeholder="กรอกชื่ออาจารย์">
-                                </div>
-
-                                <div class="col-md-4">
-                                <label for="subject_code_pre" class="form-label">รหัสวิชา</label>
-                                <input type="text" class="form-control"
-                                        id="subject_code_pre" placeholder="เช่น ENGCE123"
-                                        required
-                                        oninput="this.value = this.value.toUpperCase().trim()">
-                                </div>
-
-                                <div class="col-md-4">
-                                <label for="subject_name_pre" class="form-label">ชื่อวิชา</label>
-                                <input type="text" class="form-control"
-                                        id="subject_name_pre" placeholder="กรอกชื่อวิชา">
-                                </div>
-
-                                <!-- แถวที่ 2 : 4 คอลัมน์ (col-md-3) -->
-                                <div class="col-md-3">
-                                <label for="subject_type_pre" class="form-label">ประเภทรายวิชา</label>
-                                <select class="form-select" id="subject_type_pre">
-                                    <option value="">เลือกประเภท</option>
-                                    <option value="iot">IoT</option>
-                                    <option value="computer">computer</option>
-                                    <option value="electric">electric</option>
-                                </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                <label for="type_pre" class="form-label">ประเภทภาควิชา</label>
-                                <select class="form-select" id="type_pre">
-                                    <option value="">เลือกประเภท</option>
-                                    <option value="ภาคทฤษฎี">ภาคทฤษฎี</option>
-                                    <option value="ภาคปฏิบัติ">ภาคปฏิบัติ</option>
-                                </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                <label for="student_type_pre" class="form-label">ประเภทนักศึกษา</label>
-                                <select class="form-select" id="student_type_pre">
-                                    <option value="">เลือกประเภท</option>
-                                    <option value="ภาคปกติ">ภาคปกติ</option>
-                                    <option value="ภาคพิเศษ">ภาคพิเศษ</option>
-                                </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                <label for="hours_pre" class="form-label">จำนวนชั่วโมง</label>
-                                <!-- Added step="0.5" and min="0.5" attributes -->
-                                <input type="number" class="form-control" id="hours_pre" step="0.5" min="0.5">
-                                </div>
-
-                                <!-- แถวที่ 3 : 4 คอลัมน์ (col-md-3) -->
-                                <div class="col-md-3">
-                                <label for="day_pre" class="form-label">วัน</label>
-                                <select class="form-select" id="day_pre">
-                                    <option value="">เลือกวัน</option>
-                                    <option value="จันทร์">วันจันทร์</option>
-                                    <option value="อังคาร">วันอังคาร</option>
-                                    <option value="พุธ">วันพุธ</option>
-                                    <option value="พฤหัสบดี">วันพฤหัสบดี</option>
-                                    <option value="ศุกร์">วันศุกร์</option>
-                                </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                <label for="start_time_pre" class="form-label">เวลาเริ่ม</label>
-                                <!-- Changed from input type="time" to select dropdown -->
-                                <select class="form-select" id="start_time_pre">
-                                    <option value="">เลือกเวลาเริ่ม</option>
-                                    <option>08:00</option><option>09:00</option><option>10:00</option>
-                                    <option>11:00</option><option>12:00</option><option>13:00</option>
-                                    <option>14:00</option><option>15:00</option><option>16:00</option>
-                                    <option>17:00</option><option>18:00</option><option>19:00</option>
-                                </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                <label for="stop_time_pre" class="form-label">เวลาสิ้นสุด</label>
-                                <!-- Changed from disabled to readonly-select class with proper attributes -->
-                                <select class="form-select readonly-select" id="stop_time_pre" 
-                                        aria-readonly="true" tabindex="-1">
-                                    <option value="">คำนวณอัตโนมัติ</option>
-                                    <option>09:00</option><option>10:00</option><option>11:00</option>
-                                    <option>12:00</option><option>13:00</option><option>14:00</option>
-                                    <option>15:00</option><option>16:00</option><option>17:00</option>
-                                    <option>18:00</option><option>19:00</option><option>20:00</option>
-                                </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                <label for="room_name_pre" class="form-label">ห้องเรียน</label>
-                                <input type="text" class="form-control"
-                                        id="room_name_pre" placeholder="เช่น 201">
-                                </div>
-
-                                <!-- ปุ่ม: จัดไว้มุมขวาล่างเหมือนตัวอย่าง -->
-                                <div class="col-12">
-                                <div class="d-flex justify-content-end mt-4">
-                                    <button type="button"
-                                            class="btn btn-primary-gradient px-4 py-2"
-                                            onclick="addPreSchedule()">
-                                    <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-            <!-- Table Section -->
-            <div class="col-12">
-                <div class="card content-card h-100">
-                    <div class="card-header card-header-purple">
-                        <h5 class="card-title mb-0 d-flex align-items-center">
-                            <i class="bi bi-table me-2"></i>รายการวิชาล่วงหน้า
-                        </h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="table-container">
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>อาจารย์</th>
-                                            <th>รหัสวิชา</th>
-                                            <th>ชื่อวิชา</th>
-                                            <th>ประเภทรายวิชา</th>
-                                            <th>ประเภทภาควิชา</th>
-                                            <th>ประเภทนักศึกษา</th>
-                                            <th>จำนวนชั่วโมง</th>
-                                            <th>วัน</th>
-                                            <th>เวลาเริ่ม</th>
-                                            <th>เวลาสิ้นสุด</th>
-                                            <th>ห้องเรียน</th>
-                                            <th>จัดการ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for pre in pre_schedules %}
-                                        <tr data-id="{{ pre.id }}">
-                                            <td>{{ pre.teacher_name_pre }}</td>
-                                            <td><span class="badge bg-primary">{{ pre.subject_code_pre }}</span></td>
-                                            <td>{{ pre.subject_name_pre }}</td>
-                                            <td><span class="badge {% if pre.room_type_pre == 'iot' %}bg-success{% elif pre.room_type_pre == 'computer' %}bg-info{% elif pre.room_type_pre == 'electric' %}bg-danger{% else %}bg-secondary{% endif %}">{{ pre.room_type_pre }}</span></td>
-                                            <td><span class="badge bg-secondary">{{ pre.type_pre }}</span></td>
-                                            <td><span class="badge {% if pre.curriculum_type_pre == 'ภาคปกติ' %}bg-success{% else %}bg-warning{% endif %}">{{ pre.curriculum_type_pre }}</span></td>
-                                            <td><span class="badge bg-info">{{ pre.hours_pre }}</span></td>
-                                            <td><span class="badge bg-info">{{ pre.day_pre }}</span></td>
-                                            <td><span class="badge bg-success">{{ pre.start_time_pre|time:"H:i" }}</span></td>
-                                            <td><span class="badge bg-warning">{{ pre.stop_time_pre|time:"H:i" }}</span></td>
-                                            <td>{{ pre.room_name_pre }}</td>
-                                            <td>
-                                                <button class="btn btn-warning-gradient btn-sm me-1" onclick="openEditModal(this)" title="แก้ไข">
-                                                    <i class="bi bi-pencil"></i>
-                                                </button>
-                                                <button class="btn btn-danger-gradient btn-sm" onclick="confirmDelete(this)" title="ลบ">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        {% empty %}
-                                        <tr>
-                                            <td colspan="12" class="text-center text-muted">ไม่มีข้อมูลวิชาล่วงหน้า</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between mt-4">
-                            <button class="btn btn-consistent btn-secondary-consistent" onclick="refreshData()">
-                                <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
-                            </button>
-                            <button class="btn btn-success-gradient" onclick="downloadCSV()">
-                                <i class="bi bi-download me-2"></i>ดาวน์โหลด CSV
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content" style="border-radius: 16px; border: none;">
-                <div class="modal-header" style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border-radius: 16px 16px 0 0;">
-                    <h5 class="modal-title">
-                        <i class="bi bi-pencil-square me-2"></i>แก้ไขข้อมูลวิชาล่วงหน้า
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="editteacher_name_pre" class="form-label">ชื่ออาจารย์</label>
-                            <input type="text" class="form-control" id="editteacher_name_pre">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editsubject_code_pre" class="form-label">รหัสวิชา</label>
-                            <input type="text" class="form-control" id="editsubject_code_pre">
-                        </div>
-                        <div class="col-12">
-                            <label for="editsubject_name_pre" class="form-label">ชื่อวิชา</label>
-                            <input type="text" class="form-control" id="editsubject_name_pre">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editsubject_type_pre" class="form-label">ประเภทรายวิชา</label>
-                            <select class="form-select" id="editsubject_type_pre">
-                                <option value="iot">IoT</option>
-                                <option value="computer">computer</option>
-                                <option value="electric">electric</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="edittype_pre" class="form-label">ประเภทภาควิชา</label>
-                            <select class="form-select" id="edittype_pre">
-                                <option value="">เลือกประเภท</option>
-                                <option value="ภาคทฤษฎี">ภาคทฤษฎี</option>
-                                <option value="ภาคปฏิบัติ">ภาคปฏิบัติ</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editstudent_type_pre" class="form-label">ประเภทนักศึกษา</label>
-                            <select class="form-select" id="editstudent_type_pre">
-                                <option value="">เลือกประเภท</option>
-                                <option value="ภาคปกติ">ภาคปกติ</option>
-                                <option value="ภาคพิเศษ">ภาคพิเศษ</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="edithours_pre" class="form-label">จำนวนชั่วโมง</label>
-                            <!-- Added step="0.5" and min="0.5" attributes -->
-                            <input type="number" class="form-control" id="edithours_pre" step="0.5" min="0.5">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editday_pre" class="form-label">วัน</label>
-                            <select class="form-select" id="editday_pre">
-                                <option value="จันทร์">วันจันทร์</option>
-                                <option value="อังคาร">วันอังคาร</option>
-                                <option value="พุธ">วันพุธ</option>
-                                <option value="พฤหัสบดี">วันพฤหัสบดี</option>
-                                <option value="ศุกร์">วันศุกร์</option>
-                             </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editstart_time_pre" class="form-label">เวลาเริ่ม</label>
-                            <!-- Changed from input type="time" to select dropdown -->
-                            <select class="form-select" id="editstart_time_pre">
-                                <option>08:00</option><option>09:00</option><option>10:00</option>
-                                <option>11:00</option><option>12:00</option><option>13:00</option>
-                                <option>14:00</option><option>15:00</option><option>16:00</option>
-                                <option>17:00</option><option>18:00</option><option>19:00</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editstop_time_pre" class="form-label">เวลาสิ้นสุด</label>
-                            <!-- Changed from disabled to readonly-select class with proper attributes -->
-                            <select class="form-select readonly-select" id="editstop_time_pre" 
-                                    aria-readonly="true" tabindex="-1">
-                                <option value="">คำนวณอัตโนมัติ</option>
-                                <option>09:00</option><option>10:00</option><option>11:00</option>
-                                <option>12:00</option><option>13:00</option><option>14:00</option>
-                                <option>15:00</option><option>16:00</option><option>17:00</option>
-                                <option>18:00</option><option>19:00</option><option>20:00</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editroom_name_pre" class="form-label">ห้องเรียน</label>
-                            <input type="text" class="form-control" id="editroom_name_pre">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer border-0 p-4">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="border-radius: 12px;">
-                        <i class="bi bi-x-lg me-2"></i>ยกเลิก
-                    </button>
-                    <button type="button" class="btn btn-primary-gradient" onclick="saveEdit()">
-                        <i class="bi bi-check-lg me-2"></i>บันทึกการแก้ไข
-                    </button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </header>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
-    <!-- Added setSelectValue helper function before existing time calculation script -->
-    <script>
-    function setSelectValue(sel, val) {
-        const hit = [...sel.options].find(o => o.value === val || o.text === val);
-        if (hit) sel.value = val;
-        else {
-            const opt = document.createElement('option');
-            opt.value = val; opt.text = val;
-            sel.appendChild(opt);
-            sel.value = val;
-        }
-    }
-    </script>
+<!-- Navigation -->
+<nav class="bg-white border-bottom">
+  <div class="container-fluid" style="max-width: 1400px;">
+    <ul class="nav nav-tabs border-0">
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+           href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+          <i class="bi bi-house me-2"></i>หน้าหลัก
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'subject' %}active{% endif %}"
+           href="{% url 'subject' %}" {% if request.resolver_match.url_name == 'subject' %}aria-current="page"{% endif %}>
+          <i class="bi bi-plus-square me-2"></i>เพิ่มข้อมูล
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'pre' %}active{% endif %}"
+           href="{% url 'pre' %}" {% if request.resolver_match.url_name == 'pre' %}aria-current="page"{% endif %}>
+          <i class="bi bi-book me-2"></i>ลงล่วงหน้า
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'course' %}active{% endif %}"
+           href="{% url 'course' %}" {% if request.resolver_match.url_name == 'course' %}aria-current="page"{% endif %}>
+          <i class="bi bi-people me-2"></i>รายวิชา
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'weekactivity' %}active{% endif %}"
+           href="{% url 'weekactivity' %}" {% if request.resolver_match.url_name == 'weekactivity' %}aria-current="page"{% endif %}>
+          <i class="bi bi-activity me-2"></i>กิจกรรม
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-    <script>
-    // ===== Utilities =====
-    function hhmmToMinutes(hhmm) { 
-        if(!hhmm) return null;
-        const [h,m]=hhmm.split(':').map(Number);
-        return (isNaN(h)||isNaN(m))?null:(h*60+m);
-    }
-    
-    function minutesToHHMM(mins){
-        mins = ((mins % 1440) + 1440) % 1440;
-        const h = String(Math.floor(mins / 60)).padStart(2, '0');
-        const m = String(mins % 60).padStart(2, '0');
-        return `${h}:${m}`;
-    }
-    
-    function calcEnd(startStr, hoursStr){
-        const s=hhmmToMinutes(startStr), h=parseFloat(hoursStr||0);
-        if(s===null || !isFinite(h) || h<=0) return '';
-        return minutesToHHMM(s + Math.round(h*60));
-    }
-    
-    function wireAutoStop(startSel, hoursSel, stopSel){
-        const startEl =document.querySelector(startSel);
-        const hoursEl =document.querySelector(hoursSel);
-        const stopEl =document.querySelector(stopSel);
-        if(!startEl||!hoursEl||!stopEl) return;
-        const update = () => {
-            const end = calcEnd(startEl.value, hoursEl.value);
-            if(!end) { stopEl.value = ''; return; }
-            const hit=[...stopEl.options].find(o=>o.value===end||o.text===end);
-            if(hit){ stopEl.value=end; }
-            else{
-                const opt=document.createElement('option');
-                opt.value=end; opt.text=end;
-                stopEl.appendChild(opt); stopEl.value=end;
-            }
-        };
-        startEl.addEventListener('change', update);
-        hoursEl.addEventListener('input', update);
-        update();
-    }
-
-    // ===== ติดตั้งให้ Add และ Edit =====
-    document.addEventListener('DOMContentLoaded', () => {
-        wireAutoStop('#start_time_pre', '#hours_pre', '#stop_time_pre');
-        wireAutoStop('#editstart_time_pre', '#edithours_pre', '#editstop_time_pre');
+  <!-- Django Messages -> trigger notifications -->
+  {% if messages %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      {% for message in messages %}
+        showNotification('{{ message|escapejs }}', '{{ message.tags }}');
+      {% endfor %}
     });
-    </script>
+  </script>
+  {% endif %}
 
-    <script>
-        let editRow = null;
-        let editId = null;
+  <!-- Main Content -->
+  <main class="container-fluid py-5" style="max-width: 1400px;">
+    <div class="row g-4">
 
-        // Notification System
-        function showNotification(message, type = 'info', duration = 5000) {
-            const container = document.getElementById('notificationContainer');
-            const notification = document.createElement('div');
-            
-            const typeMap = {
-                'success': 'success',
-                'error': 'error', 
-                'warning': 'warning',
-                'info': 'info',
-                'debug': 'info'
-            };
-            
-            const notificationType = typeMap[type] || 'info';
-            
-            notification.className = `notification ${notificationType}`;
-            notification.innerHTML = `
-                <button class="notification-close" onclick="closeNotification(this)">&times;</button>
-                <div>${message}</div>
-                <div class="notification-progress"></div>
-            `;
-            
-            container.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-            
-            const progressBar = notification.querySelector('.notification-progress');
-            progressBar.style.width = '100%';
-            setTimeout(() => {
-                progressBar.style.width = '0%';
-                progressBar.style.transitionDuration = duration + 'ms';
-            }, 100);
-            
-            setTimeout(() => {
-                closeNotification(notification.querySelector('.notification-close'));
-            }, duration);
-        }
+      <!-- Form Section -->
+      <div class="col-12">
+        <div class="card content-card">
+          <div class="card-header card-header-purple">
+            <h5 class="card-title mb-0 d-flex align-items-center">
+              <i class="bi bi-book me-2"></i>วิชาที่ต้องสอนล่วงหน้า
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row g-3 form-compact">
+              <!-- Dropdowns (ดึงจากฐานข้อมูล) -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="teacher_name_pre" class="form-label">อาจารย์</label>
+                <select id="teacher_name_pre" class="form-select"><option value="">เลือกอาจารย์</option></select>
+              </div>
 
-        function closeNotification(button) {
-            const notification = button.parentElement;
-            notification.style.opacity = '0';
-            notification.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.parentElement.removeChild(notification);
-                }
-            }, 300);
-        }
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="subject_code_pre" class="form-label">รหัสวิชา</label>
+                <select id="subject_code_pre" class="form-select"><option value="">เลือกรหัสวิชา</option></select>
+                <div class="field-note">จะซิงก์กับ “ชื่อวิชา” อัตโนมัติ</div>
+              </div>
 
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="subject_name_pre" class="form-label">ชื่อวิชา</label>
+                <select id="subject_name_pre" class="form-select"><option value="">เลือกชื่อวิชา</option></select>
+              </div>
 
-        // CSV Upload Form Handler
-        document.getElementById('csvUploadForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // ป้องกัน default form submission
-            
-            const fileInput = document.getElementById('csvFileInput');
-            const uploadBtn = document.getElementById('uploadBtn');
-            
-            if (!fileInput.files.length) {
-                showNotification('กรุณาเลือกไฟล์ CSV', 'warning');
-                return;
-            }
-            
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
-            
-            uploadBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>กำลังอัปโหลด...';
-            uploadBtn.disabled = true;
-            
-            fetch('/upload/pre-csv/', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    showNotification(data.message, 'success');
-                    location.reload();
-                } else {
-                    showNotification(data.message, 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('เกิดข้อผิดพลาดในการอัปโหลดไฟล์', 'error');
-            })
-            .finally(() => {
-                uploadBtn.innerHTML = '<i class="bi bi-cloud-upload me-2"></i>อัปโหลด CSV';
-                uploadBtn.disabled = false;
-                fileInput.value = '';
-            });
-        });
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="subject_type_pre" class="form-label">ประเภทรายวิชา</label>
+                <select id="subject_type_pre" class="form-select"><option value="">เลือกประเภท</option></select>
+              </div>
 
-        function addPreSchedule() {
-            const teacher_name_pre   = document.getElementById("teacher_name_pre").value.trim();
-            const subject_code_pre   = document.getElementById("subject_code_pre").value.trim();
-            const subject_name_pre   = document.getElementById("subject_name_pre").value.trim();
-            const room_type_pre      = document.getElementById("subject_type_pre").value;
-            const type_pre           = document.getElementById("type_pre").value;
-            const curriculum_type_pre= document.getElementById("student_type_pre").value;
-            const hours_pre = Number(document.getElementById("hours_pre").value || 0);
-            const day_pre            = document.getElementById("day_pre").value;
-            const start_time_pre     = document.getElementById("start_time_pre").value;
-            const stop_time_pre      = document.getElementById("stop_time_pre").value;
-            const room_name_pre      = document.getElementById("room_name_pre").value.trim();
-            
-            if (!subject_code_pre) {
-                showNotification('กรุณากรอกรหัสวิชา', 'warning');
-                return;
-            }
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="type_pre" class="form-label">ประเภทภาควิชา</label>
+                <select id="type_pre" class="form-select"><option value="">เลือกประเภท</option></select>
+              </div>
 
-            fetch('/api/pre/add/', {
-                method: 'POST',
-                headers: {'Content-Type':'application/json','X-CSRFToken': getCookie('csrftoken')},
-                body: JSON.stringify({
-                teacher_name_pre, subject_code_pre, subject_name_pre,
-                room_type_pre, type_pre, curriculum_type_pre, hours_pre,
-                day_pre, start_time_pre, stop_time_pre, room_name_pre
-                })
-            })
-            .then(r=>r.json())
-            .then(d=>{
-                if (d.status === 'success') { showNotification('✅ เพิ่มวิชาล่วงหน้าสำเร็จ','success'); location.reload(); }
-                else { showNotification('เกิดข้อผิดพลาด: '+d.message,'error'); }
-            })
-            .catch(()=> showNotification('เกิดข้อผิดพลาดในการเพิ่มข้อมูล','error'));
-        }
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="student_type_pre" class="form-label">ชื่อกลุ่มนักศึกษา</label>
+                <select id="student_type_pre" class="form-select"><option value="">เลือกประเภท</option></select>
+              </div>
 
-        function confirmDelete(button) {
-            if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?")) {
-                const row = button.closest("tr");
-                const id = row.getAttribute("data-id");
-                
-                fetch(`/api/pre/delete/${id}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        row.remove();
-                        showNotification("✅ ลบข้อมูลเรียบร้อยแล้ว", 'success');
-                    } else {
-                        showNotification('เกิดข้อผิดพลาดในการลบข้อมูล', 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showNotification('เกิดข้อผิดพลาดในการลบข้อมูล', 'error');
-                });
-            }
-        }
+              <!-- จำนวนชั่วโมง: เปลี่ยนเป็นกรอกตัวเลข -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="hours_pre" class="form-label">จำนวนชั่วโมง</label>
+                <input type="number" id="hours_pre" class="form-control" step="0.5" min="0.5" placeholder="เช่น 1.5">
+              </div>
 
-        function openEditModal(button) {
-            editRow = button.closest("tr");
-            editId  = editRow.getAttribute("data-id");
-            const cells = editRow.getElementsByTagName("td");
+              <!-- กลุ่มเรียน: ช่องใหม่ เป็นตัวเลข -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="group_no_pre" class="form-label">กลุ่มเรียน</label>
+                <input type="number" id="group_no_pre" class="form-control" min="1" step="1" placeholder="เช่น 1">
+              </div>
 
-            document.getElementById("editteacher_name_pre").value = cells[0].innerText.trim();
-            document.getElementById("editsubject_code_pre").value = cells[1].querySelector('.badge').innerText.trim();
-            document.getElementById("editsubject_name_pre").value = cells[2].innerText.trim();
-            document.getElementById("editsubject_type_pre").value = cells[3].querySelector('.badge').innerText.trim();
-            document.getElementById("edittype_pre").value = cells[4].querySelector('.badge').innerText.trim();
-            document.getElementById("editstudent_type_pre").value = cells[5].querySelector('.badge').innerText.trim();
-            document.getElementById("edithours_pre").value = cells[6].querySelector('.badge').innerText.trim();
-            document.getElementById("editday_pre").value = cells[7].querySelector('.badge').innerText.trim();
-            // ใน openEditModal แทนที่การตั้งค่า start/stop เดิม ให้เป็น helper ดีแล้ว ใน openEditModal :
-            setSelectValue(document.getElementById("editstart_time_pre"), 
-                            cells[8].querySelector('.badge').innerText.trim());
-            setSelectValue(document.getElementById("editstop_time_pre"), 
-                            cells[9].querySelector('.badge').innerText.trim());
-            document.getElementById("editroom_name_pre").value = cells[10].innerText.trim();
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="day_pre" class="form-label">วัน</label>
+                <select id="day_pre" class="form-select"><option value="">เลือกวัน</option></select>
+              </div>
 
-            new bootstrap.Modal(document.getElementById("editModal")).show();
-        }
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="start_time_pre" class="form-label">เวลาเริ่ม</label>
+                <select id="start_time_pre" class="form-select"><option value="">เลือกเวลาเริ่ม</option></select>
+              </div>
 
-        function saveEdit() {
-            const teacher_name_pre = document.getElementById("editteacher_name_pre").value;
-            const subject_code_pre = document.getElementById("editsubject_code_pre").value;
-            const subject_name_pre = document.getElementById("editsubject_name_pre").value;
-            const room_type_pre = document.getElementById("editsubject_type_pre").value;
-            const type_pre = document.getElementById("edittype_pre").value;
-            const curriculum_type_pre = document.getElementById("editstudent_type_pre").value;
-            const hours_pre = Number(document.getElementById("edithours_pre").value || 0);
-            const day_pre = document.getElementById("editday_pre").value;
-            const start_time_pre = document.getElementById("editstart_time_pre").value;
-            const stop_time_pre = document.getElementById("editstop_time_pre").value;
-            const room_name_pre = document.getElementById("editroom_name_pre").value;
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="stop_time_pre" class="form-label">เวลาสิ้นสุด</label>
+                <select id="stop_time_pre" class="form-select readonly-select" aria-readonly="true" tabindex="-1">
+                  <option value="">คำนวณอัตโนมัติ</option>
+                </select>
+              </div>
 
-            fetch(`/api/pre/update/${editId}/`, {
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json','X-CSRFToken': getCookie('csrftoken')},
-                body: JSON.stringify({
-                teacher_name_pre, subject_code_pre, subject_name_pre,
-                room_type_pre, type_pre, curriculum_type_pre, hours_pre,
-                day_pre, start_time_pre, stop_time_pre, room_name_pre
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    showNotification("✅ แก้ไขข้อมูลเรียบร้อยแล้ว", 'success');
-                    bootstrap.Modal.getInstance(document.getElementById("editModal")).hide();
-                    location.reload(); // Reload to show updated data
-                } else {
-                    showNotification('เกิดข้อผิดพลาดในการแก้ไขข้อมูล', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('เกิดข้อผิดพลาดในการแก้ไขข้อมูล', 'error');
-            });
-        }
+              <!-- ห้องเรียน: คงเป็น dropdown (ดึงจากฐานข้อมูล) -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <label for="room_name_pre" class="form-label">ห้องเรียน</label>
+                <select id="room_name_pre" class="form-select"><option value="">เลือกห้อง</option></select>
+              </div>
 
-        function refreshData() {
-            location.reload();
-        }
+              <div class="col-12 d-flex justify-content-end mt-2">
+                <button type="button" class="btn btn-primary-gradient px-4 py-2" onclick="addPreSchedule()">
+                  <i class="bi bi-plus-lg me-2"></i>เพิ่มข้อมูล
+                </button>
+              </div>
+            </div><!-- /.row -->
+          </div><!-- /.card-body -->
+        </div><!-- /.card -->
+      </div>
 
-        function downloadCSV() {
-            let csv = "teacher_name_pre,subject_code_pre,subject_name_pre,room_type_pre,type_pre,curriculum_type_pre,hours_pre,day_pre,start_time_pre,stop_time_pre,room_name_pre\n";
+      <!-- Table Section -->
+      <div class="col-12">
+        <div class="card content-card h-100">
+          <div class="card-header card-header-purple">
+            <h5 class="card-title mb-0 d-flex align-items-center">
+              <i class="bi bi-table me-2"></i>รายการวิชาล่วงหน้า
+            </h5>
+          </div>
+          <div class="card-body p-4">
+            <div class="table-container">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0" id="dataTable">
+                  <thead>
+                    <tr>
+                      <th>อาจารย์</th>
+                      <th>รหัสวิชา</th>
+                      <th>ชื่อวิชา</th>
+                      <th>ประเภทรายวิชา</th>
+                      <th>ประเภทภาควิชา</th>
+                      <th>ประเภทนักศึกษา</th>
+                      <th>จำนวนชั่วโมง</th>
+                      <th>วัน</th>
+                      <th>เวลาเริ่ม</th>
+                      <th>เวลาสิ้นสุด</th>
+                      <th>ห้องเรียน</th>
+                      <th>จัดการ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for pre in pre_schedules %}
+                    <tr data-id="{{ pre.id }}">
+                      <td>{{ pre.teacher_name_pre }}</td>
+                      <td><span class="badge bg-primary">{{ pre.subject_code_pre }}</span></td>
+                      <td>{{ pre.subject_name_pre }}</td>
+                      <td><span class="badge {% if pre.room_type_pre == 'iot' %}bg-success{% elif pre.room_type_pre == 'computer' %}bg-info{% elif pre.room_type_pre == 'electric' %}bg-danger{% else %}bg-secondary{% endif %}">{{ pre.room_type_pre }}</span></td>
+                      <td><span class="badge bg-secondary">{{ pre.type_pre }}</span></td>
+                      <td><span class="badge {% if pre.curriculum_type_pre == 'ภาคปกติ' %}bg-success{% else %}bg-warning{% endif %}">{{ pre.curriculum_type_pre }}</span></td>
+                      <td><span class="badge bg-info">{{ pre.hours_pre }}</span></td>
+                      <td><span class="badge bg-info">{{ pre.day_pre }}</span></td>
+                      <td><span class="badge bg-success">{{ pre.start_time_pre|time:"H:i" }}</span></td>
+                      <td><span class="badge bg-warning">{{ pre.stop_time_pre|time:"H:i" }}</span></td>
+                      <td>{{ pre.room_name_pre }}</td>
+                      <td>
+                        <button class="btn btn-warning-gradient btn-sm me-1" onclick="openEditModal(this)" title="แก้ไข">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-danger-gradient btn-sm" onclick="confirmDelete(this)" title="ลบ">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td colspan="12" class="text-center text-muted">ไม่มีข้อมูลวิชาล่วงหน้า</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-            document.querySelectorAll("#dataTable tbody tr").forEach(row => {
-                const c = row.querySelectorAll("td");
-                if (c.length < 12) return; // ข้ามแถวว่าง
+            <div class="d-flex justify-content-end mt-4">
+              <button class="btn btn-consistent btn-secondary-consistent" onclick="refreshData()">
+                <i class="bi bi-arrow-clockwise me-2"></i>รีเฟรช
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                const val = i =>
-                (c[i].querySelector('.badge') ? c[i].querySelector('.badge').textContent.trim()
-                                                : c[i].textContent.trim());
+    </div>
+  </main>
 
-                const line = [
-                c[0].textContent.trim(), // อาจารย์
-                val(1),                  // รหัสวิชา (badge)
-                c[2].textContent.trim(), // ชื่อวิชา
-                val(3),                  // ประเภทรายวิชา
-                val(4),                  // ประเภทภาควิชา
-                val(5),                  // ประเภทนักศึกษา
-                val(6),                  // จำนวนชั่วโมง
-                val(7),                  // วัน
-                val(8),                  // เวลาเริ่ม
-                val(9),                  // เวลาสิ้นสุด
-                c[10].textContent.trim() // ห้องเรียน (ไม่มี badge)
-                ].map(s => `"${String(s).replace(/"/g,'""')}"`).join(",");
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content" style="border-radius: 16px; border: none;">
+        <div class="modal-header" style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border-radius: 16px 16px 0 0;">
+          <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>แก้ไขข้อมูลวิชาล่วงหน้า</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="row g-3">
+            <!-- Dropdowns ใน Modal -->
+            <div class="col-md-6">
+              <label for="editteacher_name_pre" class="form-label">ชื่ออาจารย์</label>
+              <select class="form-select" id="editteacher_name_pre">
+                <option value="">เลือกอาจารย์</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="editsubject_code_pre" class="form-label">รหัสวิชา</label>
+              <select class="form-select" id="editsubject_code_pre">
+                <option value="">เลือกรหัสวิชา</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label for="editsubject_name_pre" class="form-label">ชื่อวิชา</label>
+              <select class="form-select" id="editsubject_name_pre">
+                <option value="">เลือกชื่อวิชา</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="editsubject_type_pre" class="form-label">ประเภทรายวิชา</label>
+              <select class="form-select" id="editsubject_type_pre">
+                <option value="iot">IoT</option>
+                <option value="computer">computer</option>
+                <option value="electric">electric</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="edittype_pre" class="form-label">ประเภทภาควิชา</label>
+              <select class="form-select" id="edittype_pre">
+                <option value="">เลือกประเภท</option>
+                <option value="ภาคทฤษฎี">ภาคทฤษฎี</option>
+                <option value="ภาคปฏิบัติ">ภาคปฏิบัติ</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="editstudent_type_pre" class="form-label">ประเภทนักศึกษา</label>
+              <select class="form-select" id="editstudent_type_pre">
+                <option value="">เลือกประเภท</option>
+                <option value="ภาคปกติ">ภาคปกติ</option>
+                <option value="ภาคพิเศษ">ภาคพิเศษ</option>
+              </select>
+            </div>
 
-                csv += line + "\n";
-            });
+            <!-- จำนวนชั่วโมง: คงเป็นตัวเลขใน Modal -->
+            <div class="col-md-6">
+              <label for="edithours_pre" class="form-label">จำนวนชั่วโมง</label>
+              <input type="number" class="form-control" id="edithours_pre" step="0.5" min="0.5">
+            </div>
 
-            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url; a.download = "วิชาล่วงหน้า.csv"; a.click();
-            URL.revokeObjectURL(url);
-            showNotification("✅ ดาวน์โหลดไฟล์ CSV เรียบร้อยแล้ว", 'success');
-        }
+            <!-- กลุ่มเรียน: ช่องใหม่ใน Modal -->
+            <div class="col-md-6">
+              <label for="editgroup_no_pre" class="form-label">กลุ่มเรียน</label>
+              <input type="number" class="form-control" id="editgroup_no_pre" min="1" step="1">
+            </div>
 
-        // Initial load
-        window.onload = function() {
-            showNotification("ยินดีต้อนรับสู่หน้าจัดการวิชาล่วงหน้า", 'info');
-        };
-    </script>
+            <div class="col-md-6">
+              <label for="editday_pre" class="form-label">วัน</label>
+              <select class="form-select" id="editday_pre">
+                <option value="จันทร์">วันจันทร์</option>
+                <option value="อังคาร">วันอังคาร</option>
+                <option value="พุธ">วันพุธ</option>
+                <option value="พฤหัสบดี">วันพฤหัสบดี</option>
+                <option value="ศุกร์">วันศุกร์</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="editstart_time_pre" class="form-label">เวลาเริ่ม</label>
+              <select class="form-select" id="editstart_time_pre">
+                <option>08:00</option><option>09:00</option><option>10:00</option>
+                <option>11:00</option><option>12:00</option><option>13:00</option>
+                <option>14:00</option><option>15:00</option><option>16:00</option>
+                <option>17:00</option><option>18:00</option><option>19:00</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="editstop_time_pre" class="form-label">เวลาสิ้นสุด</label>
+              <select class="form-select readonly-select" id="editstop_time_pre" aria-readonly="true" tabindex="-1">
+                <option value="">คำนวณอัตโนมัติ</option>
+                <option>09:00</option><option>10:00</option><option>11:00</option>
+                <option>12:00</option><option>13:00</option><option>14:00</option>
+                <option>15:00</option><option>16:00</option><option>17:00</option>
+                <option>18:00</option><option>19:00</option><option>20:00</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="editroom_name_pre" class="form-label">ห้องเรียน</label>
+              <select class="form-select" id="editroom_name_pre">
+                <option value="">เลือกห้อง</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0 p-4">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="border-radius: 12px;">
+            <i class="bi bi-x-lg me-2"></i>ยกเลิก
+          </button>
+          <button type="button" class="btn btn-primary-gradient" onclick="saveEdit()">
+            <i class="bi bi-check-lg me-2"></i>บันทึกการแก้ไข
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script src="{% static 'js/pre.js' %}"></script>
 </body>
 </html>

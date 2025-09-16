@@ -1,22 +1,22 @@
 from django.contrib import admin
 from .models import (
 
-    TeacherSchedule, PreSchedule, ActivitySchedule, ScheduleInfo, Timedata,
+    CourseSchedule, PreSchedule, WeekActivity, ScheduleInfo, Timedata,
 
     Subject, Teacher, GroupType, StudentGroup, TimeSlot, GroupAllow,
-    RoomType, Room, WeekActivity
+    RoomType, Room
 )
 
-@admin.register(TeacherSchedule)
-class TeacherScheduleAdmin(admin.ModelAdmin):
-    list_display = ['teacher_name_teacher', 'subject_code_teacher', 'subject_name_teacher']
-    search_fields = ['teacher_name_teacher', 'subject_code_teacher', 'subject_name_teacher']
+@admin.register(CourseSchedule)
+class CourseScheduleAdmin(admin.ModelAdmin):
+    list_display  = ['teacher_name_course', 'subject_code_course', 'subject_name_course']
+    search_fields = ['teacher_name_course', 'subject_code_course', 'subject_name_course']
 
-@admin.register(ActivitySchedule)
-class ActivityScheduleAdmin(admin.ModelAdmin):
-    list_display = ['act_name_activities', 'day_activities', 'start_time_activities']
-    list_filter  = ['day_activities']
-    search_fields = ['act_name_activities']
+@admin.register(WeekActivity)
+class WeekActivityAdmin(admin.ModelAdmin):
+    list_display = ['act_name_activity', 'day_activity', 'start_time_activity']
+    list_filter  = ['day_activity']
+    search_fields = ['act_name_activity']
 
 @admin.register(PreSchedule)
 class PreScheduleAdmin(admin.ModelAdmin):
@@ -76,10 +76,4 @@ class RoomTypeAdmin(admin.ModelAdmin):
 class RoomAdmin(admin.ModelAdmin):
     list_display = ['name', 'room_type']
     list_filter  = ['room_type']
-    search_fields = ['name']
-
-@admin.register(WeekActivity)
-class WeekActivityAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slot']
-    list_filter  = ['slot__day_of_week']
     search_fields = ['name']

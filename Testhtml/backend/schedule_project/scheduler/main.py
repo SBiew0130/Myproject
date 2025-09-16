@@ -1149,11 +1149,13 @@ def run_genetic_algorithm(data_loader, write_csv=False, return_df=False):
 
 def run_genetic_algorithm_from_db():
     """รัน GA โดยใช้ข้อมูลจาก Django ORM — ไม่อ่าน/เขียน CSV เลย"""
-    import pandas as pd
     from django.db import transaction
     from .models import (
-        TeacherSchedule, RoomSchedule, PreSchedule,
-        ActivitySchedule, Timedata, ScheduleInfo
+        CourseSchedule,
+        Room, RoomType,
+        PreSchedule,
+        WeekActivity,
+        Timedata, ScheduleInfo,
     )
 
     def to_int(x, default=0):
@@ -1180,49 +1182,56 @@ def run_genetic_algorithm_from_db():
             return 1
 
     # ----- ORM -> DataFrames -----
+    room_qs = Room.objects.select_related('room_type').all()
     room_df = pd.DataFrame([{
-        "room_name": r.room_name_room or "",
-        "room_type": (r.room_type_room or "").strip(),
-    } for r in RoomSchedule.objects.all()])
+        "room_name": r.name,
+        "room_type": r.room_type.name if r.room_type else ""
+    } for r in Room.objects.select_related("room_type")])
 
     time_df = pd.DataFrame([{
-        "day_of_week": (t.day_of_week or "").strip(),
-        "start_time": to_hour(t.start_time),
-        "stop_time": to_hour(t.stop_time),
+    "day_of_week": (t.day_of_week or "").strip(),
+    "start_time": to_hour(t.start_time),
+    "stop_time":  to_hour(t.stop_time),
     } for t in Timedata.objects.all()])
 
+    def _to_int(x, default=0):
+        try:
+            return int(str(x).strip())
+        except Exception:
+            return default
+
     course_df = pd.DataFrame([{
-        "subject_code": t.subject_code_teacher or "",
-        "subject_name": t.subject_name_teacher or "",
-        "teacher_name": t.teacher_name_teacher or "",
-        "room_type":    t.room_type_teacher or "",
-        "theory_slot":  to_int(t.theory_slot_amount_teacher, 0),
-        "lab_slot":     to_int(t.lab_slot_amount_teacher, 0),
-        "section_count": section_count(t.section_teacher),
-        "curriculum_type": (t.curriculum_type_teacher or "ภาคปกติ").strip() or "ภาคปกติ",
-    } for t in TeacherSchedule.objects.all()])
+        "subject_code":  t.subject_code_course or "",
+        "subject_name":  t.subject_name_course or "",
+        "teacher_name":  t.teacher_name_course or "",
+        "room_type":     t.room_type_course or "",
+        "theory_slot":   to_int(t.theory_slot_amount_course, 0),
+        "lab_slot":      to_int(t.lab_slot_amount_course, 0),
+        "section_count": section_count(t.section_course),
+        "curriculum_type": (t.curriculum_type_course or "ภาคปกติ").strip() or "ภาคปกติ",
+    } for t in CourseSchedule.objects.all()])
 
     locked_df = pd.DataFrame([{
-        "subject_code": p.subject_code_pre or "",
-        "subject_name": p.subject_name_pre or "",
-        "teacher_name": p.teacher_name_pre or "",
+        "subject_code":   (p.subject_code_pre or "").strip(),
+        "subject_name":   (p.subject_name_pre or "").strip(),
+        "teacher_name":   (p.teacher_name_pre or "").strip(),
         "curriculum_type": (p.curriculum_type_pre or "ภาคปกติ").strip() or "ภาคปกติ",
-        "room_name": p.room_name_pre or "",
-        "room_type": p.room_type_pre or "",
-        "type": (p.type_pre or "").strip().lower(),   # 'theory' / 'lab' ถ้ามี
-        "hours": to_int(p.hours_pre, 0),
-        "section": 1,
-        "day": (p.day_pre or "").strip(),
-        "start_time": to_hour(p.start_time_pre),
-        "stop_time": to_hour(p.stop_time_pre),
+        "room_name":      (p.room_name_pre or "").strip(),
+        "room_type":      (p.room_type_pre or "").strip().lower(),
+        "type":           (p.type_pre or "").strip().lower(),    # "theory"/"lab"
+        "hours":          _to_int(p.hours_pre, 0),
+        "section":        1,
+        "day":            (p.day_pre or "").strip(),
+        "start_time":     to_hour(p.start_time_pre) if p.start_time_pre else None,
+        "stop_time":      to_hour(p.stop_time_pre)  if p.stop_time_pre  else None,
     } for p in PreSchedule.objects.all()])
 
     locked_activity_df = pd.DataFrame([{
-        "activity_name": a.act_name_activities or "",
-        "day": (a.day_activities or "").strip(),
-        "start_time": to_hour(a.start_time_activities),
-        "stop_time": to_hour(a.stop_time_activities),
-    } for a in ActivitySchedule.objects.all()])
+        "activity_name": a.name or "",
+        "day":           a.slot.day_of_week if a.slot else "",
+        "start_time":    to_hour(a.slot.start_time) if a.slot else None,
+        "stop_time":     to_hour(a.slot.stop_time) if a.slot else None,
+    } for a in WeekActivity.objects.select_related("slot").all()])
 
     if room_df.empty:
         return {"status": "error", "message": "ไม่มีข้อมูลห้องเรียน (RoomSchedule)"}
